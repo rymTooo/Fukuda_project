@@ -2,34 +2,34 @@
 CSS326 Database Lab project.
 Game Design
 
-Tap to increase money
+## Tap to increase money
 
 
-Buy skill to increase passive income and increase money per click
-
-
-
+- Buy skill to increase passive income and increase money per click
 
 
 
 
 
 
-Buy powerup from store to increase skills power (twice..)
 
 
-Click to a threshold cps for some second to get powered (autoclick 2x) on random cooldown (Events)
 
-Use money to buy Fukuda customization
+- Buy powerup from store to increase skills power (twice..)
 
-Tables 
-User (username, password)
-Skill( skill upgrade list)
-Store (power up list)
-Stats
-Fukuda Customization
-Setting
-Events
+
+- Click to a threshold cps for some second to get powered (autoclick 2x) on random cooldown (Events)
+
+- Use money to buy Fukuda customization
+
+## Tables 
+- User (username, password)
+- Skill( skill upgrade list)
+- Store (power up list)
+- Stats
+- Fukuda Customization
+- Setting
+- Events
 
 EERD(link : https://drive.google.com/file/d/1qOWuVpo94jOJCajYtX2wI9oSJOAr3NXi/view?usp=sharing )
 
