@@ -1,21 +1,15 @@
 # Fukuda_project
 CSS326 Database Lab project.
-Game Design
+## Game Design
 
-## Tap to increase money
-
+- Tap to increase money
+![image](https://github.com/rymTooo/Fukuda_project/assets/125113738/27d25070-7ae2-424f-89fd-435dbfa70229)
 
 - Buy skill to increase passive income and increase money per click
-
-
-
-
-
-
-
-
+![image](https://github.com/rymTooo/Fukuda_project/assets/125113738/ff0a5fc2-ff59-4377-9d41-e8696d5d27df)
 
 - Buy powerup from store to increase skills power (twice..)
+![image](https://github.com/rymTooo/Fukuda_project/assets/125113738/033219bf-ab90-4805-acec-3c9a1883e88a)
 
 
 - Click to a threshold cps for some second to get powered (autoclick 2x) on random cooldown (Events)
