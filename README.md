@@ -33,7 +33,7 @@ Events
 
 EERD(link : https://drive.google.com/file/d/1qOWuVpo94jOJCajYtX2wI9oSJOAr3NXi/view?usp=sharing )
 
-### Rules:
+## Rules:
 - Each user can buy many skills. Each skill can be bought by many users
 - Each user can buy many powerups. Each powerups can be bought by many users.
 - Each user can customize a Fukuda Customisation. Each Fukuda Customisation can be customized by only one user.
@@ -44,7 +44,7 @@ EERD(link : https://drive.google.com/file/d/1qOWuVpo94jOJCajYtX2wI9oSJOAr3NXi/vi
 
 
 
-### User Journey (Patt)
+## User Journey (Patt)
 - User เจอ Login Page
 - User register
 - User enter login page
@@ -58,13 +58,13 @@ EERD(link : https://drive.google.com/file/d/1qOWuVpo94jOJCajYtX2wI9oSJOAr3NXi/vi
 - User close customisation page
 - User click on setting
 - User change setting
-User close setting
-User click on stats
-User read stats
-User close stats
+- User close setting
+- User click on stats
+- User read stats
+- User close stats
 
-User Interface(Pon)
+## User Interface(Pon)
 
-Database Design (Gus, Patt)
+## Database Design (Gus, Patt)
 
-Slide()
+## Slide()
