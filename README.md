@@ -67,4 +67,5 @@ EERD(link : https://drive.google.com/file/d/1qOWuVpo94jOJCajYtX2wI9oSJOAr3NXi/vi
 
 ## Database Design (Gus, Patt)
 ![alt text](img/ERD.png)
+^this is ERD for project database
 ## Slide()
