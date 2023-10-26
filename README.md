@@ -66,5 +66,5 @@ EERD(link : https://drive.google.com/file/d/1qOWuVpo94jOJCajYtX2wI9oSJOAr3NXi/vi
 ## User Interface(Pon)
 
 ## Database Design (Gus, Patt)
-
+![alt text](https://drive.google.com/file/d/1ecDn389BCsipDtb0jflV8tJaR6G97MkP/view?usp=drivesdk)
 ## Slide()
