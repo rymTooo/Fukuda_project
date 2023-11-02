@@ -64,9 +64,15 @@ EERD(link : https://drive.google.com/file/d/1qOWuVpo94jOJCajYtX2wI9oSJOAr3NXi/vi
 - Powerup
 - Stats
 - Events
-- Customization
+- Fukuda Customization
 ## Relations list
-- 
+- Set(user-setting)
+- buy skill
+- buy powerup
+- has(user - stat)
+- customize
+- encounter(event-user)
+- affect(skill-powerup)
 ## User Interface(Pon)
 
 ## Database Design (Gus, Patt)
