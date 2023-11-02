@@ -34,7 +34,7 @@ EERD(link : https://drive.google.com/file/d/1qOWuVpo94jOJCajYtX2wI9oSJOAr3NXi/vi
 - Each user has a stat. Each stat is owned by a user.
 - Each power up affected a skill. A skill may be affected by powerups.
 - Each User has a setting. Each setting belongs to a user.
-- Each user can have many events. Each events can be held by many users.
+- Each user can encounter many events. Each events can happen to many users.
 
 
 
