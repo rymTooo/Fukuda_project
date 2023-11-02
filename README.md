@@ -77,5 +77,6 @@ EERD(link : https://drive.google.com/file/d/1qOWuVpo94jOJCajYtX2wI9oSJOAr3NXi/vi
 
 ## Database Design (Gus, Patt)
 ![alt text](img/ERD.png)
+![FukudaERD](https://github.com/rymTooo/Fukuda_project/assets/125113738/bbeaf759-df18-4587-a442-e288d7655c9f)
 ^this is ERD for project database
 ## Slide()
