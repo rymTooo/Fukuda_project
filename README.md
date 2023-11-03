@@ -1,21 +1,17 @@
 # Fukuda_project
 CSS326 Database Lab project.
-Game Design
+## project introduction
+Our project is a clicker game inspired by coockie clicker with getsu fuuma den theme. The expected user are people with busy schedule, but want to enjoy playing game. Idle game like our project is perfect, since it allow user to progress without having to actively play the game. It also suit a person who enjoy to see number go up or see the character progress, which surprsingly a lot of people actually fit the category.
+## Game Design
 
-## Tap to increase money
-
+- Tap to increase money
+![image](https://github.com/rymTooo/Fukuda_project/assets/125113738/27d25070-7ae2-424f-89fd-435dbfa70229)
 
 - Buy skill to increase passive income and increase money per click
-
-
-
-
-
-
-
-
+![image](https://github.com/rymTooo/Fukuda_project/assets/125113738/ff0a5fc2-ff59-4377-9d41-e8696d5d27df)
 
 - Buy powerup from store to increase skills power (twice..)
+![image](https://github.com/rymTooo/Fukuda_project/assets/125113738/033219bf-ab90-4805-acec-3c9a1883e88a)
 
 
 - Click to a threshold cps for some second to get powered (autoclick 2x) on random cooldown (Events)
@@ -40,7 +36,7 @@ EERD(link : https://drive.google.com/file/d/1qOWuVpo94jOJCajYtX2wI9oSJOAr3NXi/vi
 - Each user has a stat. Each stat is owned by a user.
 - Each power up affected a skill. A skill may be affected by powerups.
 - Each User has a setting. Each setting belongs to a user.
-- Each user can have many events. Each events can be held by many users.
+- Each user can encounter many events. Each events can happen to many users.
 
 
 
@@ -62,9 +58,25 @@ EERD(link : https://drive.google.com/file/d/1qOWuVpo94jOJCajYtX2wI9oSJOAr3NXi/vi
 - User click on stats
 - User read stats
 - User close stats
-
+## Entity list
+- User
+- Skills
+- Powerup
+- Stats
+- Events
+- Fukuda Customization
+## Relations list
+- Set(user-setting)
+- buy skill
+- buy powerup
+- has(user - stat)
+- customize
+- encounter(event-user)
+- affect(skill-powerup)
 ## User Interface(Pon)
 
 ## Database Design (Gus, Patt)
-
+![alt text](img/ERD.png)
+![FukudaERD](https://github.com/rymTooo/Fukuda_project/assets/125113738/bbeaf759-df18-4587-a442-e288d7655c9f)
+^this is ERD for project database
 ## Slide()
