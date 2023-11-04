@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'Fukuda.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE' : 'django.db.backends.mysql',# the engine is directory to core code of the database??(can view on the internet which database using which engine)
+        'NAME' : 'Fukuda',#name of the data base
+        'USER' : 'root',#username
+        'PASSWORD' : 'root',#password
+        'HOST': 'localhost',# localhost = database running on same server as application, else it has to be some kind of 125.14.3.41 .....
+        'PORT' : '3306',#port number use for communication
     }
 }
 
