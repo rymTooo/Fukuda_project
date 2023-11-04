@@ -1,1 +1,40 @@
-<h1> yay! </h1>
+<!DOCTYPE html>
+<html lang="en", style="height: 100%;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel = "stylesheet" href = "style-about.css"> -->
+</head>
+
+<body>
+<header>
+    <nav>
+        <ul>
+            {% comment %} <li><a href="/">Home</a></li>
+            <li><a href="/">About</a></li>
+            <li><a href="/">Portfolio</a></li>
+            <li><a href="/">Contact</a></li> {% endcomment %}
+        </ul>
+    </nav>
+</header>
+<section class="content">
+    {% include "C:\Users\pattp\Fukuda_project\auth_app\templates\auth_app\message.html" %}
+    <div class="left-panel">
+        <!-- <img src = "Scottish_fold_rw.jpg"> -->
+        <div>
+            
+        </div>
+        <div>
+            <p> Cat is surely a walking cuteness ball</p>
+        </div>
+    </div>
+    <div class="item">
+        <h2>Fukuda Home</h2>
+        <button type = 'submit'> <a href = '/authorization/logout'>Logout</a></button>
+        <button type = 'submit'><a href = '/authorization/login'>Login</a> </button>
+        <button type = 'submit'> <a href = '/authorization/signup'>Sign up</a></button>
+    </div>
+    
+</section>
+</body>
+</html>

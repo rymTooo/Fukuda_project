@@ -1,0 +1,8 @@
+
+{% for message in messages %}
+    <div class = "alert alret-{{message.tags}} alert-dismissible fade show" role = "alert">
+        <strong> Message: </strong> {{message}}
+        <button type = "button" class = "close" data-dismiss = "alert" aria-label = "close">close</button>
+        {% comment %} <span aria-hidden = "true"> &times;<span> {% endcomment %}
+    </div>
+{% endfor %}
