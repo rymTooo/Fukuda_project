@@ -20,8 +20,9 @@
 <section class="content">
     <div class="item">
         <h2>Sign up</h2>
-        <form action = "/signup" method = "post">
+        <form action = "" method = "post">
             {% csrf_token %}
+            
             <br>
             <label for = "email"> Email</label>
             <input type = "text" name = "email" id = "email" required>
@@ -35,10 +36,12 @@
             {% comment %} <label for = "cpassword"> Confirm Password</label>
             <input type = "password" name = "cpassword" id = "cpassword" required>
             <br> {% endcomment %}
-            <input type = "submit">sign up</input>
+            <button type = "submit">Submit</button>
+            
         </form>
         
-        {% comment %} <form method = "POST" >{# trying to use form as a class in python rather than explicitly writing it in html #}
+    <!--
+        {% comment %} <form action="" method = "POST">{# trying to use form as a class in python rather than explicitly writing it in html #}
             {%csrf_token%}
             <h2> sign up 2 </h2>
             {{ form.as_p }}
@@ -46,7 +49,7 @@
             {{ form.non_field_errors }}
             <input type= "submit">
         </form>  {% endcomment %}
-
+    -->
         
     </div>
     

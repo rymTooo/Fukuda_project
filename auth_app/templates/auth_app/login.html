@@ -18,7 +18,6 @@
     </nav>
 </header>
 <section class="content">
-    {% include "C:\Users\pattp\Fukuda_project\auth_app\templates\auth_app\message.html"%}
     <h2> login</h2>
     <p>{{username}}</p>
     <form action = "" method = "post">
@@ -29,9 +28,13 @@
         <label for = "password"> Password </label>
         <input type = "password" name = "password" id = "password" required>
         <br>
-        <input type = "submit">signup</input>
+
+        <button type = "submit">Login</button>
     </form>
-    
+    {% if invalid_creds %}
+        <p>Invalid username or password. Please try again.</p>
+    {% endif %}
 </section>
+
 </body>
 </html>
