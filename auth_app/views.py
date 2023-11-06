@@ -13,7 +13,15 @@ def user_list(request): #Ex. for pull data from database (Show in home.html)
     return render(request, 'auth_app/EX_display_from_database.html', {'users': users})
 
 def home(request):
-    return render(request, 'auth_app/home.html')
+    current_user = request.user
+
+    # Check if the user is authenticated
+    if request.user.is_authenticated:
+        # Perform actions for authenticated user
+        # Access user attributes like username, email, etc.
+        username = current_user.username
+        email = current_user.email
+    return render(request, 'auth_app/home.html',{'current_user': current_user})
 
 def signup (request):
 
@@ -34,7 +42,7 @@ def signup (request):
         return redirect("/authorization/login")
     return render(request , "auth_app/signup.html")
 
-def login(request):
+def login_user(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         
@@ -51,7 +59,7 @@ def login(request):
             else:
                 # Handle invalid login
                 return render(request, "auth_app/login.html", {'form': form, 'invalid_creds': True})
-                print("User authenticated:", user)
+                
     else:
         form = LoginForm()
         

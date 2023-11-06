@@ -18,24 +18,19 @@
     </nav>
 </header>
 <section class="content">
-    
+    <h2>Welcome, {{ current_user.username }}!</h2>
+    <h3>Email: {{ current_user.email }}</h3>   
     <div class="left-panel">
         <!-- <img src = "Scottish_fold_rw.jpg"> -->
         <div>
-            
+
         </div>
         <div>
             <p> Cat is surely a walking cuteness ball</p>
         </div>
+
     </div>
-    <!-- This part is the ex of pull data from database -->
-    <h1>List of User</h1>
-    <ul>
-        {% for user in users %}
-            <li>{{ user.username }}</li>
-        {% endfor %}
-    </ul>
-    <!-- end of this part-->
+
     <div class="item">
         <h2>Fukuda Home</h2>
         <button type = 'submit'> <a href = '/authorization/logout'>Logout</a></button>
