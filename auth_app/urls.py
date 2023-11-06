@@ -6,6 +6,7 @@ urlpatterns = [
     path("home/", views.home),
     ##path("login/", views.login),
     path("signup/", views.signup),
-    path('login/', views.user_login),
+    path('login/', views.login),
+    path('showDB/', views.user_list) #EX for display data from database
     
 ]

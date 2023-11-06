@@ -28,6 +28,14 @@
             <p> Cat is surely a walking cuteness ball</p>
         </div>
     </div>
+    <!-- This part is the ex of pull data from database -->
+    <h1>List of User</h1>
+    <ul>
+        {% for user in users %}
+            <li>{{ user.username }}</li>
+        {% endfor %}
+    </ul>
+    <!-- end of this part-->
     <div class="item">
         <h2>Fukuda Home</h2>
         <button type = 'submit'> <a href = '/authorization/logout'>Logout</a></button>

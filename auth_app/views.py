@@ -8,10 +8,9 @@ from django.contrib import messages
 
 # Create your views here.
 
-# Login  
-# def login (request):
-    
-#     return render(request, "auth_app/login.html")
+def user_list(request): #Ex. for pull data from database (Show in home.html)
+    users = User.objects.all()  # Retrieve all books from the database
+    return render(request, 'auth_app/EX_display_from_database.html', {'users': users})
 
 def home(request):
     return render(request, 'auth_app/home.html')
@@ -35,7 +34,7 @@ def signup (request):
         return redirect("/authorization/login")
     return render(request , "auth_app/signup.html")
 
-def user_login(request):
+def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         
