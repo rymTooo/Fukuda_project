@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fukuda Clicker Game</title>
+    <style>
+        #cookie {
+            width: 200px;
+            height: 200px;
+            background-image: url('Fukuda.png'); /* Replace 'cookie.png' with the path to your cookie image */
+            background-size: cover;
+            cursor: pointer;
+        }
+        #score {
+            font-size: 24px;
+        }
+        .upgrade {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Fukuda Clicker</h1>
+    <div id="cookie"></div>
+    <div id="score">Score: <span id="scoreValue">0</span></div>
+
+    <div id="upgrades">
+        <div class="upgrade" id="upgrade1">
+            <button onclick="buyUpgrade(1)">Upgrade 1 (Cost: <span id="cost1">10</span>)</button>
+            <span>Upgrade 1 Level: <span id="upgrade1Level">0</span></span>
+        </div>
+        <div class="upgrade" id="upgrade2">
+            <button onclick="buyUpgrade(2)">Upgrade 2 (Cost: <span id="cost2">20</span>)</button>
+            <span>Upgrade 2 Level: <span id="upgrade2Level">0</span></span>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        let passiveScore = 0;
+        let upgrade1Level = 0;
+        let upgrade2Level = 0;
+
+        function updateScore() {
+            score += passiveScore;
+            document.getElementById('scoreValue').textContent = score;
+        }
+
+        function buyUpgrade(upgradeId) {
+            switch(upgradeId) {
+                case 1:
+                    let cost1 = 10 * (upgrade1Level + 1);
+                    if (score >= cost1) {
+                        score -= cost1;
+                        upgrade1Level++;
+                        passiveScore += 1;
+                        document.getElementById('upgrade1Level').textContent = upgrade1Level;
+                        document.getElementById('cost1').textContent = cost1+10;
+                        document.getElementById('scoreValue').textContent = score;
+                    }
+                    break;
+                case 2:
+                    let cost2 = 20 * (upgrade2Level + 1);
+                    if (score >= cost2) {
+                        score -= cost2;
+                        upgrade2Level++;
+                        passiveScore += 2;
+                        document.getElementById('upgrade2Level').textContent = upgrade2Level;
+                        document.getElementById('cost2').textContent = cost2+20;
+                        document.getElementById('scoreValue').textContent = score;
+                    }
+                    break;
+            }
+        }
+
+        setInterval(updateScore, 1000); // Update score every second
+
+        // Add event listener to the cookie for manual clicking
+        document.getElementById('cookie').addEventListener('click', function() {
+            score++;
+            document.getElementById('scoreValue').textContent = score;
+        });
+    </script>
+</body>
+</html>
