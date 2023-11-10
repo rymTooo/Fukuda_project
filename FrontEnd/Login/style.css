@@ -35,23 +35,25 @@ html, body {margin: 0; height: 100%; overflow: hidden}
     position: absolute;
     top: 39%;
     left: 50%;
+    color: white;
     transform: translate(-50%, -50%);
     font-size: 170%;
     font-style: Regular;
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
-    -webkit-text-stroke: 0.2px white;
+    -webkit-text-stroke: 0.5px black;
 }
 .overlay-password{
     position: absolute;
     top: 45.1%;
     left: 50%;
+    color: white;
     transform: translate(-50%, -50%);
     font-size: 170%;
     font-style: Regular;
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
-    -webkit-text-stroke: 0.2px white;
+    -webkit-text-stroke: 0.5px black;
 }
 .overlay-formuser{
     font-size: 25px;
@@ -97,9 +99,41 @@ html, body {margin: 0; height: 100%; overflow: hidden}
 }
 .overlay-button {
     position: absolute;
-    top: 55%;
+    top: 58%;
     left: 50%;
     transform: translate(-50%, -50%);
-
+    border: none;
+    background-color: white;
+    color: black;
+    padding: 1% 2%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 150%;
+    border-radius: 20%;
+    transition-duration: 0.4s;
 }
 
+.overlay-button:hover {
+    position: absolute;
+    top: 58%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: none;
+    background-color: black;
+    color: white;
+    padding: 1% 2%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 150%;
+    border-radius: 20%;
+}
+
+.overlay-signup {
+    position: absolute;
+    top: 53%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 50%;
+}
