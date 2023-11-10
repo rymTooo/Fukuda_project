@@ -1,40 +1,53 @@
 <!DOCTYPE html>
-<html lang="en", style="height: 100%;">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel = "stylesheet" href = "static/auth_app/style-about.css">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
+<html>
+    {% load static %}
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Fukuda Login</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="{% static 'auth_app/Loginstyle.css' %}">
 </head>
+    </head>
+    <body>
+        <div class="container">
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        
+            <img class="background-image" type="text/png" src="{% static 'auth_app/Background.png' %}" width="100%">
+            <img class="overlay-background" type="text/png" src="{% static 'auth_app/signup background.png' %}" width="100%">  
+            <img class="overlay-image" type="text/png" src="{% static 'auth_app/blood 1.png' %}" ; width="35%">
+            <img class="overlay-image" type="text/png" src="{% static 'auth_app/image 1.png' %}" ; width="15%">
+            <img class="overlay-image" type="text/png" src="{% static 'auth_app/Fukada Clicker.png' %}" ; width="25%">
+            <img class="overlay-login" type="text/png" src="{% static 'auth_app/login.png' %}"  width="8%">
+            {% if invalid_creds %}
+                <h1 class = "overlay-login">Invalid username or password. Please try again.</h1>
+            {% endif %}
+            <h1 class="overlay-user">username</h1>
+            <h1 class="overlay-password">password</h1>
 
-<body>
-<header>
-    <nav>
-        <ul>
-            {% comment %} <li><a href="/">Home</a></li>
-            <li><a href="/">About</a></li>
-            <li><a href="/">Portfolio</a></li>
-            <li><a href="/">Contact</a></li> {% endcomment %}
-        </ul>
-    </nav>
-</header>
-<section class="content">
-    <h2> login</h2>
-    <p>{{username}}</p>
-    <form action = "" method = "post">
-        {% csrf_token %}
-        <label for = "username"> Username</label>
-        <input type = "text" name = "username" id = "username" placeholder="only letter and number" required>
-        <br>
-        <label for = "password"> Password </label>
-        <input type = "password" name = "password" id = "password" required>
-        <br>
+            <form action = "" method = "post">
+                {% csrf_token %}
+                <input class="overlay-formuser" type = "text" name = "username" id = "username" placeholder="only letter and number" required>
+                <input class="overlay-formpass" type = "password" name = "password" id = "password" required>
+                
+                <button class="overlay-button">Login</button>
+                
+            </form>
 
-        <button type = "submit">Login</button>
-    </form>
-    {% if invalid_creds %}
-        <p>Invalid username or password. Please try again.</p>
-    {% endif %}
-</section>
+            
 
-</body>
+            <div class="overlay-signup">          
+                <h1 >doesn't have an account? <a href="/authorization/signup">sign up here</a></h1>
+            </div>
+  
+        </div>
+        <script src="" async defer></script>
+    </body>
 </html>

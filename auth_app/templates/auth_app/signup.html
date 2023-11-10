@@ -4,13 +4,14 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
 <html>
+    {% load static%}
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Fukuda Login</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="static/auth_app/SignUpstyle.css">
+        <link rel="stylesheet" type = "text/css" href="{% static 'auth_app/SignUpstyle.css' %}">
     </head>
     <body>
         <div class="container">
@@ -18,16 +19,17 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         
-            <img class="background-image" src="Background.png" width="100%">
-            <img class="overlay-background" src="signup background.png" width="100%">  
-            <img class="overlay-image" src="blood 1.png"; width="35%">
-            <img class="overlay-image" src="image 1.png"; width="15%">
-            <img class="overlay-image" src="Fukada Clicker.png"; width="25%">
-            <img class="overlay-login" src="sign up header.png" width="8%">
+            <img class="background-image" type="text/png" src="{% static 'auth_app/Background.png' %}" width="100%">
+            <img class="overlay-background"type="text/png" src="{% static 'auth_app/signup background.png' %}" width="100%">  
+            <img class="overlay-image" type="text/png" src="{% static 'auth_app/blood 1.png' %}"; width="35%">
+            <img class="overlay-image" type="text/png" src="{% static 'auth_app/image 1.png' %}"; width="15%">
+            <img class="overlay-image" type="text/png" src="{% static 'auth_app/Fukada Clicker.png' %}"; width="25%">
+            <img class="overlay-login" type="text/png" src="{% static 'auth_app/sign up header.png' %}" width="8%">
             <h1 class="overlay-user">username</h1>
             <h1 class="overlay-password">password</h1>
             <div>
                 <form class="overlay-form" action = "" method = "post">
+                    {%csrf_token%}
                     <input  type="text" name = "username" id = "username" placeholder="only letter and number" required minlength="4"><br>
                     <input type="password" name = "password" id = "password" required><br>
                     <input type="password" name = "cpassword" id = "cpassword" required><br>
@@ -38,7 +40,7 @@
                 <h1 >already have an account? <a href="/login">Login here</a></h1>
             </div>
   
-        </div>>
+        </div>
         <script src="" async defer></script>
     </body>
 </html>
