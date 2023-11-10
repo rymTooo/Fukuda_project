@@ -1,58 +1,44 @@
 <!DOCTYPE html>
-<html lang="en", style="height: 100%;">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel = "stylesheet" href = "style-about.css"> -->
-</head>
-
-<body>
-<header>
-    <nav>
-        <ul>
-            {% comment %} <li><a href="/">Home</a></li>
-            <li><a href="/">About</a></li>
-            <li><a href="/">Portfolio</a></li>
-            <li><a href="/">Contact</a></li> {% endcomment %}
-        </ul>
-    </nav> 
-</header>
-<section class="content">
-    <div class="item">
-        <h2>Sign up</h2>
-        <form action = "" method = "post">
-            {% csrf_token %}
-            
-            <br>
-            <label for = "email"> Email</label>
-            <input type = "text" name = "email" id = "email" required>
-            <br>
-            <label for = "username"> Username</label>
-            <input type = "text" name = "username" id = "username" placeholder="only letter and number" required>
-            <br>
-            <label for = "password"> Password </label>
-            <input type = "password" name = "password" id = "password" required>
-            <br>
-            {% comment %} <label for = "cpassword"> Confirm Password</label>
-            <input type = "password" name = "cpassword" id = "cpassword" required>
-            <br> {% endcomment %}
-            <button type = "submit">Submit</button>
-            
-        </form>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Fukuda Login</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="SignUpstyle.css">
+    </head>
+    <body>
+        <div class="container">
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
         
-    <!--
-        {% comment %} <form action="" method = "POST">{# trying to use form as a class in python rather than explicitly writing it in html #}
-            {%csrf_token%}
-            <h2> sign up 2 </h2>
-            {{ form.as_p }}
-            {{ form.errors }}
-            {{ form.non_field_errors }}
-            <input type= "submit">
-        </form>  {% endcomment %}
-    -->
-        
-    </div>
-    
-</section>
-</body>
+            <img class="background-image" src="Background.png" width="100%">
+            <img class="overlay-background" src="signup background.png" width="100%">  
+            <img class="overlay-image" src="blood 1.png"; width="35%">
+            <img class="overlay-image" src="image 1.png"; width="15%">
+            <img class="overlay-image" src="Fukada Clicker.png"; width="25%">
+            <img class="overlay-login" src="sign up header.png" width="8%">
+            <h1 class="overlay-user">username</h1>
+            <h1 class="overlay-password">password</h1>
+            <div>
+                <form class="overlay-form" action = "" method = "post">
+                    <input  type="text" name = "username" id = "username" placeholder="only letter and number" required minlength="4"><br>
+                    <input type="password" name = "password" id = "password" required><br>
+                    <input type="password" name = "cpassword" id = "cpassword" required><br>
+                    <button class="overlay-button" >Sign Up</button>
+                </form>
+            </div>
+            <div class="overlay-signup">          
+                <h1 >already have an account? <a href="/login">Login here</a></h1>
+            </div>
+  
+        </div>>
+        <script src="" async defer></script>
+    </body>
 </html>
