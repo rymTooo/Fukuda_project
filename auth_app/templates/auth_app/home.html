@@ -34,10 +34,10 @@
     <div class="item">
         <h2>Fukuda Home</h2>
         {% if user.is_authenticated %} <!-- display different contents based on whether user is logged in or not -->
-        <button type = 'submit'> <a href = '/logout'>Logout</a></button>
+        <button type = 'submit'> <a href = '/authorization/logout'>Logout</a></button>
         {% else %}
-        <button type = 'submit'><a href = '/login'>Login</a> </button>
-        <button type = 'submit'> <a href = '/signup'>Sign up</a></button>
+        <button type = 'submit'><a href = '/authorization/login'>Login</a> </button>
+        <button type = 'submit'> <a href = '/authorization/signup'>Sign up</a></button>
         {% endif %}
     </div>
     
