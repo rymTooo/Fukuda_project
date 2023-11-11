@@ -1,0 +1,15 @@
+<!-- add_skill.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Skill</title>
+</head>
+<body>
+    <h2>Add Skill</h2>
+    <form method="post" action='/game/add_skill/'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Skill</button>
+    </form>
+</body>
+</html>

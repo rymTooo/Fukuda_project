@@ -36,6 +36,7 @@
             <span>Upgrade 2 Level: <span id="upgrade2Level">0</span></span>
         </div>
     </div>
+    <button onclick="saveManually()" method = "POST">Save</button>
     <p id = "lvdata">{{lvdata}}</p>
     {% comment %} {{ lvdata|json_script:"lvdata" }} {% endcomment %}
 
@@ -85,42 +86,26 @@
             score++;
             document.getElementById('scoreValue').textContent = score;
         });
-    </script>
 
-    <script>
         function saveManually() {
-            fetch('/save-data/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
-                },
-                body: JSON.stringify({
-                    field1: 'value1',
-                    field2: 'value2'
-                    // Add other fields to send
-                }),
-            });
-        }
+                fetch('http://127.0.0.1:8000/game/save-data/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
+                    },
+                    body: JSON.stringify({
+                        skill_name1 : "upgrade1",
+                        level_1 : upgrade1Level,
+                        skill_name2 : "upgrade2",
+                        level_2 : upgrade2Level,
 
-        function saveDataPeriodically() {
-            fetch('/save-data/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
-                },
-                body: JSON.stringify({
-                    field1: 'value1',
-                    field2: 'value2'
-                    // Add other fields to send
-                }),
-            });
-        }
+                        // Add other fields to send
+                    }),
+                });
+            }
+        
 
-        setInterval(saveDataPeriodically, 60000); // Call saveDataPeriodically every 60 seconds
-
-        // Function to get CSRF token for the header
         function getCookie(name) {
             var cookieValue = null;
             if (document.cookie && document.cookie !== '') {
