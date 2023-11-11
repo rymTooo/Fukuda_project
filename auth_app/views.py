@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from auth_app.forms import LoginForm, SignupForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 
@@ -55,7 +55,7 @@ def login_user(request):
                 login(request, user)
                 print("User authenticated:", user)
                 # Redirect to a success page or home page
-                return redirect('/authorization/home')  # Change 'home' to the name of your homepage URL
+                return redirect('/game/main')  # go to game main page
             else:
                 # Handle invalid login
                 return render(request, "auth_app/login.html", {'form': form, 'invalid_creds': True})
@@ -64,4 +64,6 @@ def login_user(request):
         form = LoginForm()
         
     return render(request, "auth_app/login.html", {'form': form})
-
+def logout_user(request):
+    logout(request)
+    return render(request, "auth_app/home.html")

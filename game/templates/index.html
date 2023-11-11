@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
+    {% load static%}
 <head>
     <title>Fukuda Clicker Game</title>
     <style>
         #cookie {
             width: 200px;
             height: 200px;
-            background-image: url('Fukuda.png'); /* Replace 'cookie.png' with the path to your cookie image */
-            background-size: cover;
+            background-image: url('{ static Fukuda.png}'); 
             cursor: pointer;
         }
         #score {

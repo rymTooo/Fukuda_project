@@ -22,5 +22,6 @@ from django.urls import path,include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('authorization/', include("auth_app.urls")),
+    path('game/', include("game.urls")),
     path("__debug__/", include("debug_toolbar.urls")),
 ]
