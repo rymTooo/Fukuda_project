@@ -55,7 +55,7 @@ def login_user(request):
                 login(request, user)
                 print("User authenticated:", user)
                 # Redirect to a success page or home page
-                return redirect('/game/main')  # go to game main page
+                return redirect('/game/main/')  # go to game main page
             else:
                 # Handle invalid login
                 return render(request, "auth_app/login.html", {'form': form, 'invalid_creds': True})

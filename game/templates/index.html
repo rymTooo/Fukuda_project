@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
-    {% load static%}
+    {% load static%}    
 <head>
     <title>Fukuda Clicker Game</title>
     <style>
+        {% load static%} 
         #cookie {
             width: 200px;
             height: 200px;
-            background-image: url('{ static Fukuda.png}'); 
+            background-image: url('{%static "game/Fukuda.png" %}'); 
             cursor: pointer;
         }
         #score {
@@ -35,9 +36,12 @@
             <span>Upgrade 2 Level: <span id="upgrade2Level">0</span></span>
         </div>
     </div>
+    <p id = "lvdata">{{lvdata}}</p>
+    {% comment %} {{ lvdata|json_script:"lvdata" }} {% endcomment %}
 
     <script>
-        let score = 0;
+        let lvdata = document.getElementById("lvdata").textContent
+        let score = lvdata["clicky"];
         let passiveScore = 0;
         let upgrade1Level = 0;
         let upgrade2Level = 0;

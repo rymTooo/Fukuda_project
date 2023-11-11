@@ -137,7 +137,8 @@ STATIC_ROOT = os.path.join(BASE_DIR,'/static/')
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / "static"
+    BASE_DIR / "static",
+    BASE_DIR / "game/static",
 ]
 
 # Default primary key field type
