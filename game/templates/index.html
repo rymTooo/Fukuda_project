@@ -42,8 +42,6 @@
         let passiveScore = 0;
         let upgrade1Level = 0;
         let upgrade2Level = 0;
-        let Name = {upgrade1, upgrade2}
-        let Level = {upgrade1Level,upgrade2Level};
 
         function updateScore() {
             score += passiveScore;
@@ -86,19 +84,23 @@
         });
 
         function saveManually() {
-            fetch('http://127.0.0.1:8000/game/save-data/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
-                },
-                body: JSON.stringify({
-                    skill_name : "upgrade1",
-                    level : upgrade1Level
-                    // Add other fields to send
-                }),
-            });
-        }
+                fetch('http://127.0.0.1:8000/game/save-data/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
+                    },
+                    body: JSON.stringify({
+                        skill_name1 : "upgrade1",
+                        level_1 : upgrade1Level,
+                        skill_name2 : "upgrade2",
+                        level_2 : upgrade2Level,
+
+                        // Add other fields to send
+                    }),
+                });
+            }
+        
 
         function getCookie(name) {
             var cookieValue = null;

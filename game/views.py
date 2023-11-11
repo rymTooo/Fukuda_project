@@ -33,19 +33,23 @@ def save_data(request):
             try:
                 # Process the data and save it to the database
                 data = json.loads(request.body)    # Get the data sent from the JavaScript
-                skill_name = data.get('skill_name')
-                level = data.get('level')
-                # Extract other fields
-                print(username)
-                print(data)
-                print(skill_name)
-                print(level)
-                user_skill = get_object_or_404(User_Skill, username = username, skill_name = skill_name)
-                user_skill.level = level
-                user_skill.save()
-                print("Data created successfully.")
-                # Save the data to the database using YourModel
-
+                for i in range (1,3):
+                    a = 'skill_name'+str(i)
+                    b = "level_"+ str(i)
+                    skill_name = data.get(a)
+                    level = data.get(b)
+                    print(a)
+                    # Extract other fields
+                    print(username)
+                    print(data)
+                    print(skill_name)
+                    print(level)
+                    
+                    # Save the data to the database using YourModel
+                    user_skill = get_object_or_404(User_Skill, username = username, skill_name = skill_name)
+                    user_skill.level = level
+                    user_skill.save()
+                    print("Data created successfully.")
                 return JsonResponse({'status': 'success'})
             except Exception as e:
                 print("Data created failed.")
