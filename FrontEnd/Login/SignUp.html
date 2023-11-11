@@ -25,13 +25,15 @@
             <img class="overlay-image" src="Fukada Clicker.png"; width="25%">
             <img class="overlay-login" src="sign up header.png" width="8%">
             <h1 class="overlay-user">username</h1>
-            <h1 class="overlay-password">password</h1>
+            <h1 class="overlay-password" id="password" onkeyup='check()'>password</h1>
+            <h1 class="overlay-confirmpassword" id="confirm_password" onkeyup='check()'>confirm password</h1>
             <div>
                 <form class="overlay-form">
                 <input  type="text" minlength="4"><br>
                 <input type="password"><br>
-                <input type="password"><br>
+                <input type="password"><span id='message'></span><br>
                 <button class="overlay-button" >Sign Up</button>
+  
                 </form>
             </div>
             <div class="overlay-signup">          
@@ -39,6 +41,17 @@
             </div>
   
         </div>>
-        <script src="" async defer></script>
+        <script>
+            var check = function() {
+                if (document.getElementById('password').value ==
+                  document.getElementById('confirm_password').value) {
+                  document.getElementById('message').style.color = 'green';
+                  document.getElementById('message').innerHTML = 'matching';
+                } else {
+                  document.getElementById('message').style.color = 'red';
+                  document.getElementById('message').innerHTML = 'not matching';
+                }
+              }
+        </script>
     </body>
 </html>
