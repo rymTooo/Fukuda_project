@@ -137,7 +137,7 @@ STATIC_ROOT = os.path.join(BASE_DIR,'/static/')
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-    "C:/Users/pattp/Fukuda_project/static"
+    BASE_DIR / "static"
 ]
 
 # Default primary key field type

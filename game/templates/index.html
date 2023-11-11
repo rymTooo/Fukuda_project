@@ -82,5 +82,55 @@
             document.getElementById('scoreValue').textContent = score;
         });
     </script>
+
+    <script>
+        function saveManually() {
+            fetch('/save-data/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
+                },
+                body: JSON.stringify({
+                    field1: 'value1',
+                    field2: 'value2'
+                    // Add other fields to send
+                }),
+            });
+        }
+
+        function saveDataPeriodically() {
+            fetch('/save-data/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
+                },
+                body: JSON.stringify({
+                    field1: 'value1',
+                    field2: 'value2'
+                    // Add other fields to send
+                }),
+            });
+        }
+
+        setInterval(saveDataPeriodically, 60000); // Call saveDataPeriodically every 60 seconds
+
+        // Function to get CSRF token for the header
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
 </body>
 </html>
