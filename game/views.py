@@ -14,8 +14,8 @@ def main_page(request):
     
     for i in skill_level:
         level_dict[i.skill_name.skill_name] = i.level
-
-    return render(request, 'index.html', {"lvdata": level_dict})
+    data = json.dumps(level_dict)
+    return render(request, 'index.html', {"loaded_data": data})
 
 
 

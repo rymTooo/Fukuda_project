@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
-    {% load static%}    
 <head>
+    {% load static%}
     <title>Fukuda Clicker Game</title>
     <style>
-        {% load static%} 
         #cookie {
-            width: 200px;
-            height: 200px;
-            background-image: url('{%static "game/Fukuda.png" %}'); 
+            width: 350px;
+            height: 300px;
+            background-image: url('{% static 'game/Fukuda.png' %}');
+            background-size: cover; <!-- so the problem is that the image is larger than the space and not displaying-->
             cursor: pointer;
         }
         #score {
@@ -37,19 +37,30 @@
         </div>
     </div>
     <button onclick="saveManually()" method = "POST">Save</button>
-    <p id = "lvdata">{{lvdata}}</p>
-    {% comment %} {{ lvdata|json_script:"lvdata" }} {% endcomment %}
+    <p> this is the loaded save of player {{loaded_data}}</p><!-- this is the json objects containing save data from player being dispaly on screen-->
 
     <script>
-        let lvdata = document.getElementById("lvdata").textContent
-        let score = lvdata["clicky"];
+        let loaded_data = JSON.parse("{{loaded_data|escapejs}}"); //convert json format to javascript objects
+        let score = loaded_data["clicky"]; // upgrade number 1 level
         let passiveScore = 0;
-        let upgrade1Level = 0;
-        let upgrade2Level = 0;
+        let upgrade1Level = loaded_data.clicky;
+        console.log(upgrade1Level + " << upgrade1 level value");
+        let upgrade2Level = loaded_data["super clicky"]; //upgrade number 2 level
+        console.log(upgrade2Level + " << upgrade2 level value");
 
         function updateScore() {
             score += passiveScore;
             document.getElementById('scoreValue').textContent = score;
+        }
+        function initiateSave(){ // this function suppose to run one time when the web is open. Still no idea how to do so.
+            document.getElementById('scoreValue').textContent = score; // update score
+            document.getElementById('upgrade1Level').textContent = upgrade1Level; // update upgrade level and their cost
+            document.getElementById('cost1').textContent = 10 * (upgrade1Level + 1);
+            document.getElementById('upgrade2Level').textContent = upgrade2Level;
+            document.getElementById('cost2').textContent = 20 * (upgrade2Level + 1);
+            // still doesn't update passive score, left for pon to deal with later
+            
+
         }
 
         function buyUpgrade(upgradeId) {
