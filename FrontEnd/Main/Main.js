@@ -7,7 +7,7 @@ function showTab(tabId) {
 
 const swordman = document.getElementById('swordman');
 
-swordman.addEventListener('click', () => {
+hitbox.addEventListener('click', () => {
     swordman.classList.add('SwingAnim');
     setTimeout(() => {
         swordman.classList.remove('SwingAnim');
