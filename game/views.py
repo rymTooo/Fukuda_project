@@ -8,14 +8,14 @@ from game.models import User_Skill
 from .forms import SkillForm
 
 def main_page(request): 
-    level_dict = {}
+    save_data_dict = {}
     user = request.user
     skill_level = User_Skill.objects.filter(username=user.id)
     
     for i in skill_level:
-        level_dict[i.skill_name.skill_name] = i.level
-    data = json.dumps(level_dict)
-    return render(request, 'index.html', {"loaded_data": data})
+        save_data_dict[i.skill_name.skill_name] = i.level
+    data = json.dumps(save_data_dict)
+    return render(request, 'Main.html', {"loaded_data": data})
 
 
 
