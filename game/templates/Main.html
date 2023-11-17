@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    {%load static%}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Fukuda Clicker</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href={% static "game/styles.css" %}>
+
+</head>
+<body>
+    <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <div class="Picture">
+        <img src={% static "game/Background.png" %} class="background">
+        <!--<img src="Fukuda.png" class="fukuda">-->
+        <div class="Character" id="swordman"></div>
+        <img src={% static "game/Dummy.png" %} class="dummy">
+    </div>
+    <div class="Navigation">
+        <button onclick="showTab('skills')">Skills</button>
+        <button onclick="showTab('powerups')">Powerups</button>
+        <button onclick="showTab('customisation')">Customisation</button>
+        <button onclick="showTab('statistics')">Statistics</button>
+        <button onclick="showTab('setting')">Setting</button>
+    </div>
+    <div class="Content">
+        <div id="skills" class="tabContent active">
+           skills
+        </div>
+        <div id="powerups" class="tabContent">
+            powerups
+        </div>
+        <div id="customisation" class="tabContent">
+            customisation
+        </div>
+        <div id="statistics" class="tabContent">
+            statistics
+        </div>
+        <div id="setting" class="tabContent">
+            setting
+        </div>
+    <script src={% static "game/Main.js" %} async defer></script>
+</body>
+</html>
