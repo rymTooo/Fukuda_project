@@ -2,7 +2,7 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
 <html>
     {%load static%}
 <head>
@@ -19,21 +19,36 @@
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <div class="Picture">
-        <img src={% static "game/Background.png" %} class="background">
+        <img src={% static "game/Background.png" %} class="background">      
         <!--<img src="Fukuda.png" class="fukuda">-->
         <div class="Character" id="swordman"></div>
-        <img src={% static "game/Dummy.png" %} class="dummy">
+        <div class="CharacterHitbox" id="hitbox">Test</div>
+        <img src = {% static "game/dummy.png" %} class="dummy">
+    </div>
+    
+    <div id="score">Score: <span id="scoreValue">0</span>
+        <p>{{username}}</p>
     </div>
     <div class="Navigation">
-        <button onclick="showTab('skills')">Skills</button>
-        <button onclick="showTab('powerups')">Powerups</button>
-        <button onclick="showTab('customisation')">Customisation</button>
-        <button onclick="showTab('statistics')">Statistics</button>
-        <button onclick="showTab('setting')">Setting</button>
+        <div onclick="showTab('skills')" class="tab" >Skills</div >
+        <div onclick="showTab('powerups')" class="tab">Powerups</div >
+        <div  onclick="showTab('customisation')" class="tab">Customisation</div >
+        <div  onclick="showTab('statistics')" class="tab">Statistics</div >
+        <div  onclick="showTab('setting')" class="tab">Setting</div >
     </div>
     <div class="Content">
         <div id="skills" class="tabContent active">
            skills
+           <div id="upgrades">
+            <div class="upgrade" id="upgrade1">
+                <button onclick="buyUpgrade(1)">Upgrade 1 (Cost: <span id="cost1">10</span>)</button>
+                <span>Upgrade 1 Level: <span id="upgrade1Level">0</span></span>
+            </div>
+            <div class="upgrade" id="upgrade2">
+                <button onclick="buyUpgrade(2)">Upgrade 2 (Cost: <span id="cost2">20</span>)</button>
+                <span>Upgrade 2 Level: <span id="upgrade2Level">0</span></span>
+            </div>
+        </div>
         </div>
         <div id="powerups" class="tabContent">
             powerups
@@ -45,7 +60,8 @@
             statistics
         </div>
         <div id="setting" class="tabContent">
-            setting
+            Hello
+            <button onclick="saveManually()" method = "POST">Save</button>
         </div>
     <script src={% static "game/Main.js" %} async defer></script>
 </body>
