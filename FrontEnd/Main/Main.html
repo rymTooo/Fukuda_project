@@ -18,10 +18,13 @@
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <div class="Picture">
-        <img src="Background.png" class="background">
+        <img src="Background.png" >
         <!--<img src="Fukuda.png" class="fukuda">-->
+        <img src="Coin.png" class="coin" >
         <div class="Character" id="swordman"></div>
         <div class="CharacterHitbox" id="hitbox">Test</div>
+        <div class="DisCurMoney">1211111111111</div>
+
         <img src="Dummy.png" class="dummy">
     </div>
     <div class="Navigation">
@@ -42,16 +45,12 @@
             customisation
         </div>
         <div id="statistics" class="tabContent">
-            <ul>
-                <li><strong>Current Money:</strong> $500</li>
-                <li><strong>All-time Clicks:</strong> 1000</li>
-                <li><strong>All-time Money:</strong> $2000</li>
-                <li><strong>Passive Income:</strong> $50/hour</li>
-                <li><strong>Money per Click:</strong> $2</li>
-            </ul>
+            <p class="rowStat">Current Money<br> <span id="CurMoneyStat">500</span></p> <p class="rowStat">All-time Clicks<br> <span id="AllClickStat">500</span></p>
+            <p class="rowStat">All-time Money<br> <span id="AllMoneyStat">500</span></p> <p class="rowStat">Passive Income<br> <span id="PassiveStat">500</span></p>
+            <p class="rowStat">Money per Click<br> <span id="PerClickStat">500</span></p>
         </div>
         <div id="setting" class="tabContent">
-            Hello
+            Setting
         </div>
     <script src="Main.js" async defer></script>
 </body>
