@@ -19,17 +19,18 @@
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <div class="Picture">
-        <img src={% static "game/Background.png" %} class="background">
+        <img src={% static "game/Background.png" %} class="background">      
         <!--<img src="Fukuda.png" class="fukuda">-->
         <div class="Character" id="swordman"></div>
-        <img src={% static "game/Dummy.png" %} class="dummy">
+        <div class="CharacterHitbox" id="hitbox">Test</div>
+        <img src = {% static "game/dummy.png" %} class="dummy">
     </div>
     <div class="Navigation">
-        <button onclick="showTab('skills')">Skills</button>
-        <button onclick="showTab('powerups')">Powerups</button>
-        <button onclick="showTab('customisation')">Customisation</button>
-        <button onclick="showTab('statistics')">Statistics</button>
-        <button onclick="showTab('setting')">Setting</button>
+        <div onclick="showTab('skills')" class="tab" >Skills</div >
+        <div onclick="showTab('powerups')" class="tab">Powerups</div >
+        <div  onclick="showTab('customisation')" class="tab">Customisation</div >
+        <div  onclick="showTab('statistics')" class="tab">Statistics</div >
+        <div  onclick="showTab('setting')" class="tab">Setting</div >
     </div>
     <div class="Content">
         <div id="skills" class="tabContent active">
@@ -45,7 +46,7 @@
             statistics
         </div>
         <div id="setting" class="tabContent">
-            setting
+            Hello
         </div>
     <script src={% static "game/Main.js" %} async defer></script>
 </body>

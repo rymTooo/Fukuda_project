@@ -1,4 +1,3 @@
-
 html, body {
     opacity: 1;
     margin: 0;
@@ -30,42 +29,67 @@ html, body {
             
     to { background-position: -38400px; }
   }
-
+  
 .Character {
     z-index: 1;
     height: 1080px;
+    width: auto;
     background: url('/static/game/IdleSprite.png');
     animation: Idle 1s steps(20) infinite;
-    transform: translate(-15%, -31.5%) scale(0.4);
+    transform: translate(-15%, -31.5%) scale(0.3);
+    pointer-events: none;
 }
-
+.CharacterHitbox {
+    height: 200px; /* Set the desired height for the hitbox */
+    width: 225px;  /* Set the desired width for the hitbox */
+    position: absolute;
+    top: 69%; /* Adjust the position of the hitbox */
+    left: 38%; /* Adjust the position of the hitbox */
+    transform: translate(-50%, -50%);
+    pointer-events: auto; /* Enable pointer events for the hitbox */
+    z-index: 1;
+    /* Debug styling - remove these styles in production */
+    border: 2px solid red; /* Add a red border to the hitbox */
+    background-color: rgba(255, 0, 0, 0.3);
+}
 @keyframes Swing {
             
     to { background-position: -19200px; }
   }
   
   .SwingAnim {
-    height: 1080px;
+    width: 1920px;
     background: url('/static/game/SwingSprite.png');
     animation: Swing 0.7s steps(10) infinite;
-    transform: translate(-15%, -38%) scale(0.5);
+    transform: translate(-18.2%, -36%) scale(0.38);
   }
 
 .Picture img.dummy {
     z-index: 1; /* Place the Fukuda.png on top */
-    width: 200px;
+    width: 175px;
     height: auto;
-    top: 42%;
+    top: 44%;
     left: 60%;
 }
 
 .Navigation {
     height: 10%;
-    background-color: #333;
+    background-color: #FFB648;
     color: #fff;
     display: flex;
     justify-content: space-around;
     align-items: center;
+}
+.tab {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 40px;
+    border: 5px solid #8A5B00; /* Add a white border around each tab */
+    padding: 0.5% 4.7%; /* Add some padding to the tabs for better visibility */
+    /* Set the background color of the tabs */
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    
 }
 .Content {
     height: 40%;
@@ -78,4 +102,25 @@ html, body {
 }
 .tabContent.active {
     display: block;
+}
+
+#setting {
+    background: url('SettingBackground2.png') center/cover; /* Set the background image */
+    height: 113%; /* Ensure the content takes up the full height */
+    width: auto;
+    padding: 0%; /* Add some padding for better visibility of content */
+    margin: -20px;
+     /* Include padding in the height calculation */
+    background-size: 100% 100%;
+    overflow: hidden;
+}
+#statistics {
+    background: url('SettingBackground1.png') center/cover; /* Set the background image */
+    height: 113%;/* Ensure the content takes up the full height */
+    width: auto;
+    padding: 0%; /* Add some padding for better visibility of content */
+    margin: -20px;
+     /* Include padding in the height calculation */
+    background-size: 100% 100%;
+    overflow: hidden;
 }
