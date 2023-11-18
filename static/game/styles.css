@@ -72,6 +72,25 @@ html, body {
     left: 60%;
 }
 
+.Picture img.coin {
+    z-index: 1; /* Place the Fukuda.png on top */
+    width: 50px;
+    height: auto;
+    top: 2%;
+    left: 1%;
+}
+
+.DisCurMoney{
+    z-index: 1; 
+    font-size: 52px;
+    top: 0%;
+    left: 5%;
+    position: absolute;
+    object-fit: cover;
+    color: white;
+    text-align: left;
+}
+
 .Navigation {
     height: 10%;
     background-color: #FFB648;
@@ -103,9 +122,28 @@ html, body {
 .tabContent.active {
     display: block;
 }
-
+#skills {
+    background: url('/static/game/SettingBackground.png') center/cover; /* Set the background image */
+    height: 113%; /* Ensure the content takes up the full height */
+    width: auto;
+    padding: 0%; /* Add some padding for better visibility of content */
+    margin: -20px;
+     /* Include padding in the height calculation */
+    background-size: 100% 100%;
+    overflow: hidden;
+}
+#powerups {
+    background: url('/static/game/SettingBackground.png') center/cover; /* Set the background image */
+    height: 113%; /* Ensure the content takes up the full height */
+    width: auto;
+    padding: 0%; /* Add some padding for better visibility of content */
+    margin: -20px;
+     /* Include padding in the height calculation */
+    background-size: 100% 100%;
+    overflow: hidden;
+}
 #setting {
-    background: url('SettingBackground2.png') center/cover; /* Set the background image */
+    background: url('/static/game/SettingBackground.png') center/cover; /* Set the background image */
     height: 113%; /* Ensure the content takes up the full height */
     width: auto;
     padding: 0%; /* Add some padding for better visibility of content */
@@ -115,7 +153,7 @@ html, body {
     overflow: hidden;
 }
 #statistics {
-    background: url('SettingBackground1.png') center/cover; /* Set the background image */
+    background: url('/static/game/SettingBackground.png') center/cover; /* Set the background image */
     height: 113%;/* Ensure the content takes up the full height */
     width: auto;
     padding: 0%; /* Add some padding for better visibility of content */
@@ -123,4 +161,14 @@ html, body {
      /* Include padding in the height calculation */
     background-size: 100% 100%;
     overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+.rowStat{
+    background-color: white;
+    text-align: center;
+    margin: 50px;
+    flex-grow: 1; /* Allow items to grow and take up equal space */
+    border-radius: 20px;
 }
