@@ -1,14 +1,19 @@
-html, body {
+html,
+body {
     opacity: 1;
+    padding: 0;
+    ;
     margin: 0;
     height: 100%;
     overflow: hidden;
 }
+
 .Picture {
     position: relative;
     height: 45%;
     width: 100%;
 }
+
 .Picture img {
     position: absolute;
     top: 0;
@@ -17,8 +22,10 @@ html, body {
     height: 100%;
     object-fit: cover;
 }
+
 .Picture img.fukuda {
-    z-index: 1; /* Place the Fukuda.png on top */
+    z-index: 1;
+    /* Place the Fukuda.png on top */
     width: 300px;
     height: auto;
     top: 33%;
@@ -26,10 +33,12 @@ html, body {
 }
 
 @keyframes Idle {
-            
-    to { background-position: -38400px; }
-  }
-  
+
+    to {
+        background-position: -38400px;
+    }
+}
+
 .Character {
     z-index: 1;
     height: 1080px;
@@ -39,48 +48,61 @@ html, body {
     transform: translate(-15%, -31.5%) scale(0.3);
     pointer-events: none;
 }
+
 .CharacterHitbox {
-    height: 200px; /* Set the desired height for the hitbox */
-    width: 225px;  /* Set the desired width for the hitbox */
+    height: 200px;
+    /* Set the desired height for the hitbox */
+    width: 225px;
+    /* Set the desired width for the hitbox */
     position: absolute;
-    top: 69%; /* Adjust the position of the hitbox */
-    left: 38%; /* Adjust the position of the hitbox */
+    top: 69%;
+    /* Adjust the position of the hitbox */
+    left: 38%;
+    /* Adjust the position of the hitbox */
     transform: translate(-50%, -50%);
-    pointer-events: auto; /* Enable pointer events for the hitbox */
+    pointer-events: auto;
+    /* Enable pointer events for the hitbox */
     z-index: 1;
     /* Debug styling - remove these styles in production */
-    border: 2px solid red; /* Add a red border to the hitbox */
+    border: 2px solid red;
+    /* Add a red border to the hitbox */
     background-color: rgba(255, 0, 0, 0.3);
 }
+
 @keyframes Swing {
-            
-    to { background-position: -19200px; }
-  }
-  
-  .SwingAnim {
+
+    to {
+        background-position: -19200px;
+    }
+}
+
+.SwingAnim {
     width: 1920px;
     background: url("SwingSprite.png");
     animation: Swing 0.7s steps(10) infinite;
     transform: translate(-18.2%, -37%) scale(0.38);
-  }
+}
 
 .Picture img.dummy {
-    z-index: 1; /* Place the Fukuda.png on top */
+    z-index: 1;
+    /* Place the Fukuda.png on top */
     width: 175px;
     height: auto;
     top: 44%;
     left: 60%;
 }
+
 .Picture img.coin {
-    z-index: 1; /* Place the Fukuda.png on top */
+    z-index: 1;
+    /* Place the Fukuda.png on top */
     width: 50px;
     height: auto;
     top: 2%;
     left: 1%;
 }
 
-.DisCurMoney{
-    z-index: 1; 
+.DisCurMoney {
+    z-index: 1;
     font-size: 52px;
     top: 0%;
     left: 5%;
@@ -98,79 +120,176 @@ html, body {
     justify-content: space-around;
     align-items: center;
 }
+
 .tab {
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-size: 40px;
-    border: 5px solid #8A5B00; /* Add a white border around each tab */
-    padding: 0.5% 4.7%; /* Add some padding to the tabs for better visibility */
+    border: 5px solid #8A5B00;
+    /* Add a white border around each tab */
+    padding: 0.5% 4.7%;
+    /* Add some padding to the tabs for better visibility */
     /* Set the background color of the tabs */
     text-align: center;
     color: #fff;
     cursor: pointer;
-    
+    transition: 0.3s;
+
 }
+.tab:hover{
+    background-color: #ffc368;
+}
+
 .Content {
     height: 40%;
     background-color: #eee;
     overflow: auto;
     padding: 20px;
 }
+
 .tabContent {
     display: none;
+    margin: 0;
+    padding: 0;
+
 }
+
 .tabContent.active {
     display: block;
 }
+
 #skills {
-    background: url('SettingBackground.png') center/cover; /* Set the background image */
-    height: 113%; /* Ensure the content takes up the full height */
+    background: url('SettingBackground.png') center/cover;
+    /* Set the background image */
+    height: 113%;
+    /* Ensure the content takes up the full height */
     width: auto;
-    padding: 0%; /* Add some padding for better visibility of content */
+    padding: 0%;
+    /* Add some padding for better visibility of content */
     margin: -20px;
-     /* Include padding in the height calculation */
+    /* Include padding in the height calculation */
     background-size: 100% 100%;
     overflow: hidden;
 }
+
 #powerups {
-    background: url('SettingBackground.png') center/cover; /* Set the background image */
-    height: 113%;/* Ensure the content takes up the full height */
+    background: url('SettingBackground.png') center/cover;
+    /* Set the background image */
+    height: 113%;
+    /* Ensure the content takes up the full height */
     width: auto;
-    padding: 0%; /* Add some padding for better visibility of content */
+    padding: 0%;
+    /* Add some padding for better visibility of content */
     margin: -20px;
-     /* Include padding in the height calculation */
+    /* Include padding in the height calculation */
     background-size: 100% 100%;
     overflow: hidden;
     display: flex;
     justify-content: space-between;
     flex-direction: row;
 }
-.rowPow{
-    background-color: white;
-    text-align: center;
+
+.picPowContain {
     margin-top: 25px;
-    margin-bottom: 125px;
+    margin-bottom: 10px;
     margin-left: 100px;
-    margin-right: 100px;
-    flex-grow: 1; /* Allow items to grow and take up equal space */
-    border-radius: 20px;
+    margin-right: 125px;
+    flex-grow: 1;
+    /* Allow items to grow and take up equal space */
+    border-radius: 10px;
+    width: 150px;
+    /* Set the width of the container */
+    height: 150px;
+    /* Set the height of the container */
+    background-color: #FFDF8B;
+    /* Set the background color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.picPow {
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.PowContain {
+    display: flex;
+    flex-direction: column;
+    /* Arrange child elements in a column */
+    align-items: center;
+    /* Center child elements horizontally */
+    justify-content: space-between;
+    /* Distribute space evenly between child elements */
+    height: 98%;
+    /* Set the height of the container */
+    border: 2px solid #ccc;
+    /* Optional: Add a border for visibility */
+    /* Optional: Add padding for spacing */
+}
+
+.PowDesc {
+    margin-right: 30px;
+    font-size: 50px;
+    justify-content: center;
+    align-items: center;
+    background: -webkit-linear-gradient(#FFFCF4, #FFDF8B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 1px black;
+    font-family: 'Brush Script MT', cursive;
+}
+
+.PowButton {
+    margin-bottom: 10px;
+    margin-right: 30px;
+    background-image: linear-gradient(#84ceee, #38baf2);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 27px;
+    border-radius: 10px;
+    transition-duration: 0.4s;
+}
+.PowButton:hover {
+    background-image: linear-gradient(#90DEFF, #40C6FF);
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.PowCoin{
+    margin-top: -20px;
+    margin-bottom: -9px;
+    height: 75%;
 }
 #setting {
-    background: url('SettingBackground.png') center/cover; /* Set the background image */
-    height: 113%; /* Ensure the content takes up the full height */
+    background: url('SettingBackground.png') center/cover;
+    /* Set the background image */
+    height: 113%;
+    /* Ensure the content takes up the full height */
     width: auto;
-    padding: 0%; /* Add some padding for better visibility of content */
+    padding: 0%;
+    /* Add some padding for better visibility of content */
     margin: -20px;
-     /* Include padding in the height calculation */
+    /* Include padding in the height calculation */
     background-size: 100% 100%;
     overflow: hidden;
 }
+
 #statistics {
-    background: url('SettingBackground.png') center/cover; /* Set the background image */
-    height: 113%;/* Ensure the content takes up the full height */
+    background: url('SettingBackground.png') center/cover;
+    /* Set the background image */
+    height: 113%;
+    /* Ensure the content takes up the full height */
     width: auto;
-    padding: 0%; /* Add some padding for better visibility of content */
+    padding: 0%;
+    /* Add some padding for better visibility of content */
     margin: -20px;
-     /* Include padding in the height calculation */
+    /* Include padding in the height calculation */
     background-size: 100% 100%;
     overflow: hidden;
     display: flex;
@@ -178,10 +297,12 @@ html, body {
     flex-direction: row;
 
 }
-.rowStat{
+
+.rowStat {
     background-color: white;
     text-align: center;
     margin: 50px;
-    flex-grow: 1; /* Allow items to grow and take up equal space */
+    flex-grow: 1;
+    /* Allow items to grow and take up equal space */
     border-radius: 20px;
 }

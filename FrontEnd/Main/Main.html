@@ -4,55 +4,85 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Fukuda Clicker</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="styles.css">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Fukuda Clicker</title>
+        <meta name="description" content>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="styles.css">
 
-</head>
-<body>
-    <!--[if lt IE 7]>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <div class="Picture">
-        <img src="Background.png" >
-        <!--<img src="Fukuda.png" class="fukuda">-->
-        <img src="Coin.png" class="coin" >
-        <div class="Character" id="swordman"></div>
-        <div class="CharacterHitbox" id="hitbox">Test</div>
-        <div class="DisCurMoney"><span id="money">0</span></div>
+        <div class="Picture">
+            <img src="Background.png">
+            <!--<img src="Fukuda.png" class="fukuda">-->
+            <img src="Coin.png" class="coin">
+            <div class="Character" id="swordman"></div>
+            <div class="CharacterHitbox" id="hitbox">Test</div>
+            <div class="DisCurMoney"><span id="money">0</span></div>
 
-        <img src="Dummy.png" class="dummy">
-    </div>
-    <div class="Navigation">
-        <div onclick="showTab('skills')" class="tab" >Skills</div >
-        <div onclick="showTab('powerups')" class="tab">Powerups</div >
-        <div  onclick="showTab('customisation')" class="tab">Customisation</div >
-        <div  onclick="showTab('statistics')" class="tab">Statistics</div >
-        <div  onclick="showTab('setting')" class="tab">Setting</div >
-    </div>
-    <div class="Content">
-        <div id="skills" class="tabContent active">
-           skills
+            <img src="Dummy.png" class="dummy">
         </div>
-        <div id="powerups" class="tabContent">
-            <p class="rowPow"><img src="Oil.png"></p> <p class="rowPow"><img src="Titanium.png"></p>
-            <p class="rowPow"><img src="Grinder.png"></p> 
+        <div class="Navigation">
+            <div onclick="showTab('skills')" class="tab">Skills</div>
+            <div onclick="showTab('powerups')" class="tab">Powerups</div>
+            <div onclick="showTab('customisation')" class="tab">Customisation</div>
+            <div onclick="showTab('statistics')" class="tab">Statistics</div>
+            <div onclick="showTab('setting')" class="tab">Setting</div>
         </div>
-        <div id="customisation" class="tabContent">
-            customisation
-        </div>
-        <div id="statistics" class="tabContent">
-            <p class="rowStat">Current Money<br> <span id="CurMoneyStat">500</span></p> <p class="rowStat">All-time Clicks<br> <span id="AllClickStat">500</span></p>
-            <p class="rowStat">All-time Money<br> <span id="AllMoneyStat">500</span></p> <p class="rowStat">Passive Income<br> <span id="PassiveStat">500</span></p>
-            <p class="rowStat">Money per Click<br> <span id="PerClickStat">500</span></p>
-        </div>
-        <div id="setting" class="tabContent">
-            Setting
-        </div>
-    <script src="Main.js" async defer></script>
-</body>
-</html>
+        <div class="Content">
+            <div id="skills" class="tabContent active">
+                skills
+            </div>
+            <div id="powerups" class="tabContent">
+                <div class="PowContain" id="pow1">  
+                    <div class="picPowContain">   
+                        <img class="picPow" src="Oil.png" >
+                    </div>  
+                    <div class="PowDesc" id="pow1Name">Oil</div>
+                    <button class="PowButton">BUY <img class="PowCoin" src="Coin.png" ><span id="pow1Price"> 13</span></button>>
+                </div>
+                <div class="PowContain" id="pow2">      
+                    <div class="picPowContain">   
+                        <img class="picPow" src="Titanium.png" >
+                    </div>  
+                    <div class="PowDesc" id="pow2Name">Titanium</div>
+                    <button class="PowButton">BUY <img class="PowCoin" src="Coin.png" ><span id="pow2Price"> 200</span></button>
+                </div>
+                <div class="PowContain" id="pow3">      
+                    <div class="picPowContain">  
+                        <img class="picPow" src="Grinder.png" >
+                    </div>  
+                    <div class="PowDesc" id="pow3Name">Grinder</div>
+                    <button class="PowButton">BUY <img class="PowCoin" src="Coin.png" ><span id="pow3Price"> 500</span></button>
+                </div>
+                <div class="PowContain" id="pow4">      
+                    <div class="picPowContain">  
+                        <img class="picPow" src="Cloud.png" >
+                    </div>  
+                    <div class="PowDesc" id="pow4Name">Cloud</div>
+                    <button class="PowButton">BUY <img class="PowCoin" src="Coin.png" ><span id="pow4Price"> 600</span></button>
+                </div>
+          
+         
+            </div>
+            <div id="customisation" class="tabContent">
+                customisation
+            </div>
+            <div id="statistics" class="tabContent">
+                <p class="rowStat">Current Money<br> <span id="CurMoneyStat">500</span></p>
+                <p class="rowStat">All-time Clicks<br> <span id="AllClickStat">500</span></p>
+                <p class="rowStat">All-time Money<br> <span id="AllMoneyStat">500</span></p>
+                <p class="rowStat">Passive Income<br> <span id="PassiveStat">500</span></p>
+                <p class="rowStat">Money per Click<br> <span id="PerClickStat">500</span></p>
+            </div>
+            <div id="setting" class="tabContent">
+                Setting
+            </div>
+            <script src="Main.js" async defer></script>
+        </body>
+    </html>
