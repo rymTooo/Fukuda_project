@@ -37,6 +37,21 @@ function initiateSave(){ // this function suppose to run one time when the web i
     
 
 }
+function updateStatistics() {
+    // Example variables, replace them with your actual variables
+    const currentMoney = 1000;
+    const allTimeClicks = 500;
+    const allTimeMoney = 1500;
+    const passiveIncome = 200;
+    const moneyPerClick = 2;
+
+    // Update the content of each statistic element
+    document.getElementById('CurMoneyStat').textContent = currentMoney;
+    document.getElementById('AllClickStat').textContent = allTimeClicks;
+    document.getElementById('AllMoneyStat').textContent = allTimeMoney;
+    document.getElementById('PassiveStat').textContent = passiveIncome;
+    document.getElementById('PerClickStat').textContent = moneyPerClick;
+}
 
 function buyUpgrade(upgradeId) {
     switch(upgradeId) {
