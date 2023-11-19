@@ -1,3 +1,16 @@
+
+//updating money
+let money = 0;
+let passiveMoney = 0;
+
+function updateMoney() {
+    money += passiveMoney;
+    document.getElementById('money').textContent = money;
+}
+setInterval(updateMoney, 1000); // Update score every second
+
+
+//switching tab
 function showTab(tabId) {
     const tabs = document.querySelectorAll('.tabContent');
     tabs.forEach(tab => (tab.style.display = 'none'));
@@ -25,11 +38,13 @@ function updateStatistics() {
     document.getElementById('PerClickStat').textContent = moneyPerClick;
 }
 
-//Swing Animation
+//Clicking
 const swordman = document.getElementById('swordman');
 
 hitbox.addEventListener('click', () => {
     swordman.classList.add('SwingAnim');
+    money++;
+    document.getElementById('money').textContent = money;
     setTimeout(() => {
         swordman.classList.remove('SwingAnim');
     }, 700); // Adjust based on your swing animation duration

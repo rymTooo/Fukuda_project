@@ -133,13 +133,26 @@ html, body {
 }
 #powerups {
     background: url('SettingBackground.png') center/cover; /* Set the background image */
-    height: 113%; /* Ensure the content takes up the full height */
+    height: 113%;/* Ensure the content takes up the full height */
     width: auto;
     padding: 0%; /* Add some padding for better visibility of content */
     margin: -20px;
      /* Include padding in the height calculation */
     background-size: 100% 100%;
     overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+.rowPow{
+    background-color: white;
+    text-align: center;
+    margin-top: 25px;
+    margin-bottom: 125px;
+    margin-left: 100px;
+    margin-right: 100px;
+    flex-grow: 1; /* Allow items to grow and take up equal space */
+    border-radius: 20px;
 }
 #setting {
     background: url('SettingBackground.png') center/cover; /* Set the background image */
