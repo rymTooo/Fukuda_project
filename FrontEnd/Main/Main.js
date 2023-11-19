@@ -16,7 +16,11 @@ function showTab(tabId) {
     tabs.forEach(tab => (tab.style.display = 'none'));
 
     const selectedTab = document.getElementById(tabId);
-    selectedTab.style.display = 'flex';
+    if (tabId === 'skills'){
+    selectedTab.style.display = 'block';}
+    else{
+        selectedTab.style.display = 'flex';
+    }
     if (tabId === 'statistics') {
         updateStatistics();
     }

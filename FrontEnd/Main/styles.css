@@ -158,9 +158,10 @@ body {
 }
 
 #skills {
+    
     background: url('SettingBackground.png') center/cover;
     /* Set the background image */
-    height: 113%;
+    height: 100%;
     /* Ensure the content takes up the full height */
     width: auto;
     padding: 0%;
@@ -168,9 +169,47 @@ body {
     margin: -20px;
     /* Include padding in the height calculation */
     background-size: 100% 100%;
-    overflow: hidden;
+
+
+}
+.SkillRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+.SkillInfo {
+    display: flex;
+    align-items: center;
 }
 
+.SkillImage {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.SkillDetails {
+    display: flex;
+    text-align: left;
+}
+
+.BuyButton {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.UpgradeImages img {
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+}
 #powerups {
     background: url('SettingBackground.png') center/cover;
     /* Set the background image */
@@ -225,7 +264,7 @@ body {
     /* Distribute space evenly between child elements */
     height: 98%;
     /* Set the height of the container */
-    border: 2px solid #ccc;
+    /*border: 2px solid #ccc;
     /* Optional: Add a border for visibility */
     /* Optional: Add padding for spacing */
 }
