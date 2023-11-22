@@ -32,7 +32,7 @@ function showTab(tabId) {
 function fetchSkills() {
     // Make an API request to your server to get the skills
     // Example using Fetch API:
-    updateSkillsUI([{
+    let skills = [{
         image: "Fire.png",
         name: "Fire",
         level: "2",
@@ -52,8 +52,9 @@ function fetchSkills() {
         upgrade3: "black.png",
         upgrade4: "black.png",
         upgrade5: "black.png",
-      }]);
-    print("Hello")
+      }]
+    updateSkillsUI(skills);
+
 }
 
 // Function to update the HTML with the new skills
@@ -61,7 +62,7 @@ function updateSkillsUI(skills) {
     const skillsContainer = document.getElementById('skills');
 
     // Clear existing content in the container
-    skillsContainer.innerHTML = '';
+    //skillsContainer.innerHTML = '';
 
     // Loop through the skills and create HTML elements for each skill
     skills.forEach(skill => {
@@ -92,7 +93,7 @@ function updateSkillsUI(skills) {
         skillDetails.appendChild(skillLevel);
 
         const skillCost = document.createElement('p');
-        skillLevel.textContent = 'Cost: ' + skill.cost; // Replace with your skill level property
+        skillCost.textContent = 'Cost: ' + skill.cost; // Replace with your skill level property
         skillDetails.appendChild(skillCost);
 
         const skillButton = document.createElement('button');

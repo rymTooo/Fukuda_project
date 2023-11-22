@@ -192,12 +192,24 @@ body {
 }
 
 .BuyButton {
-    background-color: #4CAF50;
+    font-size: 40px;
+    background-image: linear-gradient(#84ceee, #38baf2);
     color: white;
     padding: 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: 0.4s;
+}
+.BuyButton:hover {
+    background-image: linear-gradient(#90DEFF, #40C6FF);
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.SkillCoin{
+    margin-top: -20px;
+    margin-bottom: -9px;
+    height: 50px;
 }
 
 .UpgradeImages img {
@@ -205,6 +217,8 @@ body {
     height: 30px;
     margin-right: 5px;
 }
+
+
 #powerups {
     background: url('SettingBackground.png') center/cover;
     /* Set the background image */
