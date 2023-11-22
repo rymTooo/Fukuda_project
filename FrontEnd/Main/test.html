@@ -1,56 +1,29 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Fukuda Clicker</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-          }
-          @keyframes Idle {
-            
-            to { background-position: -38400px; }
-          }
-          
-        .Character {
-            height: 1080px;
-            background: url("IdleSprite.png");
-            animation: Idle 1s steps(20) infinite;
-            transform: translate(-15%, -31.5%) scale(0.4);
-        }
-        
-          @keyframes Swing {
-            
-            to { background-position: -19200px; }
-          }
-          
-          .SwingAnim {
-            height: 1080px;
-            background: url("SwingSprite.png");
-            animation: Swing 0.7s steps(10) infinite;
-            transform: translate(-25%, -25%) scale(0.5);
-          }
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Fukuda Clicker</title>
+        <meta name="description" content>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="styles.css">
 
-    </style>
-</head>
-<body>
-    <!--[if lt IE 7]>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <h1>Test</h1>
-    <div class="Character" id="swordman"></div>
+        <div class="Picture">
+            <img src="Background.png">
+            <!--<img src="Fukuda.png" class="fukuda">-->
+            <img src="Coin.png" class="coin">
+            <div class="Character" id="swordman"></div>
+            <div class="CharacterHitbox" id="hitbox">Test</div>
+            <div class="DisCurMoney"><span id="money">0</span></div>
 
-
-    <script src="Main.js" async defer></script>
-</body>
-</html>
+            <img src="Dummy.png" class="dummy">
+        </div>
+        <div id="skills" class="tabContent active">
+        </div>
+        <script src="Main.js" async defer></script>
+      </body>
+  </html>

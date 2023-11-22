@@ -29,6 +29,109 @@ function showTab(tabId) {
     }
 }
 
+function fetchSkills() {
+    // Make an API request to your server to get the skills
+    // Example using Fetch API:
+    updateSkillsUI([{
+        image: "Fire.png",
+        name: "Fire",
+        level: "2",
+        cost: "4",
+        upgrade1: "black.png",
+        upgrade2: "black.png",
+        upgrade3: "black.png",
+        upgrade4: "black.png",
+        upgrade5: "black.png",
+      },{
+        image: "Dummy.png",
+        name: "Cum",
+        level: "5",
+        cost: "40",
+        upgrade1: "black.png",
+        upgrade2: "black.png",
+        upgrade3: "black.png",
+        upgrade4: "black.png",
+        upgrade5: "black.png",
+      }]);
+    print("Hello")
+}
+
+// Function to update the HTML with the new skills
+function updateSkillsUI(skills) {
+    const skillsContainer = document.getElementById('skills');
+
+    // Clear existing content in the container
+    skillsContainer.innerHTML = '';
+
+    // Loop through the skills and create HTML elements for each skill
+    skills.forEach(skill => {
+        const skillRow = document.createElement('div');
+        skillRow.classList.add('SkillRow');
+
+        const skillInfo = document.createElement('div');
+        skillInfo.classList.add('SkillInfo');
+        skillRow.appendChild(skillInfo);
+        // Create and append HTML elements for skill details (image, name, level, etc.)
+        // Adjust this based on your skill data structure
+        const skillImage = document.createElement('img');
+        skillImage.src = skill.image; // Replace with your image URL
+        skillImage.classList.add('SkillImage');
+        skillInfo.appendChild(skillImage);
+
+        const skillDetails = document.createElement('div');
+        skillDetails.classList.add('SkillDetails');
+        skillInfo.appendChild(skillDetails);
+
+        // Create other elements (name, level, buy button, upgrade images, etc.) and append them to skillRow
+        const skillName = document.createElement('h3');
+        skillName.textContent = skill.name; // Replace with your skill name property
+        skillDetails.appendChild(skillName);
+
+        const skillLevel = document.createElement('p');
+        skillLevel.textContent = 'Level: ' + skill.level; // Replace with your skill level property
+        skillDetails.appendChild(skillLevel);
+
+        const skillCost = document.createElement('p');
+        skillLevel.textContent = 'Cost: ' + skill.cost; // Replace with your skill level property
+        skillDetails.appendChild(skillCost);
+
+        const skillButton = document.createElement('button');
+        skillButton.textContent = 'Buy'; // Replace with your skill level property
+        skillButton.classList.add('BuyButton');
+        skillRow.appendChild(skillButton);
+
+        const UpgradeImages = document.createElement('div');
+        UpgradeImages.classList.add('UpgradeImages');
+        skillRow.appendChild(UpgradeImages);
+
+        const Upgrade1 = document.createElement('img');
+        Upgrade1.src = skill.upgrade1; // Replace with your image URL
+        UpgradeImages.appendChild(Upgrade1);
+
+        const Upgrade2 = document.createElement('img');
+        Upgrade2.src = skill.upgrade2; // Replace with your image URL
+        UpgradeImages.appendChild(Upgrade2);
+
+        const Upgrade3 = document.createElement('img');
+        Upgrade3.src = skill.upgrade3; // Replace with your image URL
+        UpgradeImages.appendChild(Upgrade3);
+
+        const Upgrade4 = document.createElement('img');
+        Upgrade4.src = skill.upgrade4; // Replace with your image URL
+        UpgradeImages.appendChild(Upgrade4);
+
+        const Upgrade5 = document.createElement('img');
+        Upgrade5.src = skill.upgrade5; // Replace with your image URL
+        UpgradeImages.appendChild(Upgrade5);
+
+        // Finally, append the skillRow to the skillsContainer
+        skillsContainer.appendChild(skillRow);
+    });
+}
+
+// Fetch skills when the page loads
+fetchSkills();
+
 function updatePower() {
     // Example variables, replace them with your actual variables
     let pow1Price = 10;

@@ -162,14 +162,9 @@ body {
     background: url('SettingBackground.png') center/cover;
     /* Set the background image */
     height: 100%;
-    /* Ensure the content takes up the full height */
-    width: auto;
-    padding: 0%;
-    /* Add some padding for better visibility of content */
     margin: -20px;
     /* Include padding in the height calculation */
-    background-size: 100% 100%;
-
+    background-size: cover;
 
 }
 .SkillRow {
