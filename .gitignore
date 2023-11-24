@@ -1,1 +1,3 @@
 **/__pycache__/
+*.pyc
+Fukuda/__pycache__/settings.cpython-310.pyc
