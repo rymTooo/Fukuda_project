@@ -1,10 +1,14 @@
 
 //updating money
 let money = 0;
-let passiveMoney = 0;
-
+let skills = [];
+let totalPassiveIncome = 0;
 function updateMoney() {
-    money += passiveMoney;
+    totalPassiveIncome = 0;
+    skills.forEach(skill => {
+        totalPassiveIncome += skill.passive;
+    });
+    money += totalPassiveIncome;
     document.getElementById('money').textContent = money;
 }
 setInterval(updateMoney, 1000); // Update score every second
@@ -32,21 +36,31 @@ function showTab(tabId) {
 function fetchSkills() {
     // Make an API request to your server to get the skills
     // Example using Fetch API:
-    let skills = [{
+    skills = [{
+        skillID: "Skill1",
+        baseIncome: 0.1,
+        growthRate: 2,
+        baseCost: 4,
+        passive: 0,
         image: "Fire.png",
         name: "Fire",
-        level: "2",
-        cost: "4",
+        level: 1,
+        cost: 4,
         upgrade1: "black.png",
         upgrade2: "black.png",
         upgrade3: "black.png",
         upgrade4: "black.png",
         upgrade5: "black.png",
       },{
+        skillID: "Skill2",
+        baseIncome: 0.5,
+        growthRate: 1.5,
+        baseCost: 10,
+        passive: 0,
         image: "Dummy.png",
         name: "Cum",
-        level: "5",
-        cost: "40",
+        level: 1,
+        cost: 40,
         upgrade1: "black.png",
         upgrade2: "black.png",
         upgrade3: "black.png",
@@ -96,9 +110,41 @@ function updateSkillsUI(skills) {
         skillCost.textContent = 'Cost: ' + skill.cost; // Replace with your skill level property
         skillDetails.appendChild(skillCost);
 
+        const skillPassive = document.createElement('p');
+        skillPassive.textContent = 'Passive: ' + skill.passive; // Replace with your skill level property
+        skillDetails.appendChild(skillPassive);
+
         const skillButton = document.createElement('button');
         skillButton.textContent = 'Buy'; // Replace with your skill level property
         skillButton.classList.add('BuyButton');
+
+        skillButton.addEventListener('click', () => {
+            
+            // Check if the player has enough money to buy the skill
+            if (money >= skill.cost) {
+                // Subtract the cost from the player's money
+                money -= skill.cost;
+
+                // Increase the skill level
+                skill.level++;
+                skill.passive = calculatePassiveIncome(skill.level,skill.baseIncome,skill.growthRate);
+                console.log(skill.passive)
+                console.log(totalPassiveIncome)
+                // Update the skill cost (modify this based on your logic)
+                skill.cost = calculateNewCost(skill.level,skill.baseCost);
+    
+                // Update the displayed information
+                skillLevel.textContent = 'Level: ' + skill.level;
+                skillCost.textContent = 'Cost: ' + skill.cost;
+                skillPassive.textContent = 'Passive: ' + skill.passive;
+                updateMoney();
+            } else {
+                // Display a message or take some action if the player doesn't have enough money
+                alert("Not enough money to buy this skill!");
+            }
+            
+        });
+
         skillRow.appendChild(skillButton);
 
         const UpgradeImages = document.createElement('div');
@@ -128,6 +174,19 @@ function updateSkillsUI(skills) {
         // Finally, append the skillRow to the skillsContainer
         skillsContainer.appendChild(skillRow);
     });
+}
+
+function calculateNewCost(baseCost,level) {
+    // Cost increases exponentially
+    return Math.floor(baseCost * Math.pow(1.1, level));
+}
+function calculatePassiveIncome(level,baseIncome,growthRate) {
+    // Passive income increases exponentially
+    //baseIncome = baseIncome || 2;
+    //growthRate = growthRate || 1.2;
+
+    // Use the skill's level to calculate passive income
+    return Math.floor(baseIncome * Math.pow(growthRate,level));
 }
 
 // Fetch skills when the page loads
