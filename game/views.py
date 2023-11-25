@@ -65,11 +65,17 @@ def main_page(request):
         
         #Load skill_level
         skills_dict = {}
-        skills = User_Skill.objects.raw("select * from game_user_skill join game_skill on game_skill.skill_name = game_user_skill.skill_name_id where username_id = %s;",[user.id]) # need to change to user_id later
+        skills = User_Skill.objects.raw("select * from game_user_skill where user_id = %s;",[user.id]) 
         for i in skills:
-            skills_dict[i.skill_name.skill_name] = i.level
-            
-            print(i.skill_name.skill_name, i.level)
+            skill = {}
+            skill["skill_name"] = i.skill_name.skill_name
+            skill["base_income"] = i.skill_name.base_passive_income
+            skill["growth_rate"] = i.skill_name.growth_rate
+            skill["base_cost"] = i.skill_name.base_cost
+            skill["level"] = i.level
+            skills_dict[i.skill_name.skill_name] = skill
+            print(skill)
+        #load ...
         data = json.dumps(skills_dict)
 
        
@@ -122,3 +128,25 @@ def save_data(request):
                 return JsonResponse({'status': 'failed', 'error': str(e)})
 
     return JsonResponse({'status': 'failed'})
+
+
+def data(request):
+    user = request.user
+    if user.is_authenticated:
+         #Load skill_level
+        skills_dict = {}
+        skills = User_Skill.objects.raw("select * from game_user_skill where user_id = %s;",[user.id]) 
+        for i in skills:
+            skill = {}
+            skill["skill_name"] = i.skill_name.skill_name
+            skill["base_income"] = i.skill_name.base_passive_income
+            skill["growth_rate"] = i.skill_name.growth_rate
+            skill["base_cost"] = i.skill_name.base_cost
+            skill["level"] = i.level
+            skills_dict[i.skill_name.skill_name] = skill
+            print(skill)
+        #load ...
+        data = json.dumps(skills_dict)
+        return JsonResponse(skills_dict)
+    else:
+        return JsonResponse({"error": "user not authenticated"}, status=401)

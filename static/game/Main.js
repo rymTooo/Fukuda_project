@@ -1,8 +1,19 @@
 
+let loaded_data;
+function get_data() { // add get data method to load data into loaded_data variable.
+    fetch('../data')
+        .then(response => response.json())
+        .then(data => {
+            loaded_data = data;
+            console.log(data);
+        })
+        .catch(error => console.error('Error:', error));
+}
+get_data();
+
 //updating money
-let loaded_data = JSON.parse("{{loaded_data|escapejs}}"); //loaded_data = {money:'money', skills:'skills',powerups:'powerups'}
 let money = 0;
-let skills = [];// skill list composes of many skill objects.
+let skills = loaded_data;// skill list composes of many skill objects.
 let totalPassiveIncome = 0;
 function updateMoney() {
     totalPassiveIncome = 0;
