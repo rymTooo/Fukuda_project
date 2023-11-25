@@ -43,7 +43,7 @@ body {
     z-index: 1;
     height: 1080px;
     width: auto;
-    background: url("IdleSprite.png");
+    background: url("static/game/IdleSprite.png");
     animation: Idle 1s steps(20) infinite;
     transform: translate(-15%, -31.5%) scale(0.3);
     pointer-events: none;
@@ -78,7 +78,7 @@ body {
 
 .SwingAnim {
     width: 1920px;
-    background: url("SwingSprite.png");
+    background: url("static/game/SwingSprite.png");
     animation: Swing 0.7s steps(10) infinite;
     transform: translate(-18.2%, -37%) scale(0.38);
 }
@@ -159,7 +159,7 @@ body {
 
 #skills {
     
-    background: url('SettingBackground.png') center/cover;
+    background: url('static/game/SettingBackground.png') center/cover;
     /* Set the background image */
     height: 100%;
     margin: -20px;
@@ -220,7 +220,7 @@ body {
 
 
 #powerups {
-    background: url('SettingBackground.png') center/cover;
+    background: url('static/game/SettingBackground.png') center/cover;
     /* Set the background image */
     height: 113%;
     /* Ensure the content takes up the full height */
@@ -315,7 +315,7 @@ body {
     height: 75%;
 }
 #setting {
-    background: url('SettingBackground.png') center/cover;
+    background: url('static/game/SettingBackground.png') center/cover;
     /* Set the background image */
     height: 113%;
     /* Ensure the content takes up the full height */
@@ -329,7 +329,7 @@ body {
 }
 
 #statistics {
-    background: url('SettingBackground.png') center/cover;
+    background: url('static/game/SettingBackground.png') center/cover;
     /* Set the background image */
     height: 113%;
     /* Ensure the content takes up the full height */

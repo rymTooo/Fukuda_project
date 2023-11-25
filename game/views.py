@@ -9,7 +9,7 @@ from .forms import SkillForm, Skill
 
 def main_page(request): 
     
-    save_data_dict = {}
+    
     user = request.user
     if user.is_authenticated:
         print(f"\n--------------------------------\nCREATING data for user '{user.username}'\n")
@@ -64,11 +64,13 @@ def main_page(request):
         print("--------------------------------\n")
         
         #Load skill_level
-        skill_level = User_Skill.objects.raw("select id,skill_name_id from game_user_skill where username_id = %s;",[user.id])
-        for i in skill_level:
-            save_data_dict[i.skill_name.skill_name] = i.level
+        skills_dict = {}
+        skills = User_Skill.objects.raw("select * from game_user_skill join game_skill on game_skill.skill_name = game_user_skill.skill_name_id where username_id = %s;",[user.id]) # need to change to user_id later
+        for i in skills:
+            skills_dict[i.skill_name.skill_name] = i.level
+            
             print(i.skill_name.skill_name, i.level)
-        data = json.dumps(save_data_dict)
+        data = json.dumps(skills_dict)
 
        
         return render(request, 'Main.html', {"loaded_data": data, "username": user})

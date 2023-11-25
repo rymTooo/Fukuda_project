@@ -1,13 +1,14 @@
 
 //updating money
+let loaded_data = JSON.parse("{{loaded_data|escapejs}}"); //loaded_data = {money:'money', skills:'skills',powerups:'powerups'}
 let money = 0;
-let skills = [];
+let skills = [];// skill list composes of many skill objects.
 let totalPassiveIncome = 0;
 function updateMoney() {
     totalPassiveIncome = 0;
     skills.forEach(skill => {
         totalPassiveIncome += skill.passive;
-    });
+    }); 
     money += totalPassiveIncome;
     document.getElementById('money').textContent = money;
 }
@@ -37,15 +38,15 @@ function fetchSkills() {
     // Make an API request to your server to get the skills
     // Example using Fetch API:
     skills = [{
-        skillID: "Skill1",
-        baseIncome: 0.1,
-        growthRate: 2,
-        baseCost: 4,
-        passive: 0,
+        skillID: "Skill1",//use the same value as skillname('Fire')
+        baseIncome: 0.1,//skill
+        growthRate: 2,//skill
+        baseCost: 4,//skill
+        passive: 0,//calculate from baseIncome + level + growth rate
         image: "../../static/game/Fire.png",
-        name: "Fire",
-        level: 1,
-        cost: 4,
+        name: "Fire",//skill
+        level: 1,//user skill
+        cost: 4,//calculate from level + base cost
         upgrade1: "../../static/game/black.png",
         upgrade2: "../../static/game/black.png",
         upgrade3: "../../static/game/black.png",
