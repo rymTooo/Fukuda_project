@@ -89,39 +89,35 @@ def test_method(request):
     return render(request, 'add_skill.html')
 
 
-def add_skill(request):
-    if request.method == 'POST':
-        form = SkillForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('success')  # Redirect to a success page or another view
-    else:
-        form = SkillForm()
+# def add_skill(request):
+#     if request.method == 'POST':
+#         form = SkillForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('success')  # Redirect to a success page or another view
+#     else:
+#         form = SkillForm()
 
-    return render(request, 'add_skill.html', {'form': form})
+#     return render(request, 'add_skill.html', {'form': form})
 
 def save_data(request):
     if request.method == 'POST':
-        username = None
+        user = None
 
         if request.user.is_authenticated:
-            username = request.user.id
+            user = request.user.id
             try:
                 # Process the data and save it to the database
                 data = json.loads(request.body)    # Get the data sent from the JavaScript
-                
-                #save SKILL for logged in user
-                all_skills = Skill.objects.all()
-                for skill in all_skills:
-                    skill_level = "level_"+ skill.skill_name
-                    level = data.get(skill_level)
-                    # Extract other fields
-                    
-                    # Save the data to the database using YourModel
-                    user_skill = get_object_or_404(User_Skill, username = username, skill_name = skill)
-                    user_skill.level = level
+                print(data)
+                print("=================================")
+                data_user_skill = data["User_Skill"]  
+                # Save skill data to database
+                for skill in data_user_skill:
+                    user_skill = get_object_or_404(User_Skill, user = user, skill_name = skill["name"])
+                    user_skill.level = skill["level"]
                     user_skill.save()
-                    print(f"save for skill {skill.skill_name} successfully.")
+                    print(f"save for skill {skill['name']} successfully.")
                 return JsonResponse({'status': 'success'})
             except Exception as e:
                 print("Saved failed.")
