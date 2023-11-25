@@ -7,4 +7,5 @@ urlpatterns = [
     path('main/', views.main_page),
     path('add_skill/', views.add_skill),
     path('save-data/',views.save_data),
+    path('test/',views.test_method)
 ]

@@ -64,9 +64,10 @@ def main_page(request):
         print("--------------------------------\n")
         
         #Load skill_level
-        skill_level = User_Skill.objects.filter(username=user.id)
+        skill_level = User_Skill.objects.raw("select id,skill_name_id from game_user_skill where username_id = %s;",[user.id])
         for i in skill_level:
             save_data_dict[i.skill_name.skill_name] = i.level
+            print(i.skill_name.skill_name, i.level)
         data = json.dumps(save_data_dict)
 
        
@@ -74,7 +75,10 @@ def main_page(request):
     else:
         return render(request, "auth_app/login.html")
 
-
+def test_method(request):
+    for i in User_Skill.objects.raw("select * from game_user_skill;"):
+        print(i.skill_name)
+    return render(request, 'add_skill.html')
 
 
 def add_skill(request):
