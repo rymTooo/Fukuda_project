@@ -2,6 +2,7 @@
 //updating money
 let money = 0;
 let skills = [];
+let stat = {};
 let totalPassiveIncome = 0;
 function updateMoney() {
     totalPassiveIncome = 0;
@@ -241,3 +242,31 @@ hitbox.addEventListener('click', () => {
         swordman.classList.remove('SwingAnim');
     }, 700); // Adjust based on your swing animation duration
 });
+
+test = [{name:"test",level:"1"}]
+function saveManually() {
+    fetch('http://127.0.0.1:8000/game/save-data/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
+        },
+        body: JSON.stringify({User_Skill:skills,TEST:test})
+    });
+}
+
+setInterval(saveManually, 60000); // Auto save every 1 min
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+    }
