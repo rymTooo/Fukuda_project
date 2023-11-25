@@ -9,7 +9,6 @@ from game.models import Event, FukudaCustomization, PowerUp, Setting, Stat, User
 
 def main_page(request): 
     
-    
     user = request.user
     if user.is_authenticated:
         print(f"\n--------------------------------\nCREATING data for user '{user.username}'\n")
@@ -98,22 +97,35 @@ def save_data(request):
                 print("=================================")
                 for i in data:
                     print(i)
+                    print(data[i])
+                    print("-------------------")
+                    
                 data_user_skill = data["User_Skill"]
                 data_stat = data["Stat"]
+                data_user_power_up = data["User_PowerUp"]
             
-                # Save skill data to database
+                # Save USER_SKILL data to database
                 for skill in data_user_skill:
                     user_skill = get_object_or_404(User_Skill, user = user, skill_name = skill["skill_name"])
                     user_skill.level = skill["level"]
                     user_skill.save()
-                    print(f"save for skill {skill['skill_name']} successfully.")
+                    print(f"Save skill: {skill['skill_name']} for user: {user} Successfully")
 
-                # Save stat
+                # Save STAT
                 stat_obj = get_object_or_404(Stat, user = user)
                 for key, value in data_stat.items():
                     setattr(stat_obj, key, value)
                 stat_obj.save()
                 print(f'Save stat for user: {user} Successfully')
+
+                # Save USER_POWERUP data to database
+                for powerup in data_user_power_up:
+                    user_powerup = get_object_or_404(User_PowerUp, user = user, powerup_name = powerup["powerup_name"])
+                    user_powerup.accuired = powerup["accuired"]
+                    user_powerup.save()
+                    print(f"Save powerup: {powerup['powerup_name']} for user: {user} Successfully")
+                
+                # Save USER_EVENT
             except Exception as e:
                 print(f"Saved failed.: {str(e)}")
                 return JsonResponse({'status': 'failed', 'error': str(e)})

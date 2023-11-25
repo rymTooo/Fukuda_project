@@ -26,6 +26,7 @@ let totalPassiveIncome = 0;
 let money_per_click = 1;
 let click_counter = 0;
 let skills = [];// skill list composes of many skill objects.
+let powerups = []
 function updateMoney() {
     totalPassiveIncome = 0;
     skills.forEach(skill => {
@@ -294,7 +295,7 @@ function saveManually() {
             'Content-Type': 'application/json',
             'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
         },
-        body: JSON.stringify({User_Skill:skills,Stat:stat})
+        body: JSON.stringify({User_Skill:skills,Stat:stat,User_PowerUp:powerups})
     });
 }
 

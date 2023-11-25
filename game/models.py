@@ -3,11 +3,11 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Stat(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    all_time_money = models.IntegerField(default=0)
-    passiveincome = models.IntegerField(default=0)
-    current_money = models.IntegerField(default=0)
-    money_per_click = models.IntegerField(default=0)
-    click_counter = models.IntegerField(default=0)
+    all_time_money = models.BigIntegerField(default=0,max_length=255)
+    passiveincome = models.BigIntegerField(default=0,max_length=255)
+    current_money = models.BigIntegerField(default=0,max_length=255)
+    money_per_click = models.IntegerField(default=0,max_length=255)
+    click_counter = models.BigIntegerField(default=0,max_length=255)
 
 
 class Setting(models.Model):
