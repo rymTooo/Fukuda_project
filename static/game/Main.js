@@ -13,7 +13,7 @@ get_data();
 
 //updating money
 let money = 0;
-let skills = loaded_data;// skill list composes of many skill objects.
+let skills = [];// skill list composes of many skill objects.
 let totalPassiveIncome = 0;
 function updateMoney() {
     totalPassiveIncome = 0;
