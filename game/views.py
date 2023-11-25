@@ -4,8 +4,8 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from game.models import Event, FukudaCustomization, PowerUp, Setting, Stat, User_Event, User_PowerUp, User_Skill
-from .forms import SkillForm, Skill
+from game.models import Event, FukudaCustomization, PowerUp, Setting, Stat, User_Event, User_PowerUp, User_Skill,Skill
+#from .forms import Skill
 
 def main_page(request): 
     
@@ -17,26 +17,26 @@ def main_page(request):
         all_skills = Skill.objects.all()
         for skill in all_skills:
             # Retrieve or create a User_Skill instance for the user and skill
-            user_skill, user_skill_created = User_Skill.objects.get_or_create(username=user, skill_name=skill)
+            user_skill, user_skill_created = User_Skill.objects.get_or_create(user=user, skill_name=skill)
             
             if user_skill_created:
                 print(f"USER_SKILL, skill '{skill.skill_name}' created SUCCESSFUL.")
             else:
                 print(f"USER_SKILL, skill '{skill.skill_name}' already exists.")
         #create Stat
-        stat, stat_created = Stat.objects.get_or_create(username = user,all_time_money = 0, passiveincome = 0,current_money = 0, money_per_click = 0, click_counter = 0)
+        stat, stat_created = Stat.objects.get_or_create(user = user,all_time_money = 0, passiveincome = 0,current_money = 0, money_per_click = 0, click_counter = 0)
         if stat_created:
             print(f"STAT created SUCCESSFUL.")
         else:
             print(f"STAT already EXISTS.")
         #create Setting
-        setting, setting_created = Setting.objects.get_or_create(username = user, theme = "defaut", sound_volumn = 50.0, notification = True)
+        setting, setting_created = Setting.objects.get_or_create(user = user, theme = "defaut", sound_volumn = 50.0, notification = True)
         if setting_created:
             print(f"SETTING created SUCCESSFUL.")
         else:
             print(f"SETTING already EXISTS.")
         #create FukudaCustomization
-        custom, custom_created = FukudaCustomization.objects.get_or_create(username = user, Head = "defaut",pant= "defaut",torso= "defaut",shoes= "defaut")
+        custom, custom_created = FukudaCustomization.objects.get_or_create(user = user, Head = "defaut",pant= "defaut",torso= "defaut",shoes= "defaut")
         if custom_created:
             print(f"FukudaCustomization created SUCCESSFUL.")
         else:
@@ -45,7 +45,7 @@ def main_page(request):
         all_events = Event.objects.all()
         for event in all_events:
             # Retrieve or create a User_Skill instance for the user and skill
-            user_event, user_event_created = User_Event.objects.get_or_create(username=user, event_name=event)
+            user_event, user_event_created = User_Event.objects.get_or_create(user=user, event_name=event)
             
             if user_event_created:
                 print(f"USER_EVENT, event '{event.event_name}' created SUCCESSFUL.")
@@ -55,7 +55,7 @@ def main_page(request):
         all_powerups = PowerUp.objects.all()
         for powerup in all_powerups:
             # Retrieve or create a User_Skill instance for the user and skill
-            user_powerup, user_powerup_created = User_PowerUp.objects.get_or_create(username=user, powerup_name=powerup)
+            user_powerup, user_powerup_created = User_PowerUp.objects.get_or_create(user=user, powerup_name=powerup)
             
             if user_powerup_created:
                 print(f"USER_POWERUP, powerup '{powerup.powerup_name}' created SUCCESSFUL.")
@@ -64,7 +64,7 @@ def main_page(request):
         print("--------------------------------\n")
         
         #Load skill_level
-        skill_level = User_Skill.objects.raw("select id,skill_name_id from game_user_skill where username_id = %s;",[user.id])
+        skill_level = User_Skill.objects.raw("select id,skill_name_id from game_user_skill where user_id = %s;",[user.id])
         for i in skill_level:
             save_data_dict[i.skill_name.skill_name] = i.level
             print(i.skill_name.skill_name, i.level)
