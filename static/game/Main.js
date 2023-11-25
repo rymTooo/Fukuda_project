@@ -12,16 +12,20 @@ function get_data() { // add get data method to load data into loaded_data varia
 get_data();
 
 //updating money
-let money = 0;
-let skills = [];// skill list composes of many skill objects.
+let cur_money = 0;
+let all_time_money = 0;
 let totalPassiveIncome = 0;
+let money_per_click = 1;
+let click_counter = 0;
+let skills = [];// skill list composes of many skill objects.
 function updateMoney() {
     totalPassiveIncome = 0;
     skills.forEach(skill => {
         totalPassiveIncome += skill.passive;
     }); 
-    money += totalPassiveIncome;
-    document.getElementById('money').textContent = money;
+    cur_money += totalPassiveIncome;
+    all_time_money += totalPassiveIncome
+    document.getElementById('money').textContent = cur_money;
 }
 setInterval(updateMoney, 1000); // Update score every second
 
@@ -133,9 +137,9 @@ function updateSkillsUI(skills) {
         skillButton.addEventListener('click', () => {
             
             // Check if the player has enough money to buy the skill
-            if (money >= skill.cost) {
+            if (cur_money >= skill.cost) {
                 // Subtract the cost from the player's money
-                money -= skill.cost;
+                cur_money -= skill.cost;
 
                 // Increase the skill level
                 skill.level++;
@@ -152,7 +156,7 @@ function updateSkillsUI(skills) {
                 updateMoney();
             } else {
                 // Display a message or take some action if the player doesn't have enough money
-                alert("Not enough money to buy this skill!");
+                alert("Not enough cur_money to buy this skill!");
             }
             
         });
@@ -247,22 +251,25 @@ const swordman = document.getElementById('swordman');
 
 hitbox.addEventListener('click', () => {
     swordman.classList.add('SwingAnim');
-    money++;
-    document.getElementById('money').textContent = money;
+    cur_money+= money_per_click;
+    all_time_money += money_per_click;
+    click_counter++;
+    document.getElementById('money').textContent = cur_money;
     setTimeout(() => {
         swordman.classList.remove('SwingAnim');
     }, 700); // Adjust based on your swing animation duration
 });
 
-test = [{name:"test",level:"1"}]
+test = {name:"test",level:"1"}
 function saveManually() {
+    stat = {"all_time_money":all_time_money,"passiveIncome":totalPassiveIncome,"current_money":cur_money,"money_per_click":money_per_click,"click_counter":click_counter}
     fetch('http://127.0.0.1:8000/game/save-data/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
         },
-        body: JSON.stringify({User_Skill:skills,TEST:test})
+        body: JSON.stringify({User_Skill:skills,Stat:stat})
     });
 }
 

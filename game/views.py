@@ -24,19 +24,19 @@ def main_page(request):
             else:
                 print(f"USER_SKILL, skill '{skill.skill_name}' already exists.")
         #create Stat
-        stat, stat_created = Stat.objects.get_or_create(user = user,all_time_money = 0, passiveincome = 0,current_money = 0, money_per_click = 0, click_counter = 0)
+        stat, stat_created = Stat.objects.get_or_create(user = user)
         if stat_created:
             print(f"STAT created SUCCESSFUL.")
         else:
             print(f"STAT already EXISTS.")
         #create Setting
-        setting, setting_created = Setting.objects.get_or_create(user = user, theme = "defaut", sound_volumn = 50.0, notification = True)
+        setting, setting_created = Setting.objects.get_or_create(user = user)
         if setting_created:
             print(f"SETTING created SUCCESSFUL.")
         else:
             print(f"SETTING already EXISTS.")
         #create FukudaCustomization
-        custom, custom_created = FukudaCustomization.objects.get_or_create(user = user, Head = "defaut",pant= "defaut",torso= "defaut",shoes= "defaut")
+        custom, custom_created = FukudaCustomization.objects.get_or_create(user = user)
         if custom_created:
             print(f"FukudaCustomization created SUCCESSFUL.")
         else:
@@ -111,14 +111,24 @@ def save_data(request):
                 data = json.loads(request.body)    # Get the data sent from the JavaScript
                 print(data)
                 print("=================================")
-                data_user_skill = data["User_Skill"]  
+                for i in data:
+                    print(i)
+                data_user_skill = data["User_Skill"]
+                data_stat = data["Stat"]
+                print("\n",data_stat)
                 # Save skill data to database
                 for skill in data_user_skill:
                     user_skill = get_object_or_404(User_Skill, user = user, skill_name = skill["name"])
                     user_skill.level = skill["level"]
                     user_skill.save()
                     print(f"save for skill {skill['name']} successfully.")
-                return JsonResponse({'status': 'success'})
+
+                # Save stat
+                stat_obj = get_object_or_404(Stat, user = user)
+                for key, value in data_stat.items():
+                    setattr(stat_obj, key, value)
+                stat_obj.save()
+                print(f'Save stat for user: {user} Successfully')
             except Exception as e:
                 print("Saved failed.")
                 return JsonResponse({'status': 'failed', 'error': str(e)})
