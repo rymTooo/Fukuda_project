@@ -1,42 +1,261 @@
+
+let loaded_data = {};
+function get_data() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '../data', false);  // The third parameter 'false' makes the request synchronous
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                loaded_data = JSON.parse(xhr.responseText);
+                console.log(loaded_data);
+            } else {
+                console.error('Error:', xhr.statusText);
+            }
+        }
+    };
+    xhr.send();
+}
+
+get_data();
+console.log(loaded_data);
+//updating money
+let cur_money = 0;
+let all_time_money = 0;
+let totalPassiveIncome = 0;
+let money_per_click = 1;
+let click_counter = 0;
+let skills = [];// skill list composes of many skill objects.
+let powerups = []
+function updateMoney() {
+    totalPassiveIncome = 0;
+    skills.forEach(skill => {
+        totalPassiveIncome += skill.passive;
+    }); 
+    cur_money += totalPassiveIncome;
+    all_time_money += totalPassiveIncome
+    document.getElementById('money').textContent = cur_money;
+}
+setInterval(updateMoney, 1000); // Update score every second
+
+
+//switching tab
 function showTab(tabId) {
     const tabs = document.querySelectorAll('.tabContent');
-    tabs.forEach(tab => tab.classList.remove('active'));
+    tabs.forEach(tab => (tab.style.display = 'none'));
+
     const selectedTab = document.getElementById(tabId);
-    selectedTab.classList.add('active');
+    if (tabId === 'skills'){
+    selectedTab.style.display = 'block';}
+    else{
+        selectedTab.style.display = 'flex';
+    }
+    if (tabId === 'statistics') {
+        updateStatistics();
+    }
+    if (tabId === 'powerups') {
+        updatePower();
+    }
 }
 
-const swordman = document.getElementById('swordman');
+function fetchSkills() {
+    // Make an API request to your server to get the skills
+    // Example using Fetch API:
+    loaded_data['skill'].forEach(
+        skill => {
+            n = {...skill,
+                passive: calculatePassiveIncome(skill.level,skill.base_income,skill.growth_rate),
+                image: "../../static/game/"+skill.skill_name+".png",
+                cost: calculateNewCost(skill.level,skill.base_cost),//calculate from level + base cost
+                upgrade1: "../../static/game/black.png",
+                upgrade2: "../../static/game/black.png",
+                upgrade3: "../../static/game/black.png",
+                upgrade4: "../../static/game/black.png",
+                upgrade5: "../../static/game/black.png",
+            };
+            skills.push(n);
+        }
+    );
+    // skills = [{
+    //     skillID: "Skill1",//use the same value as skillname('Fire')
+    //     base_income: 0.1,//skill
+    //     growth_rate: 2,//skill
+    //     base_cost: 4,//skill
+    //     passive: 0,//calculate from base_income + level + growth rate
+    //     image: "../../static/game/Fire.png",
+    //     skill_name: "Fire",//skill
+    //     level: 1,//user skill
+    //     cost: 4,//calculate from level + base cost
+    //     upgrade1: "../../static/game/black.png",
+    //     upgrade2: "../../static/game/black.png",
+    //     upgrade3: "../../static/game/black.png",
+    //     upgrade4: "../../static/game/black.png",
+    //     upgrade5: "../../static/game/black.png",
+    //   },{
+    //     skillID: "Skill2",
+    //     base_income: 0.5,
+    //     growth_rate: 1.5,
+    //     base_cost: 10,
+    //     passive: 0,
+    //     image: "../../static/game/Dummy.png",
+    //     skill_name: "Cum",
+    //     level: 1,
+    //     cost: 40,
+    //     upgrade1: "../../static/game/black.png",
+    //     upgrade2: "../../static/game/black.png",
+    //     upgrade3: "../../static/game/black.png",
+    //     upgrade4: "../../static/game/black.png",
+    //     upgrade5: "../../static/game/black.png",
+    //   }]
+    updateSkillsUI(skills);
 
-let score = 0;
-let passiveScore = 0;
-let upgrade1Level = 0;
-let upgrade2Level = 0;
-hitbox.addEventListener('click', () => {
-    score++;
-    document.getElementById('scoreValue').textContent = score;
-    swordman.classList.add('SwingAnim');
-    setTimeout(() => {
-        swordman.classList.remove('SwingAnim');
-    }, 700); // Adjust based on your swing animation duration
-});
-
-
-function updateScore(){
-    score += passiveScore;
-    document.getElementById('scoreValue').textContent = score;
 }
-setInterval(updateScore, 1000); // Update score every second
 
-function initiateSave(){ // this function suppose to run one time when the web is open. Still no idea how to do so.
-    document.getElementById('scoreValue').textContent = score; // update score
-    document.getElementById('upgrade1Level').textContent = upgrade1Level; // update upgrade level and their cost
-    document.getElementById('cost1').textContent = 10 * (upgrade1Level + 1);
-    document.getElementById('upgrade2Level').textContent = upgrade2Level;
-    document.getElementById('cost2').textContent = 20 * (upgrade2Level + 1);
-    // still doesn't update passive score, left for pon to deal with later
+// Function to update the HTML with the new skills
+function updateSkillsUI(skills) {
+    const skillsContainer = document.getElementById('skills');
+
+    // Clear existing content in the container
+    //skillsContainer.innerHTML = '';
+
+    // Loop through the skills and create HTML elements for each skill
+    skills.forEach(skill => {
+        const skillRow = document.createElement('div');
+        skillRow.classList.add('SkillRow');
+
+        const skillInfo = document.createElement('div');
+        skillInfo.classList.add('SkillInfo');
+        skillRow.appendChild(skillInfo);
+        // Create and append HTML elements for skill details (image, skill_name, level, etc.)
+        // Adjust this based on your skill data structure
+        const skillImage = document.createElement('img');
+        skillImage.src = skill.image; // Replace with your image URL
+        skillImage.classList.add('SkillImage');
+        skillInfo.appendChild(skillImage);
+
+        const skillDetails = document.createElement('div');
+        skillDetails.classList.add('SkillDetails');
+        skillInfo.appendChild(skillDetails);
+
+        // Create other elements (skill_name, level, buy button, upgrade images, etc.) and append them to skillRow
+        const skillName = document.createElement('h3');
+        skillName.textContent = skill.skill_name; // Replace with your skill skill_name property
+        skillDetails.appendChild(skillName);
+
+        const skillLevel = document.createElement('p');
+        skillLevel.textContent = 'Level: ' + skill.level; // Replace with your skill level property
+        skillDetails.appendChild(skillLevel);
+
+        const skillCost = document.createElement('p');
+        skillCost.textContent = 'Cost: ' + skill.cost; // Replace with your skill level property
+        skillDetails.appendChild(skillCost);
+
+        const skillPassive = document.createElement('p');
+        skillPassive.textContent = 'Passive: ' + skill.passive; // Replace with your skill level property
+        skillDetails.appendChild(skillPassive);
+
+        const skillButton = document.createElement('button');
+        skillButton.textContent = 'Buy'; // Replace with your skill level property
+        skillButton.classList.add('BuyButton');
+
+        skillButton.addEventListener('click', () => {
+            
+            // Check if the player has enough money to buy the skill
+            if (cur_money >= skill.cost) {
+                // Subtract the cost from the player's money
+                cur_money -= skill.cost;
+
+                // Increase the skill level
+                skill.level++;
+                console.log(skill.base_income)
+                console.log(skill.growth_rate)
+                skill.passive = calculatePassiveIncome(skill.level,skill.base_income,skill.growth_rate);
+                console.log(skill.passive)
+                console.log(totalPassiveIncome)
+                // Update the skill cost (modify this based on your logic)
+                skill.cost = calculateNewCost(skill.level,skill.base_cost);
     
+                // Update the displayed information
+                skillLevel.textContent = 'Level: ' + skill.level;
+                skillCost.textContent = 'Cost: ' + skill.cost;
+                skillPassive.textContent = 'Passive: ' + skill.passive;
+                updateMoney();
+            } else {
+                // Display a message or take some action if the player doesn't have enough money
+                alert("Not enough cur_money to buy this skill!");
+            }
+            
+        });
 
+        skillRow.appendChild(skillButton);
+
+        const UpgradeImages = document.createElement('div');
+        UpgradeImages.classList.add('UpgradeImages');
+        skillRow.appendChild(UpgradeImages);
+
+        const Upgrade1 = document.createElement('img');
+        Upgrade1.src = skill.upgrade1; // Replace with your image URL
+        UpgradeImages.appendChild(Upgrade1);
+
+        const Upgrade2 = document.createElement('img');
+        Upgrade2.src = skill.upgrade2; // Replace with your image URL
+        UpgradeImages.appendChild(Upgrade2);
+
+        const Upgrade3 = document.createElement('img');
+        Upgrade3.src = skill.upgrade3; // Replace with your image URL
+        UpgradeImages.appendChild(Upgrade3);
+
+        const Upgrade4 = document.createElement('img');
+        Upgrade4.src = skill.upgrade4; // Replace with your image URL
+        UpgradeImages.appendChild(Upgrade4);
+
+        const Upgrade5 = document.createElement('img');
+        Upgrade5.src = skill.upgrade5; // Replace with your image URL
+        UpgradeImages.appendChild(Upgrade5);
+
+        // Finally, append the skillRow to the skillsContainer
+        skillsContainer.appendChild(skillRow);
+    });
 }
+
+function calculateNewCost(base_cost,level) {
+    // Cost increases exponentially
+    return Math.floor(base_cost * Math.pow(1.1, level));
+}
+function calculatePassiveIncome(level,base_income,growth_rate) {
+    // Passive income increases exponentially
+    //base_income = base_income || 2;
+    //growth_rate = growth_rate || 1.2;
+
+    // Use the skill's level to calculate passive income
+    return Math.floor(base_income * Math.pow(growth_rate,level));
+}
+
+// Fetch skills when the page loads
+fetchSkills();
+
+function updatePower() {
+    // Example variables, replace them with your actual variables
+    let pow1Price = 10;
+    let pow2Price = 50;
+    let pow3Price = 100;
+    let pow4Price = 500;
+    let pow1Name = "Oil";
+    let pow2Name = "Titanium";
+    let pow3Name = "Grinder";
+    let pow4Name = "Cloud";
+
+    // Update the content of each statistic element
+    document.getElementById('pow1Name').textContent = pow1Name;
+    document.getElementById('pow2Name').textContent = pow2Name;
+    document.getElementById('pow3Name').textContent = pow3Name;
+    document.getElementById('pow4Name').textContent = pow4Name;
+    document.getElementById('pow1Price').textContent = pow1Price;
+    document.getElementById('pow2Price').textContent = pow2Price;
+    document.getElementById('pow3Price').textContent = pow3Price;
+    document.getElementById('pow4Price').textContent = pow4Price;
+}
+
 function updateStatistics() {
     // Example variables, replace them with your actual variables
     const currentMoney = 1000;
@@ -53,66 +272,45 @@ function updateStatistics() {
     document.getElementById('PerClickStat').textContent = moneyPerClick;
 }
 
-function buyUpgrade(upgradeId) {
-    switch(upgradeId) {
-        case 1:
-            let cost1 = 10 * (upgrade1Level + 1);
-            if (score >= cost1) {
-                score -= cost1;
-                upgrade1Level++;
-                passiveScore += 1;
-                document.getElementById('upgrade1Level').textContent = upgrade1Level;
-                document.getElementById('cost1').textContent = cost1+10;
-                document.getElementById('scoreValue').textContent = score;
-            }
-            break;
-        case 2:
-            let cost2 = 20 * (upgrade2Level + 1);
-            if (score >= cost2) {
-                score -= cost2;
-                upgrade2Level++;
-                passiveScore += 2;
-                document.getElementById('upgrade2Level').textContent = upgrade2Level;
-                document.getElementById('cost2').textContent = cost2+20;
-                document.getElementById('scoreValue').textContent = score;
-            }
-            break;
-    }
-}
+//Clicking
+const swordman = document.getElementById('swordman');
 
+hitbox.addEventListener('click', () => {
+    swordman.classList.add('SwingAnim');
+    cur_money+= money_per_click;
+    all_time_money += money_per_click;
+    click_counter++;
+    document.getElementById('money').textContent = cur_money;
+    setTimeout(() => {
+        swordman.classList.remove('SwingAnim');
+    }, 700); // Adjust based on your swing animation duration
+});
 
+test = {name:"test",level:"1"}
 function saveManually() {
+    stat = {"all_time_money":all_time_money,"passiveincome":totalPassiveIncome,"current_money":cur_money,"money_per_click":money_per_click,"click_counter":click_counter}
     fetch('http://127.0.0.1:8000/game/save-data/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
         },
-        body: JSON.stringify({
-            skill_name1 : "upgrade1",
-            level_upgrade1 : upgrade1Level,
-            skill_name2 : "upgrade2",
-            level_upgrade2 : upgrade2Level,
-
-            // Add other fields to send
-        }),
+        body: JSON.stringify({User_Skill:skills,Stat:stat,User_PowerUp:powerups})
     });
 }
 
-// setInterval(saveManually, 60000); // Auto save every 1 min
-
-
+setInterval(saveManually, 60000); // Auto save every 1 min
 function getCookie(name) {
-var cookieValue = null;
-if (document.cookie && document.cookie !== '') {
-    var cookies = document.cookie.split(';');
-    for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i].trim();
-        if (cookie.substring(0, name.length + 1) === (name + '=')) {
-            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-            break;
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
         }
     }
-}
-return cookieValue;
-}
+    return cookieValue;
+    }

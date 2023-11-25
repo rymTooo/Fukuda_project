@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
+<html>
+    {%load static%}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Fukuda Clicker</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href={% static "game/styles.css" %}>
+
+</head>
+<body>
+    <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <div class="Picture">
+        <img src={% static "game/Background.png" %} class="background">      
+        <!--<img src="Fukuda.png" class="fukuda">-->
+        <img src={% static "game/Coin.png" %} class="coin" >
+        <div class="Character" id="swordman"></div>
+        <div class="CharacterHitbox" id="hitbox">Test</div>
+        <div class="DisCurMoney"><span id="scoreValue">0</span></div>
+
+        <img src = {% static "game/dummy.png" %} class="dummy">
+        
+    </div>
+    
+    <!-- <div id="score">Score: <span id="scoreValue">0</span></div> -->
+    <div class="Navigation">
+        <div onclick="showTab('skills')" class="tab" >Skills</div >
+        <div onclick="showTab('powerups')" class="tab">Powerups</div >
+        <div  onclick="showTab('customisation')" class="tab">Customisation</div >
+        <div  onclick="showTab('statistics')" class="tab">Statistics</div >
+        <div  onclick="showTab('setting')" class="tab">Setting</div >
+    </div>
+    <div class="Content">
+        <div id="skills" class="tabContent active">
+           <div id="upgrades">
+            <div class="upgrade" id="upgrade1">
+                <button onclick="buyUpgrade(1)">Upgrade 1 (Cost: <span id="cost1">10</span>)</button>
+                <span>Upgrade 1 Level: <span id="upgrade1Level">0</span></span>
+            </div>
+            <div class="upgrade" id="upgrade2">
+                <button onclick="buyUpgrade(2)">Upgrade 2 (Cost: <span id="cost2">20</span>)</button>
+                <span>Upgrade 2 Level: <span id="upgrade2Level">0</span></span>
+            </div>
+        </div>
+        </div>
+        <div id="powerups" class="tabContent">
+            powerups
+        </div>
+        <div id="customisation" class="tabContent">
+            customisation
+        </div>
+        <div id="statistics" class="tabContent">
+            <p class="rowStat">Current Money<br> <span id="CurMoneyStat">500</span></p> <p class="rowStat">All-time Clicks<br> <span id="AllClickStat">500</span></p>
+            <p class="rowStat">All-time Money<br> <span id="AllMoneyStat">500</span></p> <p class="rowStat">Passive Income<br> <span id="PassiveStat">500</span></p>
+            <p class="rowStat">Money per Click<br> <span id="PerClickStat">500</span></p>
+        </div>
+        <div id="setting" class="tabContent">
+            <p>USERNAME: {{username}}</p>
+            <button onclick="saveManually()" method = "POST">Save</button>
+        </div>
+    <script src={% static "game/Main.js" %} async defer></script>
+</body>
+</html>
