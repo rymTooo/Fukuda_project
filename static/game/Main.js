@@ -63,7 +63,7 @@ function fetchSkills() {
     loaded_data['skill'].forEach(
         skill => {
             n = {...skill,
-                passive: 0,
+                passive: calculatePassiveIncome(skill.level,skill.base_income,skill.growth_rate),
                 image: "../../static/game/"+skill.skill_name+".png",
                 cost: calculateNewCost(skill.level,skill.base_cost),//calculate from level + base cost
                 upgrade1: "../../static/game/black.png",
@@ -77,12 +77,12 @@ function fetchSkills() {
     );
     // skills = [{
     //     skillID: "Skill1",//use the same value as skillname('Fire')
-    //     baseIncome: 0.1,//skill
-    //     growthRate: 2,//skill
-    //     baseCost: 4,//skill
-    //     passive: 0,//calculate from baseIncome + level + growth rate
+    //     base_income: 0.1,//skill
+    //     growth_rate: 2,//skill
+    //     base_cost: 4,//skill
+    //     passive: 0,//calculate from base_income + level + growth rate
     //     image: "../../static/game/Fire.png",
-    //     name: "Fire",//skill
+    //     skill_name: "Fire",//skill
     //     level: 1,//user skill
     //     cost: 4,//calculate from level + base cost
     //     upgrade1: "../../static/game/black.png",
@@ -92,12 +92,12 @@ function fetchSkills() {
     //     upgrade5: "../../static/game/black.png",
     //   },{
     //     skillID: "Skill2",
-    //     baseIncome: 0.5,
-    //     growthRate: 1.5,
-    //     baseCost: 10,
+    //     base_income: 0.5,
+    //     growth_rate: 1.5,
+    //     base_cost: 10,
     //     passive: 0,
     //     image: "../../static/game/Dummy.png",
-    //     name: "Cum",
+    //     skill_name: "Cum",
     //     level: 1,
     //     cost: 40,
     //     upgrade1: "../../static/game/black.png",
@@ -125,7 +125,7 @@ function updateSkillsUI(skills) {
         const skillInfo = document.createElement('div');
         skillInfo.classList.add('SkillInfo');
         skillRow.appendChild(skillInfo);
-        // Create and append HTML elements for skill details (image, name, level, etc.)
+        // Create and append HTML elements for skill details (image, skill_name, level, etc.)
         // Adjust this based on your skill data structure
         const skillImage = document.createElement('img');
         skillImage.src = skill.image; // Replace with your image URL
@@ -136,9 +136,9 @@ function updateSkillsUI(skills) {
         skillDetails.classList.add('SkillDetails');
         skillInfo.appendChild(skillDetails);
 
-        // Create other elements (name, level, buy button, upgrade images, etc.) and append them to skillRow
+        // Create other elements (skill_name, level, buy button, upgrade images, etc.) and append them to skillRow
         const skillName = document.createElement('h3');
-        skillName.textContent = skill.name; // Replace with your skill name property
+        skillName.textContent = skill.skill_name; // Replace with your skill skill_name property
         skillDetails.appendChild(skillName);
 
         const skillLevel = document.createElement('p');
@@ -166,11 +166,13 @@ function updateSkillsUI(skills) {
 
                 // Increase the skill level
                 skill.level++;
-                skill.passive = calculatePassiveIncome(skill.level,skill.baseIncome,skill.growthRate);
+                console.log(skill.base_income)
+                console.log(skill.growth_rate)
+                skill.passive = calculatePassiveIncome(skill.level,skill.base_income,skill.growth_rate);
                 console.log(skill.passive)
                 console.log(totalPassiveIncome)
                 // Update the skill cost (modify this based on your logic)
-                skill.cost = calculateNewCost(skill.level,skill.baseCost);
+                skill.cost = calculateNewCost(skill.level,skill.base_cost);
     
                 // Update the displayed information
                 skillLevel.textContent = 'Level: ' + skill.level;
@@ -215,17 +217,17 @@ function updateSkillsUI(skills) {
     });
 }
 
-function calculateNewCost(baseCost,level) {
+function calculateNewCost(base_cost,level) {
     // Cost increases exponentially
-    return Math.floor(baseCost * Math.pow(1.1, level));
+    return Math.floor(base_cost * Math.pow(1.1, level));
 }
-function calculatePassiveIncome(level,baseIncome,growthRate) {
+function calculatePassiveIncome(level,base_income,growth_rate) {
     // Passive income increases exponentially
-    //baseIncome = baseIncome || 2;
-    //growthRate = growthRate || 1.2;
+    //base_income = base_income || 2;
+    //growth_rate = growth_rate || 1.2;
 
     // Use the skill's level to calculate passive income
-    return Math.floor(baseIncome * Math.pow(growthRate,level));
+    return Math.floor(base_income * Math.pow(growth_rate,level));
 }
 
 // Fetch skills when the page loads
@@ -285,7 +287,7 @@ hitbox.addEventListener('click', () => {
 
 test = {name:"test",level:"1"}
 function saveManually() {
-    stat = {"all_time_money":all_time_money,"passiveIncome":totalPassiveIncome,"current_money":cur_money,"money_per_click":money_per_click,"click_counter":click_counter}
+    stat = {"all_time_money":all_time_money,"passiveincome":totalPassiveIncome,"current_money":cur_money,"money_per_click":money_per_click,"click_counter":click_counter}
     fetch('http://127.0.0.1:8000/game/save-data/', {
         method: 'POST',
         headers: {

@@ -47,11 +47,10 @@ class Skill(models.Model):
 class User_Skill(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     skill_name = models.ForeignKey(Skill, on_delete=models.CASCADE)
-    level = models.IntegerField(default=0)
+    level = models.IntegerField(default=1)
 
 class PowerUp(models.Model):
     powerup_name = models.CharField(max_length=255, primary_key=True)
-    accuired = models.BooleanField()
     cost = models.IntegerField()
     multiply = models.IntegerField()
     skill_name = models.ForeignKey(Skill,on_delete=models.CASCADE,default='name')
@@ -59,3 +58,4 @@ class PowerUp(models.Model):
 class User_PowerUp(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     powerup_name = models.ForeignKey(PowerUp, on_delete=models.CASCADE)
+    accuired = models.BooleanField(default=0)

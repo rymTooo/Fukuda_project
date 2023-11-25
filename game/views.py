@@ -100,13 +100,13 @@ def save_data(request):
                     print(i)
                 data_user_skill = data["User_Skill"]
                 data_stat = data["Stat"]
-                print("\n",data_stat)
+            
                 # Save skill data to database
                 for skill in data_user_skill:
-                    user_skill = get_object_or_404(User_Skill, user = user, skill_name = skill["name"])
+                    user_skill = get_object_or_404(User_Skill, user = user, skill_name = skill["skill_name"])
                     user_skill.level = skill["level"]
                     user_skill.save()
-                    print(f"save for skill {skill['name']} successfully.")
+                    print(f"save for skill {skill['skill_name']} successfully.")
 
                 # Save stat
                 stat_obj = get_object_or_404(Stat, user = user)
@@ -115,7 +115,7 @@ def save_data(request):
                 stat_obj.save()
                 print(f'Save stat for user: {user} Successfully')
             except Exception as e:
-                print("Saved failed.")
+                print(f"Saved failed.: {str(e)}")
                 return JsonResponse({'status': 'failed', 'error': str(e)})
 
     return JsonResponse({'status': 'failed'})
