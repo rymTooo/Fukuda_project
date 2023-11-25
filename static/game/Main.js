@@ -1,16 +1,24 @@
 
-let loaded_data;
-function get_data() { // add get data method to load data into loaded_data variable.
-    fetch('../data')
-        .then(response => response.json())
-        .then(data => {
-            loaded_data = data;
-            console.log(data);
-        })
-        .catch(error => console.error('Error:', error));
+let loaded_data = {};
+function get_data() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '../data', false);  // The third parameter 'false' makes the request synchronous
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                loaded_data = JSON.parse(xhr.responseText);
+                console.log(loaded_data);
+            } else {
+                console.error('Error:', xhr.statusText);
+            }
+        }
+    };
+    xhr.send();
 }
-get_data();
 
+get_data();
+console.log(loaded_data);
 //updating money
 let money = 0;
 let skills = [];// skill list composes of many skill objects.
@@ -48,37 +56,52 @@ function showTab(tabId) {
 function fetchSkills() {
     // Make an API request to your server to get the skills
     // Example using Fetch API:
-    skills = [{
-        skillID: "Skill1",//use the same value as skillname('Fire')
-        baseIncome: 0.1,//skill
-        growthRate: 2,//skill
-        baseCost: 4,//skill
-        passive: 0,//calculate from baseIncome + level + growth rate
-        image: "../../static/game/Fire.png",
-        name: "Fire",//skill
-        level: 1,//user skill
-        cost: 4,//calculate from level + base cost
-        upgrade1: "../../static/game/black.png",
-        upgrade2: "../../static/game/black.png",
-        upgrade3: "../../static/game/black.png",
-        upgrade4: "../../static/game/black.png",
-        upgrade5: "../../static/game/black.png",
-      },{
-        skillID: "Skill2",
-        baseIncome: 0.5,
-        growthRate: 1.5,
-        baseCost: 10,
-        passive: 0,
-        image: "../../static/game/Dummy.png",
-        name: "Cum",
-        level: 1,
-        cost: 40,
-        upgrade1: "../../static/game/black.png",
-        upgrade2: "../../static/game/black.png",
-        upgrade3: "../../static/game/black.png",
-        upgrade4: "../../static/game/black.png",
-        upgrade5: "../../static/game/black.png",
-      }]
+    loaded_data['skill'].forEach(
+        skill => {
+            n = {...skill,
+                passive: 0,
+                image: "../../static/game/"+skill.skill_name+".png",
+                cost: calculateNewCost(skill.level,skill.base_cost),//calculate from level + base cost
+                upgrade1: "../../static/game/black.png",
+                upgrade2: "../../static/game/black.png",
+                upgrade3: "../../static/game/black.png",
+                upgrade4: "../../static/game/black.png",
+                upgrade5: "../../static/game/black.png",
+            };
+            skills.push(n);
+        }
+    );
+    // skills = [{
+    //     skillID: "Skill1",//use the same value as skillname('Fire')
+    //     baseIncome: 0.1,//skill
+    //     growthRate: 2,//skill
+    //     baseCost: 4,//skill
+    //     passive: 0,//calculate from baseIncome + level + growth rate
+    //     image: "../../static/game/Fire.png",
+    //     name: "Fire",//skill
+    //     level: 1,//user skill
+    //     cost: 4,//calculate from level + base cost
+    //     upgrade1: "../../static/game/black.png",
+    //     upgrade2: "../../static/game/black.png",
+    //     upgrade3: "../../static/game/black.png",
+    //     upgrade4: "../../static/game/black.png",
+    //     upgrade5: "../../static/game/black.png",
+    //   },{
+    //     skillID: "Skill2",
+    //     baseIncome: 0.5,
+    //     growthRate: 1.5,
+    //     baseCost: 10,
+    //     passive: 0,
+    //     image: "../../static/game/Dummy.png",
+    //     name: "Cum",
+    //     level: 1,
+    //     cost: 40,
+    //     upgrade1: "../../static/game/black.png",
+    //     upgrade2: "../../static/game/black.png",
+    //     upgrade3: "../../static/game/black.png",
+    //     upgrade4: "../../static/game/black.png",
+    //     upgrade5: "../../static/game/black.png",
+    //   }]
     updateSkillsUI(skills);
 
 }

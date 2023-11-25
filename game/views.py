@@ -63,23 +63,8 @@ def main_page(request):
                 print(f"USER_POWERUP, powerup '{powerup.powerup_name}' already exists.")
         print("--------------------------------\n")
         
-        #Load skill_level
-        skills_dict = {}
-        skills = User_Skill.objects.raw("select * from game_user_skill where user_id = %s;",[user.id]) 
-        for i in skills:
-            skill = {}
-            skill["skill_name"] = i.skill_name.skill_name
-            skill["base_income"] = i.skill_name.base_passive_income
-            skill["growth_rate"] = i.skill_name.growth_rate
-            skill["base_cost"] = i.skill_name.base_cost
-            skill["level"] = i.level
-            skills_dict[i.skill_name.skill_name] = skill
-            print(skill)
-        #load ...
-        data = json.dumps(skills_dict)
-
        
-        return render(request, 'Main.html', {"loaded_data": data, "username": user})
+        return render(request, 'Main.html', {"username": user})
     else:
         return render(request, "auth_app/login.html")
 
@@ -129,8 +114,9 @@ def save_data(request):
 def data(request):
     user = request.user
     if user.is_authenticated:
+        main_dict = {}
          #Load skill_level
-        skills_dict = {}
+        skills_dict = []
         skills = User_Skill.objects.raw("select * from game_user_skill where user_id = %s;",[user.id]) 
         for i in skills:
             skill = {}
@@ -139,10 +125,11 @@ def data(request):
             skill["growth_rate"] = i.skill_name.growth_rate
             skill["base_cost"] = i.skill_name.base_cost
             skill["level"] = i.level
-            skills_dict[i.skill_name.skill_name] = skill
+            skills_dict.append(skill)
             print(skill)
         #load ...
-        data = json.dumps(skills_dict)
-        return JsonResponse(skills_dict)
+        main_dict['skill'] = skills_dict
+        data = json.dumps(main_dict)
+        return JsonResponse(main_dict)
     else:
         return JsonResponse({"error": "user not authenticated"}, status=401)
