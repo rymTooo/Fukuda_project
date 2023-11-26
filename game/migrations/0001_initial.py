@@ -10,8 +10,8 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('auth', '0012_alter_user_first_name_max_length'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
@@ -27,6 +27,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='FukudaCustomization',
             fields=[
+                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),
+                ('Head', models.CharField(default='default', max_length=255)),
+                ('pant', models.CharField(default='default', max_length=255)),
+                ('torso', models.CharField(default='default', max_length=255)),
+                ('shoes', models.CharField(default='default', max_length=255)),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),
                 ('Head', models.CharField(default='default', max_length=255)),
                 ('pant', models.CharField(default='default', max_length=255)),
@@ -49,12 +54,20 @@ class Migration(migrations.Migration):
                 ('theme', models.CharField(default='default', max_length=255)),
                 ('sound_volumn', models.DecimalField(decimal_places=1, default=50.0, max_digits=3)),
                 ('notification', models.BooleanField(default=1)),
+                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),
+                ('theme', models.CharField(default='default', max_length=255)),
+                ('sound_volumn', models.DecimalField(decimal_places=1, default=50.0, max_digits=3)),
+                ('notification', models.BooleanField(default=1)),
             ],
         ),
         migrations.CreateModel(
             name='Skill',
             fields=[
                 ('skill_name', models.CharField(max_length=255, primary_key=True, serialize=False)),
+                ('base_passive_income', models.FloatField(default=0)),
+                ('base_cost', models.FloatField(default=0)),
+                ('increase_per_click', models.FloatField(default=0)),
+                ('growth_rate', models.FloatField(default=0)),
                 ('base_passive_income', models.FloatField(default=0)),
                 ('base_cost', models.FloatField(default=0)),
                 ('increase_per_click', models.FloatField(default=0)),
@@ -70,6 +83,12 @@ class Migration(migrations.Migration):
                 ('current_money', models.BigIntegerField(default=0, max_length=255)),
                 ('money_per_click', models.IntegerField(default=0, max_length=255)),
                 ('click_counter', models.BigIntegerField(default=0, max_length=255)),
+                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),
+                ('all_time_money', models.BigIntegerField(default=0, max_length=255)),
+                ('passiveincome', models.BigIntegerField(default=0, max_length=255)),
+                ('current_money', models.BigIntegerField(default=0, max_length=255)),
+                ('money_per_click', models.IntegerField(default=0, max_length=255)),
+                ('click_counter', models.BigIntegerField(default=0, max_length=255)),
             ],
         ),
         migrations.CreateModel(
@@ -79,6 +98,7 @@ class Migration(migrations.Migration):
                 ('level', models.IntegerField(default=1)),
                 ('skill_name', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='game.skill')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -86,7 +106,9 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('accuired', models.BooleanField(default=0)),
+                ('accuired', models.BooleanField(default=0)),
                 ('powerup_name', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='game.powerup')),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
@@ -95,6 +117,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('event_name', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='game.event')),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
