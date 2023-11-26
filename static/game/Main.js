@@ -218,14 +218,15 @@ function fetchPowers() {
         purchased: false,
         image: "Oil.png"
     },
-    {
-        powerupID: "Cock",
-        skillID: "Skill2",
-        multiplier: 2,
-        cost: 2000,
-        purchased: false,
-        image: "Grinder.png"
-    }]
+    // {
+    //     powerupID: "Cock",
+    //     skillID: "Skill2",
+    //     multiplier: 2,
+    //     cost: 2000,
+    //     purchased: false,
+    //     image: "Grinder.png"
+    // }
+]
     updatePower();
 }
 
