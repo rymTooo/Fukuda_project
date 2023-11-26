@@ -1,0 +1,11 @@
+## Insert info
+## Drop tables(game)
+DROP TABLE game_user_event;
+DROP TABLE game_user_powerup;
+DROP TABLE game_user_skill;
+DROP TABLE game_powerup;
+DROP TABLE game_event;
+DROP TABLE game_fukudacustomization;
+DROP TABLE game_setting;
+DROP TABLE game_skill;
+DROP TABLE game_stat;
