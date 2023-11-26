@@ -133,12 +133,12 @@ def save_data(request):
     return JsonResponse({'status': 'failed'})
 
 
-def data(request):
+def data(request): #method for sending data from db to javascript
     user = request.user
     if user.is_authenticated:
         main_dict = {}
-         #Load skill_level
-        skills_dict = []
+         #Load skill
+        skills_list = []
         skills = User_Skill.objects.raw("select * from game_user_skill where user_id = %s;",[user.id]) 
         for i in skills:
             skill = {}
@@ -147,10 +147,10 @@ def data(request):
             skill["growth_rate"] = i.skill_name.growth_rate
             skill["base_cost"] = i.skill_name.base_cost
             skill["level"] = i.level
-            skills_dict.append(skill)
+            skills_list.append(skill)
             print(skill)
-        #load ...
-        main_dict['skill'] = skills_dict
+        #load power up
+        main_dict['skill'] = skills_list
         data = json.dumps(main_dict)
         return JsonResponse(main_dict)
     else:
