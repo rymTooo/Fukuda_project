@@ -147,13 +147,14 @@ def data(request): #method for sending data from db to javascript
             skill["growth_rate"] = i.skill_name.growth_rate
             skill["base_cost"] = i.skill_name.base_cost
             skill["level"] = i.level
+            skill["unlocked"] = i.unlocked
             skills_list.append(skill)
             print(skill,"skill")
         main_dict["skill"] = skills_list
-        
+
         #load power up
         powerups_list = []
-        powerups = User_PowerUp.objects.raw("select * from game_user_powerups where user_id = %s;", [user.id])
+        powerups = User_PowerUp.objects.raw("select * from game_user_powerup where user_id = %s;", [user.id])
         for i in powerups:
             powerup = {}
             powerup["powerupID"] = i.powerup_name.powerup_name
@@ -164,6 +165,8 @@ def data(request): #method for sending data from db to javascript
             powerups_list.append(powerup)
             print(powerup,"powerup")
         main_dict["powerup"] = powerups_list
+        
+        #load...
 
         return JsonResponse(main_dict)
     else:

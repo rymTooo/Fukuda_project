@@ -15,9 +15,11 @@ function get_data() {
         }
     };
     xhr.send();
+    // fetchPowers();// should move into get data method and then just run get data method once.
+    fetchSkills();
 }
 
-get_data();
+
 console.log(loaded_data);
 //updating money
 let cur_money = 0;
@@ -28,6 +30,8 @@ let click_counter = 0;
 let skills = [];// skill list composes of many skill objects.
 let powers = [];
 let powerInShop = [];
+
+get_data();
 
 document.addEventListener('DOMContentLoaded', fetchSkills);
 document.addEventListener('DOMContentLoaded', fetchPowers);
