@@ -41,7 +41,7 @@ class Skill(models.Model):
     base_cost = models.FloatField(default=0)
     increase_per_click = models.FloatField(default=0)
     growth_rate = models.FloatField(default=0)
-    unlocked = models.BooleanField(default=0)
+    
 
 
 
@@ -49,6 +49,7 @@ class User_Skill(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     skill_name = models.ForeignKey(Skill, on_delete=models.CASCADE)
     level = models.IntegerField(default=0)
+    unlocked = models.BooleanField(default=0)
 
 class PowerUp(models.Model):
     powerup_name = models.CharField(max_length=255, primary_key=True)
