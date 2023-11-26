@@ -85,7 +85,7 @@ function fetchSkills() {
 
 }
 
-fetchPowers();
+fetchPowers();// should move into get data method and then just run get data method once.
 fetchSkills();
 
 
@@ -210,22 +210,31 @@ function calculatePassiveIncome(level,base_income) {
 }
 
 function fetchPowers() {
-    powers = [{
-        powerupID: "Oil",
-        skill_name: "Fire",
-        multiplier: 2,
-        cost: 1000,
-        purchased: false,
-        image: "Oil.png"
-    },
-    {
-        powerupID: "Cock",
-        skillID: "Skill2",
-        multiplier: 2,
-        cost: 2000,
-        purchased: false,
-        image: "Grinder.png"
-    }]
+    loaded_data["powerup"].forEach( 
+        powerup =>{
+            n = {
+                ...powerup,
+                image: "../../static/game/"+skill.skill_name+".png"
+            };
+            powers.push(n);
+        }
+    );
+    // powers = [{
+    //     powerupID: "Oil",
+    //     skill_name: "Fire",
+    //     multiplier: 2,
+    //     cost: 1000,
+    //     purchased: false,
+    //     image: "Oil.png"
+    // },
+    // {
+    //     powerupID: "Cock",
+    //     skillID: "Skill2",
+    //     multiplier: 2,
+    //     cost: 2000,
+    //     purchased: false,
+    //     image: "Grinder.png"
+    // }]
     updatePower();
 }
 
