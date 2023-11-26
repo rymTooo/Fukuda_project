@@ -14,7 +14,7 @@ class Setting(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     theme = models.CharField(max_length=255,default="default")
     sound_volumn = models.DecimalField(max_digits=3, decimal_places=1,default=50.0)
-    notification = models.BooleanField(default=1)
+    notification = models.BooleanField(default=True)
 
 class FukudaCustomization(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE, primary_key=True)
@@ -41,6 +41,7 @@ class Skill(models.Model):
     base_cost = models.FloatField(default=0)
     increase_per_click = models.FloatField(default=0)
     growth_rate = models.FloatField(default=0)
+    unlocked = models.BooleanField(default=False)
 
 
 
