@@ -354,7 +354,7 @@ function saveManually() {
             'Content-Type': 'application/json',
             'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
         },
-        body: JSON.stringify({User_Skill:skills,Stat:stat,User_PowerUp:powerups})
+        body: JSON.stringify({User_Skill:skills,Stat:stat,User_PowerUp:powers})
     });
 }
 

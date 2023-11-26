@@ -5,6 +5,7 @@ let skills = [];
 let powers = [];
 let powerInShop = [];
 let totalPassiveIncome = 0;
+let purchasedPowerUps = [];
 
 document.addEventListener('DOMContentLoaded', fetchSkills);
 document.addEventListener('DOMContentLoaded', fetchPowers);
@@ -28,7 +29,7 @@ function showTab(tabId) {
     const selectedTab = document.getElementById(tabId);
     if (tabId === 'skills') {
         selectedTab.style.display = 'block';
-
+        updateSkillsUI();
     }
     else {
         selectedTab.style.display = 'flex';
@@ -53,17 +54,14 @@ function fetchSkills() {
         name: "Fire",
         level: 0,
         cost: 15,
-        unlocked: false,
-        upgrade1: "black.png",
-        upgrade1bought: false,
-        upgrade2: "black.png",
-        upgrade2bought: false,
-        upgrade3: "black.png",
-        upgrade3bought: false,
-        upgrade4: "black.png",
-        upgrade4bought: false,
-        upgrade5: "black.png",
-        upgrade5bought: false,
+        upgrades : [
+            {upgradeID: "Oil",upgradeImage : "black.png",bought: false},
+            {upgradeID: "Oil2",upgradeImage : "black.png",bought: false},
+            {upgradeID: "Oil3",upgradeImage : "black.png",bought: false},
+            {upgradeID: "Oil4",upgradeImage : "black.png",bought: false},
+            {upgradeID: "Oil5",upgradeImage : "black.png",bought: false},
+        ],
+        unlocked: false
     }, {
         skillID: "Skill2",
         baseIncome: 1,
@@ -74,11 +72,13 @@ function fetchSkills() {
         level: 0,
         cost: 100,
         unlocked: false,
-        upgrade1: "black.png",
-        upgrade2: "black.png",
-        upgrade3: "black.png",
-        upgrade4: "black.png",
-        upgrade5: "black.png",
+        upgrades : [
+            {upgradeID: "Cock",upgradeImage : "black.png",bought: false},
+            {upgradeID: "Cock2",upgradeImage : "black.png",bought: false},
+            {upgradeID: "Cock3",upgradeImage : "black.png",bought: false},
+            {upgradeID: "Cock4",upgradeImage : "black.png",bought: false},
+            {upgradeID: "COck5",upgradeImage : "black.png",bought: false},
+        ]
     }]
     updateSkillsUI();
 
@@ -90,7 +90,7 @@ function updateSkillsUI() {
     const skillsContainer = document.getElementById('skills');
 
     // Clear existing content in the container
-    //skillsContainer.innerHTML = '';
+    skillsContainer.innerHTML = '';
 
     // Loop through the skills and create HTML elements for each skill
     skills.forEach(skill => {
@@ -146,8 +146,8 @@ function updateSkillsUI() {
                 skill.level++;
                 skill.passive = calculatePassiveIncome(skill.level, skill.baseIncome);
 
-                console.log(skill.passive)
-                console.log(totalPassiveIncome)
+                //console.log(skill.passive)
+                //console.log(totalPassiveIncome)
                 // Update the skill cost (modify this based on your logic)
                 skill.cost = calculateNewCost(skill.level, skill.baseCost);
 
@@ -168,26 +168,30 @@ function updateSkillsUI() {
         const UpgradeImages = document.createElement('div');
         UpgradeImages.classList.add('UpgradeImages');
         skillRow.appendChild(UpgradeImages);
-
-        const Upgrade1 = document.createElement('img');
-        Upgrade1.src = skill.upgrade1; // Replace with your image URL
-        UpgradeImages.appendChild(Upgrade1);
-
-        const Upgrade2 = document.createElement('img');
-        Upgrade2.src = skill.upgrade2; // Replace with your image URL
-        UpgradeImages.appendChild(Upgrade2);
-
-        const Upgrade3 = document.createElement('img');
-        Upgrade3.src = skill.upgrade3; // Replace with your image URL
-        UpgradeImages.appendChild(Upgrade3);
-
-        const Upgrade4 = document.createElement('img');
-        Upgrade4.src = skill.upgrade4; // Replace with your image URL
-        UpgradeImages.appendChild(Upgrade4);
-
-        const Upgrade5 = document.createElement('img');
-        Upgrade5.src = skill.upgrade5; // Replace with your image URL
-        UpgradeImages.appendChild(Upgrade5);
+        let countUpgrade = 0;
+        powers.forEach(powerUp =>{
+            if(powerUp.purchased){
+                skill.upgrades.forEach(upgrade =>{
+                    console.log("upgradeID " + upgrade.upgradeID)
+                    console.log("powerUpID " + powerUp.powerupID)
+                    if(upgrade.upgradeID == powerUp.powerupID){
+                        countUpgrade++;
+                        const upgradeHTML = document.createElement('img');
+                        upgradeHTML.src = powerUp.image; // Replace with your image URL
+                        UpgradeImages.appendChild(upgradeHTML);
+                    }
+                })
+            } else{
+                if (countUpgrade < 5){
+                    countUpgrade++;
+                    const upgradeHTML = document.createElement('img');
+                    upgradeHTML.src = "black.png"; // Replace with your image URL
+                    UpgradeImages.appendChild(upgradeHTML);
+                }
+            }
+            console.log("purchased at Skill " + powerUp.purchased +" "+ powerUp.powerupID)
+            }
+        )
 
         // Finally, append the skillRow to the skillsContainer
         skillsContainer.appendChild(skillRow);
@@ -219,6 +223,38 @@ function fetchPowers() {
         image: "Oil.png"
     },
     {
+        powerupID: "Oil2",
+        skillID: "Skill1",
+        multiplier: 2,
+        cost: 1000,
+        purchased: false,
+        image: "Oil.png"
+    },
+    {
+        powerupID: "Oil3",
+        skillID: "Skill1",
+        multiplier: 2,
+        cost: 1000,
+        purchased: false,
+        image: "Oil.png"
+    },
+    {
+        powerupID: "Oil4",
+        skillID: "Skill1",
+        multiplier: 2,
+        cost: 1000,
+        purchased: false,
+        image: "Oil.png"
+    },
+    {
+        powerupID: "Oil5",
+        skillID: "Skill1",
+        multiplier: 2,
+        cost: 1000,
+        purchased: false,
+        image: "Oil.png"
+    },
+    {
         powerupID: "Cock",
         skillID: "Skill2",
         multiplier: 2,
@@ -234,10 +270,11 @@ function updatePower() {
     powerUpsStoreContainer.innerHTML = ''; // Clear existing content
     const purchasablePowerUps = powers.filter(powerUp => {
         const skill = skills.find(skill => skill.skillID === powerUp.skillID);
-        console.log(skill);
+        //console.log(skill);
+        console.log("purchased at Update Power " + powerUp.purchased +" "+ powerUp.powerupID)
         return skill && skill.unlocked && !powerUp.purchased;
     }).sort((a, b) => a.powerupID.localeCompare(b.powerupID)).slice(0, 4);
-    console.log(purchasablePowerUps);
+    //console.log(purchasablePowerUps);
     purchasablePowerUps.forEach(powerUp => {
         const skill = skills.find(skill => skill.skillID === powerUp.skillID);
 
@@ -288,8 +325,8 @@ function updatePower() {
 function buyPowerUp(powerUp) {
     const skill = skills.find(skill => skill.skillID === powerUp.skillID);
 
-    if (skill && money >= calculatePowerUpCost(powerUp)) {
-        money -= calculatePowerUpCost(powerUp);
+    if (skill && money >= powerUp.cost) {
+        money -= powerUp.cost;
 
         // Apply the power-up effects
         skill.passive *= powerUp.multiplier;
@@ -299,7 +336,7 @@ function buyPowerUp(powerUp) {
 
         // Update the UI
         updateMoney();
-        updatePowerUpsStore();
+        updatePower();
     } else {
         alert("Not enough money to buy this power-up!");
     }
