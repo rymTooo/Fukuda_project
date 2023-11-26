@@ -26,7 +26,12 @@ let totalPassiveIncome = 0;
 let money_per_click = 1;
 let click_counter = 0;
 let skills = [];// skill list composes of many skill objects.
-let powerups = []
+let powers = [];
+let powerInShop = [];
+
+document.addEventListener('DOMContentLoaded', fetchSkills);
+document.addEventListener('DOMContentLoaded', fetchPowers);
+
 function updateMoney() {
     totalPassiveIncome = 0;
     skills.forEach(skill => {
@@ -34,7 +39,7 @@ function updateMoney() {
     }); 
     cur_money += totalPassiveIncome;
     all_time_money += totalPassiveIncome
-    document.getElementById('money').textContent = cur_money;
+    document.getElementById('money').textContent = cur_money.toFixed(1);
 }
 setInterval(updateMoney, 1000); // Update score every second
 
@@ -76,43 +81,16 @@ function fetchSkills() {
             skills.push(n);
         }
     );
-    // skills = [{
-    //     skillID: "Skill1",//use the same value as skillname('Fire')
-    //     base_income: 0.1,//skill
-    //     growth_rate: 2,//skill
-    //     base_cost: 4,//skill
-    //     passive: 0,//calculate from base_income + level + growth rate
-    //     image: "../../static/game/Fire.png",
-    //     skill_name: "Fire",//skill
-    //     level: 1,//user skill
-    //     cost: 4,//calculate from level + base cost
-    //     upgrade1: "../../static/game/black.png",
-    //     upgrade2: "../../static/game/black.png",
-    //     upgrade3: "../../static/game/black.png",
-    //     upgrade4: "../../static/game/black.png",
-    //     upgrade5: "../../static/game/black.png",
-    //   },{
-    //     skillID: "Skill2",
-    //     base_income: 0.5,
-    //     growth_rate: 1.5,
-    //     base_cost: 10,
-    //     passive: 0,
-    //     image: "../../static/game/Dummy.png",
-    //     skill_name: "Cum",
-    //     level: 1,
-    //     cost: 40,
-    //     upgrade1: "../../static/game/black.png",
-    //     upgrade2: "../../static/game/black.png",
-    //     upgrade3: "../../static/game/black.png",
-    //     upgrade4: "../../static/game/black.png",
-    //     upgrade5: "../../static/game/black.png",
-    //   }]
-    updateSkillsUI(skills);
+    updateSkillsUI();
 
 }
 
+fetchPowers();
+fetchSkills();
+
+
 // Function to update the HTML with the new skills
-function updateSkillsUI(skills) {
+function updateSkillsUI() {
     const skillsContainer = document.getElementById('skills');
 
     // Clear existing content in the container
@@ -163,13 +141,16 @@ function updateSkillsUI(skills) {
             // Check if the player has enough money to buy the skill
             if (cur_money >= skill.cost) {
                 // Subtract the cost from the player's money
+                if (skill.unlocked == false) {
+                    skill.unlocked = true;
+                }
                 cur_money -= skill.cost;
 
                 // Increase the skill level
                 skill.level++;
                 console.log(skill.base_income)
                 console.log(skill.growth_rate)
-                skill.passive = calculatePassiveIncome(skill.level,skill.base_income,skill.growth_rate);
+                skill.passive = calculatePassiveIncome(skill.level,skill.base_income);
                 console.log(skill.passive)
                 console.log(totalPassiveIncome)
                 // Update the skill cost (modify this based on your logic)
@@ -178,7 +159,7 @@ function updateSkillsUI(skills) {
                 // Update the displayed information
                 skillLevel.textContent = 'Level: ' + skill.level;
                 skillCost.textContent = 'Cost: ' + skill.cost;
-                skillPassive.textContent = 'Passive: ' + skill.passive;
+                skillPassive.textContent = 'Passive: ' + skill.passive.toFixed(1);
                 updateMoney();
             } else {
                 // Display a message or take some action if the player doesn't have enough money
@@ -218,43 +199,110 @@ function updateSkillsUI(skills) {
     });
 }
 
-function calculateNewCost(base_cost,level) {
+function calculateNewCost(level,base_cost) {
     // Cost increases exponentially
-    return Math.floor(base_cost * Math.pow(1.1, level));
+    return Math.floor(base_cost * Math.pow(1.15, level));
 }
-function calculatePassiveIncome(level,base_income,growth_rate) {
-    // Passive income increases exponentially
-    //base_income = base_income || 2;
-    //growth_rate = growth_rate || 1.2;
+function calculatePassiveIncome(level,base_income) {
 
     // Use the skill's level to calculate passive income
-    return Math.floor(base_income * Math.pow(growth_rate,level));
+    return base_income * level;
 }
 
-// Fetch skills when the page loads
-fetchSkills();
+function fetchPowers() {
+    powers = [{
+        powerupID: "Oil",
+        skill_name: "Fire",
+        multiplier: 2,
+        cost: 1000,
+        purchased: false,
+        image: "Oil.png"
+    },
+    {
+        powerupID: "Cock",
+        skillID: "Skill2",
+        multiplier: 2,
+        cost: 2000,
+        purchased: false,
+        image: "Grinder.png"
+    }]
+    updatePower();
+}
 
 function updatePower() {
-    // Example variables, replace them with your actual variables
-    let pow1Price = 10;
-    let pow2Price = 50;
-    let pow3Price = 100;
-    let pow4Price = 500;
-    let pow1Name = "Oil";
-    let pow2Name = "Titanium";
-    let pow3Name = "Grinder";
-    let pow4Name = "Cloud";
+        const powerUpsStoreContainer = document.getElementById('powerups');
+        powerUpsStoreContainer.innerHTML = ''; // Clear existing content
+        const purchasablePowerUps = powers.filter(powerUp => {
+            const skill = skills.find(skill => skill.skill_name === powerUp.skill_name);
+            console.log(skill);
+            return skill && skill.unlocked && !powerUp.purchased;
+        }).sort((a, b) => a.powerupID.localeCompare(b.powerupID)).slice(0, 4);
+        console.log(purchasablePowerUps);
+        purchasablePowerUps.forEach(powerUp => {
+        const skill = skills.find(skill => skill.skillID === powerUp.skillID);
 
-    // Update the content of each statistic element
-    document.getElementById('pow1Name').textContent = pow1Name;
-    document.getElementById('pow2Name').textContent = pow2Name;
-    document.getElementById('pow3Name').textContent = pow3Name;
-    document.getElementById('pow4Name').textContent = pow4Name;
-    document.getElementById('pow1Price').textContent = pow1Price;
-    document.getElementById('pow2Price').textContent = pow2Price;
-    document.getElementById('pow3Price').textContent = pow3Price;
-    document.getElementById('pow4Price').textContent = pow4Price;
+        const powerUpRow = document.createElement('div');
+        powerUpRow.classList.add('PowContain');
+
+        // Create and append HTML elements for power-up details
+        const powerUpImageContainer = document.createElement('div');
+        powerUpImageContainer.classList.add('picPowContain');
+        powerUpRow.appendChild(powerUpImageContainer);
+
+        const powerUpImage = document.createElement('img');
+        powerUpImage.src = powerUp.image; // Replace with your image URL
+        powerUpImage.classList.add('picPow');
+        powerUpImageContainer.appendChild(powerUpImage);
+
+        const powerUpName = document.createElement('div');
+        powerUpName.textContent = powerUp.powerupID; // Replace with your power-up name property
+        powerUpName.classList.add('PowDesc');
+        powerUpRow.appendChild(powerUpName);
+
+        const powerUpButton = document.createElement('button');
+        powerUpButton.textContent = 'BUY'; // Replace with your purchase button text
+        powerUpButton.classList.add('PowButton');
+
+        const powerUpCoinImage = document.createElement('img');
+        powerUpCoinImage.src = 'Coin.png'; // Replace with your coin image URL
+        powerUpCoinImage.classList.add('PowCoin');
+        powerUpButton.appendChild(powerUpCoinImage);
+
+        const powerUpPrice = document.createElement('span');
+        powerUpPrice.textContent = powerUp.cost; // Replace with your power-up cost calculation
+        powerUpPrice.id = powerUp.powerupID + 'Price'; // Set a unique ID for the price span
+        powerUpButton.appendChild(powerUpPrice);
+
+        // Add a click event listener to buy the power-up
+        powerUpButton.addEventListener('click', () => {
+            buyPowerUp(powerUp);
+        });
+        powerUpRow.appendChild(powerUpButton);
+
+        // Finally, append the powerUpRow to the powerUpsStoreContainer
+        powerUpsStoreContainer.appendChild(powerUpRow);
+    });
 }
+
+function buyPowerUp(powerUp) {
+    const skill = skills.find(skill => skill.skillID === powerUp.skillID);
+
+    if (skill && money >= calculatePowerUpCost(powerUp)) {
+        money -= calculatePowerUpCost(powerUp);
+
+        // Apply the power-up effects
+        skill.passive *= powerUp.multiplier;
+
+        // Mark the power-up as purchased
+        powerUp.purchased = true;
+
+        // Update the UI
+        updateMoney();
+        updatePowerUpsStore();
+    } else {
+        alert("Not enough money to buy this power-up!");
+    }
+    }
 
 function updateStatistics() {
     // Example variables, replace them with your actual variables
@@ -280,7 +328,7 @@ hitbox.addEventListener('click', () => {
     cur_money+= money_per_click;
     all_time_money += money_per_click;
     click_counter++;
-    document.getElementById('money').textContent = cur_money;
+    document.getElementById('money').textContent = cur_money.toFixed(1);
     setTimeout(() => {
         swordman.classList.remove('SwingAnim');
     }, 700); // Adjust based on your swing animation duration
