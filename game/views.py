@@ -148,10 +148,23 @@ def data(request): #method for sending data from db to javascript
             skill["base_cost"] = i.skill_name.base_cost
             skill["level"] = i.level
             skills_list.append(skill)
-            print(skill)
+            print(skill,"skill")
+        main_dict["skill"] = skills_list
+        
         #load power up
-        main_dict['skill'] = skills_list
-        data = json.dumps(main_dict)
+        powerups_list = []
+        powerups = User_PowerUp.objects.raw("select * from game_user_powerups where user_id = %s;", [user.id])
+        for i in powerups:
+            powerup = {}
+            powerup["powerupID"] = i.powerup_name.powerup_name
+            powerup["skill_name"] = i.powerup_name.skill_name
+            powerup["multiplier"] = i.powerup_name.multiply
+            powerup["cost"] = i.powerup_name.cost
+            powerup["purchased"] = i.acquired
+            powerups_list.append(powerup)
+            print(powerup,"powerup")
+        main_dict["powerup"] = powerups_list
+
         return JsonResponse(main_dict)
     else:
         return JsonResponse({"error": "user not authenticated"}, status=401)
