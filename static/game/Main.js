@@ -15,12 +15,9 @@ function get_data() {
         }
     };
     xhr.send();
-    // fetchPowers();// should move into get data method and then just run get data method once.
-    fetchSkills();
 }
 
 
-console.log(loaded_data);
 //updating money
 let cur_money = 0;
 let all_time_money = 0;
@@ -218,7 +215,7 @@ function fetchPowers() {
         powerup =>{
             n = {
                 ...powerup,
-                image: "../../static/game/"+skill.skill_name+".png"
+                image: "../../static/game/"+powerup.skill_name+".png"
             };
             powers.push(n);
         }

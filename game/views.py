@@ -158,14 +158,14 @@ def data(request): #method for sending data from db to javascript
         for i in powerups:
             powerup = {}
             powerup["powerupID"] = i.powerup_name.powerup_name
-            powerup["skill_name"] = i.powerup_name.skill_name
+            powerup["skill_name"] = i.powerup_name.skill_name.skill_name
             powerup["multiplier"] = i.powerup_name.multiply
             powerup["cost"] = i.powerup_name.cost
             powerup["purchased"] = i.acquired
             powerups_list.append(powerup)
             print(powerup,"powerup")
         main_dict["powerup"] = powerups_list
-        
+
         #load...
 
         return JsonResponse(main_dict)
