@@ -32,7 +32,7 @@ let totalPassiveIncome = loaded_data["stat"]["passive_income"];
 let money_per_click = loaded_data["stat"]["money_per_click"];
 let click_counter = loaded_data["stat"]["click_counter"];
 
-document.getElementById('money').textContent = cur_money.toFixed(1);
+document.getElementById('money').textContent = Math.floor(cur_money);
 
 document.addEventListener('DOMContentLoaded', fetchSkills);
 document.addEventListener('DOMContentLoaded', fetchPowers);
@@ -44,7 +44,7 @@ function updateMoney() {
     }); 
     cur_money += totalPassiveIncome;
     all_time_money += totalPassiveIncome
-    document.getElementById('money').textContent = cur_money.toFixed(1);
+    document.getElementById('money').textContent = Math.floor(cur_money);
 }
 setInterval(updateMoney, 1000); // Update score every second
 
@@ -319,16 +319,12 @@ function buyPowerUp(powerUp) {
     }
 
 function updateStatistics() {
-    // Example variables, replace them with your actual variables
-
-
-
-    // Update the content of each statistic element
-    document.getElementById('CurMoneyStat').textContent = cur_money;
+      // Update the content of each statistic element
+    document.getElementById('CurMoneyStat').textContent = Math.floor(cur_money);
     document.getElementById('AllClickStat').textContent = click_counter;
-    document.getElementById('AllMoneyStat').textContent = all_time_money;
-    document.getElementById('PassiveStat').textContent = totalPassiveIncome;
-    document.getElementById('PerClickStat').textContent = money_per_click;
+    document.getElementById('AllMoneyStat').textContent = Math.floor(all_time_money);
+    document.getElementById('PassiveStat').textContent = Math.floor(totalPassiveIncome);
+    document.getElementById('PerClickStat').textContent = Math.floor(money_per_click);
 }
 
 //Clicking
@@ -339,7 +335,7 @@ hitbox.addEventListener('click', () => {
     cur_money+= money_per_click;
     all_time_money += money_per_click;
     click_counter++;
-    document.getElementById('money').textContent = cur_money.toFixed(1);
+    document.getElementById('money').textContent = Math.floor(cur_money);
     setTimeout(() => {
         swordman.classList.remove('SwingAnim');
     }, 700); // Adjust based on your swing animation duration
