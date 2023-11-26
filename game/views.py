@@ -121,7 +121,7 @@ def save_data(request):
                 # Save USER_POWERUP data to database
                 for powerup in data_user_power_up:
                     user_powerup = get_object_or_404(User_PowerUp, user = user, powerup_name = powerup["powerup_name"])
-                    user_powerup.accuired = powerup["accuired"]
+                    user_powerup.acquired = powerup["purchased"]
                     user_powerup.save()
                     print(f"Save powerup: {powerup['powerup_name']} for user: {user} Successfully")
                 

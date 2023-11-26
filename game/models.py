@@ -3,11 +3,11 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Stat(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    all_time_money = models.BigIntegerField(default=0,max_length=255)
-    passiveincome = models.BigIntegerField(default=0,max_length=255)
-    current_money = models.BigIntegerField(default=0,max_length=255)
-    money_per_click = models.IntegerField(default=0,max_length=255)
-    click_counter = models.BigIntegerField(default=0,max_length=255)
+    all_time_money = models.BigIntegerField(default=0)
+    passiveincome = models.BigIntegerField(default=0)
+    current_money = models.BigIntegerField(default=0)
+    money_per_click = models.IntegerField(default=0)
+    click_counter = models.BigIntegerField(default=0)
 
 
 class Setting(models.Model):
@@ -41,6 +41,7 @@ class Skill(models.Model):
     base_cost = models.FloatField(default=0)
     increase_per_click = models.FloatField(default=0)
     growth_rate = models.FloatField(default=0)
+    unlocked = models.BooleanField(default=0)
 
 
 
@@ -58,4 +59,4 @@ class PowerUp(models.Model):
 class User_PowerUp(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     powerup_name = models.ForeignKey(PowerUp, on_delete=models.CASCADE)
-    accuired = models.BooleanField(default=0)
+    acquired = models.BooleanField(default=0)
