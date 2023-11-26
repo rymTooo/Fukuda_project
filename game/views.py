@@ -13,7 +13,7 @@ def main_page(request):
     if user.is_authenticated:
         print(f"\n--------------------------------\nCREATING data for user '{user.username}'\n")
         #create User_Skill data
-        all_skills = Skill.objects.all()
+        all_skills = Skill.objects.raw("select * from game_skill order by base_cost")
         for skill in all_skills:
             # Retrieve or create a User_Skill instance for the user and skill
             user_skill, user_skill_created = User_Skill.objects.get_or_create(user=user, skill_name=skill)
@@ -51,7 +51,7 @@ def main_page(request):
             else:
                 print(f"USER_EVENT, event '{event.event_name}' already exists.")
         #create USER_POWERUP
-        all_powerups = PowerUp.objects.all()
+        all_powerups = PowerUp.objects.raw("select * from game_powerup order by cost")
         for powerup in all_powerups:
             # Retrieve or create a User_Skill instance for the user and skill
             user_powerup, user_powerup_created = User_PowerUp.objects.get_or_create(user=user, powerup_name=powerup)
