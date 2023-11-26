@@ -166,7 +166,18 @@ def data(request): #method for sending data from db to javascript
             print(powerup,"powerup")
         main_dict["powerup"] = powerups_list
 
-        #load...
+        #load stat
+        stat_dict = {}
+        loaded_stat = Stat.objects.raw("select * from game_stat where user_id = %s;", [user.id])
+        for i in loaded_stat:
+            stat_dict["all_time_money"] = i.all_time_money
+            stat_dict["passive_income"] = i.passiveincome
+            stat_dict["current_money"] = i.current_money
+            stat_dict["money_per_click"] = i.money_per_click
+            stat_dict["click_counter"] = i.click_counter
+            print(stat_dict,"stat")
+        main_dict["stat"] = stat_dict
+
 
         return JsonResponse(main_dict)
     else:

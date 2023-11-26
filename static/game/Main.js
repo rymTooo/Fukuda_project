@@ -19,16 +19,20 @@ function get_data() {
 
 
 //updating money
-let cur_money = 0;
-let all_time_money = 0;
-let totalPassiveIncome = 0;
-let money_per_click = 1;
-let click_counter = 0;
+
 let skills = [];// skill list composes of many skill objects.
 let powers = [];
 let powerInShop = [];
 
 get_data();
+
+let cur_money = loaded_data["stat"]["current_money"];
+let all_time_money = loaded_data["stat"]["all_time_money"];
+let totalPassiveIncome = loaded_data["stat"]["passive_income"];
+let money_per_click = loaded_data["stat"]["money_per_click"];
+let click_counter = loaded_data["stat"]["click_counter"];
+
+document.getElementById('money').textContent = cur_money.toFixed(1);
 
 document.addEventListener('DOMContentLoaded', fetchSkills);
 document.addEventListener('DOMContentLoaded', fetchPowers);
@@ -316,18 +320,15 @@ function buyPowerUp(powerUp) {
 
 function updateStatistics() {
     // Example variables, replace them with your actual variables
-    const currentMoney = 1000;
-    const allTimeClicks = 500;
-    const allTimeMoney = 1500;
-    const passiveIncome = 200;
-    const moneyPerClick = 2;
+
+
 
     // Update the content of each statistic element
-    document.getElementById('CurMoneyStat').textContent = currentMoney;
-    document.getElementById('AllClickStat').textContent = allTimeClicks;
-    document.getElementById('AllMoneyStat').textContent = allTimeMoney;
-    document.getElementById('PassiveStat').textContent = passiveIncome;
-    document.getElementById('PerClickStat').textContent = moneyPerClick;
+    document.getElementById('CurMoneyStat').textContent = cur_money;
+    document.getElementById('AllClickStat').textContent = click_counter;
+    document.getElementById('AllMoneyStat').textContent = all_time_money;
+    document.getElementById('PassiveStat').textContent = totalPassiveIncome;
+    document.getElementById('PerClickStat').textContent = money_per_click;
 }
 
 //Clicking
