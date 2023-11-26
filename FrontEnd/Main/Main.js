@@ -54,12 +54,12 @@ function fetchSkills() {
         name: "Fire",
         level: 0,
         cost: 15,
-        upgrades : [
-            {upgradeID: "Oil",upgradeImage : "black.png",bought: false},
-            {upgradeID: "Oil2",upgradeImage : "black.png",bought: false},
-            {upgradeID: "Oil3",upgradeImage : "black.png",bought: false},
-            {upgradeID: "Oil4",upgradeImage : "black.png",bought: false},
-            {upgradeID: "Oil5",upgradeImage : "black.png",bought: false},
+        upgrades: [
+            { upgradeID: "Oil", upgradeImage: "black.png" },
+            { upgradeID: "Oil2", upgradeImage: "black.png" },
+            { upgradeID: "Oil3", upgradeImage: "black.png" },
+            { upgradeID: "Oil4", upgradeImage: "black.png" },
+            { upgradeID: "Oil5", upgradeImage: "black.png" },
         ],
         unlocked: false
     }, {
@@ -72,12 +72,12 @@ function fetchSkills() {
         level: 0,
         cost: 100,
         unlocked: false,
-        upgrades : [
-            {upgradeID: "Cock",upgradeImage : "black.png",bought: false},
-            {upgradeID: "Cock2",upgradeImage : "black.png",bought: false},
-            {upgradeID: "Cock3",upgradeImage : "black.png",bought: false},
-            {upgradeID: "Cock4",upgradeImage : "black.png",bought: false},
-            {upgradeID: "COck5",upgradeImage : "black.png",bought: false},
+        upgrades: [
+            { upgradeID: "Cock", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock2", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock3", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock4", upgradeImage: "black.png", bought: false },
+            { upgradeID: "COck5", upgradeImage: "black.png", bought: false },
         ]
     }]
     updateSkillsUI();
@@ -144,7 +144,7 @@ function updateSkillsUI() {
 
                 // Increase the skill level
                 skill.level++;
-                skill.passive = calculatePassiveIncome(skill.level, skill.baseIncome);
+                skill.passive = calculatePassiveIncome(skill.level, skill.baseIncome,boughtPower);
 
                 //console.log(skill.passive)
                 //console.log(totalPassiveIncome)
@@ -169,7 +169,32 @@ function updateSkillsUI() {
         UpgradeImages.classList.add('UpgradeImages');
         skillRow.appendChild(UpgradeImages);
         let countUpgrade = 0;
-        powers.forEach(powerUp =>{
+        let boughtPower = [];
+        skill.upgrades.forEach(upgrade => {
+
+            powers.forEach(powerUp => {
+                if (powerUp.purchased) {
+                    console.log("upgradeID " + upgrade.upgradeID)
+                    console.log("powerUpID " + powerUp.powerupID)
+                    if (upgrade.upgradeID == powerUp.powerupID) {
+                        boughtPower.push(powerUp);
+                        countUpgrade++;
+                        const upgradeHTML = document.createElement('img');
+                        upgradeHTML.src = powerUp.image; // Replace with your image URL
+                        UpgradeImages.appendChild(upgradeHTML);
+                    }
+                }
+                console.log("purchased at Skill " + powerUp.purchased + " " + powerUp.powerupID);
+            }
+            )
+        })
+
+        for (let i = 0; i < 5 - countUpgrade; i++) {
+            const upgradeHTML = document.createElement('img');
+            upgradeHTML.src = "black.png"; // Replace with your image URL
+            UpgradeImages.appendChild(upgradeHTML);
+        }
+        /*powers.forEach(powerUp =>{
             if(powerUp.purchased){
                 skill.upgrades.forEach(upgrade =>{
                     console.log("upgradeID " + upgrade.upgradeID)
@@ -192,7 +217,7 @@ function updateSkillsUI() {
             console.log("purchased at Skill " + powerUp.purchased +" "+ powerUp.powerupID)
             }
         )
-
+        */
         // Finally, append the skillRow to the skillsContainer
         skillsContainer.appendChild(skillRow);
     });
@@ -202,13 +227,17 @@ function calculateNewCost(level, baseCost) {
     // Cost increases exponentially
     return Math.floor(baseCost * Math.pow(1.15, level));
 }
-function calculatePassiveIncome(level, baseIncome) {
+function calculatePassiveIncome(level, baseIncome,boughtPowers) {
     // Passive income increases exponentially
     //baseIncome = baseIncome || 2;
     //growthRate = growthRate || 1.2;
 
     // Use the skill's level to calculate passive income
-    return baseIncome * level;
+    let passive =  baseIncome * level
+    boughtPowers.forEach(power => {
+        passive *= power.multiplier;
+    })
+    return passive;
 }
 
 // Fetch skills when the page loads
@@ -218,31 +247,35 @@ function fetchPowers() {
         powerupID: "Oil",
         skillID: "Skill1",
         multiplier: 2,
-        cost: 1000,
+        cost: 500,
         purchased: false,
+        skillReq: 1,
         image: "Oil.png"
     },
     {
         powerupID: "Oil2",
         skillID: "Skill1",
         multiplier: 2,
-        cost: 1000,
+        cost: 10000,
         purchased: false,
+        skillReq: 10,
         image: "Oil.png"
     },
     {
         powerupID: "Oil3",
         skillID: "Skill1",
         multiplier: 2,
-        cost: 1000,
+        cost: 100000,
         purchased: false,
+        skillReq: 25,
         image: "Oil.png"
     },
     {
         powerupID: "Oil4",
         skillID: "Skill1",
         multiplier: 2,
-        cost: 1000,
+        cost: 1.0e+8,
+        skillReq: 100,
         purchased: false,
         image: "Oil.png"
     },
@@ -250,7 +283,8 @@ function fetchPowers() {
         powerupID: "Oil5",
         skillID: "Skill1",
         multiplier: 2,
-        cost: 1000,
+        cost: 1.0e+9,
+        skillReq: 200,
         purchased: false,
         image: "Oil.png"
     },
@@ -258,7 +292,8 @@ function fetchPowers() {
         powerupID: "Cock",
         skillID: "Skill2",
         multiplier: 2,
-        cost: 2000,
+        cost: 1000,
+        skillReq: 1,
         purchased: false,
         image: "Grinder.png"
     }]
@@ -271,8 +306,8 @@ function updatePower() {
     const purchasablePowerUps = powers.filter(powerUp => {
         const skill = skills.find(skill => skill.skillID === powerUp.skillID);
         //console.log(skill);
-        console.log("purchased at Update Power " + powerUp.purchased +" "+ powerUp.powerupID)
-        return skill && skill.unlocked && !powerUp.purchased;
+        console.log("purchased at Update Power " + powerUp.purchased + " " + powerUp.powerupID)
+        return skill && skill.unlocked && !powerUp.purchased && (skill.level >= powerUp.skillReq);
     }).sort((a, b) => a.powerupID.localeCompare(b.powerupID)).slice(0, 4);
     //console.log(purchasablePowerUps);
     purchasablePowerUps.forEach(powerUp => {
@@ -363,7 +398,7 @@ const swordman = document.getElementById('swordman');
 
 hitbox.addEventListener('click', () => {
     swordman.classList.add('SwingAnim');
-    money = money + 100;
+    money = money + 10000;
     document.getElementById('money').textContent = money.toFixed(1);
     setTimeout(() => {
         swordman.classList.remove('SwingAnim');
