@@ -6,9 +6,26 @@ let powers = [];
 let powerInShop = [];
 let totalPassiveIncome = 0;
 let purchasedPowerUps = [];
-
+let theme = "Background.png"
+fetchPowers();
+fetchSkills();
+startAudio();
 document.addEventListener('DOMContentLoaded', fetchSkills);
 document.addEventListener('DOMContentLoaded', fetchPowers);
+document.addEventListener('DOMContentLoaded', startAudio);
+
+//Clicking
+const swordman = document.getElementById('swordman');
+
+hitbox.addEventListener('click', () => {
+    swordman.classList.add('SwingAnim');
+    money = money + 10000;
+    document.getElementById('money').textContent = money.toFixed(1);
+    setTimeout(() => {
+        swordman.classList.remove('SwingAnim');
+    }, 700); // Adjust based on your swing animation duration
+});
+
 
 function updateMoney() {
     totalPassiveIncome = 0;
@@ -83,8 +100,7 @@ function fetchSkills() {
     updateSkillsUI();
 
 }
-fetchPowers();
-fetchSkills();
+
 // Function to update the HTML with the new skills
 function updateSkillsUI() {
     const skillsContainer = document.getElementById('skills');
@@ -125,7 +141,7 @@ function updateSkillsUI() {
         skillDetails.appendChild(skillCost);
 
         const skillPassive = document.createElement('p');
-        skillPassive.textContent = 'Passive: ' + skill.passive; // Replace with your skill level property
+        skillPassive.textContent = 'Passive: ' + skill.passive.toFixed(1); // Replace with your skill level property
         skillDetails.appendChild(skillPassive);
 
         const skillButton = document.createElement('button');
@@ -144,7 +160,7 @@ function updateSkillsUI() {
 
                 // Increase the skill level
                 skill.level++;
-                skill.passive = calculatePassiveIncome(skill.level, skill.baseIncome,boughtPower);
+                skill.passive = calculatePassiveIncome(skill.level, skill.baseIncome, boughtPower);
 
                 //console.log(skill.passive)
                 //console.log(totalPassiveIncome)
@@ -174,8 +190,8 @@ function updateSkillsUI() {
 
             powers.forEach(powerUp => {
                 if (powerUp.purchased) {
-                    console.log("upgradeID " + upgrade.upgradeID)
-                    console.log("powerUpID " + powerUp.powerupID)
+                    //console.log("upgradeID " + upgrade.upgradeID)
+                    //console.log("powerUpID " + powerUp.powerupID)
                     if (upgrade.upgradeID == powerUp.powerupID) {
                         boughtPower.push(powerUp);
                         countUpgrade++;
@@ -184,7 +200,7 @@ function updateSkillsUI() {
                         UpgradeImages.appendChild(upgradeHTML);
                     }
                 }
-                console.log("purchased at Skill " + powerUp.purchased + " " + powerUp.powerupID);
+                //console.log("purchased at Skill " + powerUp.purchased + " " + powerUp.powerupID);
             }
             )
         })
@@ -227,13 +243,13 @@ function calculateNewCost(level, baseCost) {
     // Cost increases exponentially
     return Math.floor(baseCost * Math.pow(1.15, level));
 }
-function calculatePassiveIncome(level, baseIncome,boughtPowers) {
+function calculatePassiveIncome(level, baseIncome, boughtPowers) {
     // Passive income increases exponentially
     //baseIncome = baseIncome || 2;
     //growthRate = growthRate || 1.2;
 
     // Use the skill's level to calculate passive income
-    let passive =  baseIncome * level
+    let passive = baseIncome * level
     boughtPowers.forEach(power => {
         passive *= power.multiplier;
     })
@@ -306,7 +322,7 @@ function updatePower() {
     const purchasablePowerUps = powers.filter(powerUp => {
         const skill = skills.find(skill => skill.skillID === powerUp.skillID);
         //console.log(skill);
-        console.log("purchased at Update Power " + powerUp.purchased + " " + powerUp.powerupID)
+        //console.log("purchased at Update Power " + powerUp.purchased + " " + powerUp.powerupID)
         return skill && skill.unlocked && !powerUp.purchased && (skill.level >= powerUp.skillReq);
     }).sort((a, b) => a.powerupID.localeCompare(b.powerupID)).slice(0, 4);
     //console.log(purchasablePowerUps);
@@ -393,14 +409,79 @@ function updateStatistics() {
     document.getElementById('PerClickStat').textContent = moneyPerClick;
 }
 
-//Clicking
-const swordman = document.getElementById('swordman');
+// JavaScript functions for Settings tab
+function changeUsername() {
+    const newUsername = document.getElementById('usernameInput').value;
+    // Implement logic to update the username in the game
 
-hitbox.addEventListener('click', () => {
-    swordman.classList.add('SwingAnim');
-    money = money + 10000;
-    document.getElementById('money').textContent = money.toFixed(1);
-    setTimeout(() => {
-        swordman.classList.remove('SwingAnim');
-    }, 700); // Adjust based on your swing animation duration
-});
+}
+
+function saveGame() {
+    // Implement logic to save the game state
+
+    alert('Game saved I NA HEE');
+}
+
+function getComboA(selectObject) {
+    var value = selectObject.value;  
+    console.log(value);
+  }
+// Fetch themes, initialize settings, etc. based on your game structure
+function changeTheme(teem) {
+    console.log(teem)
+    // Set the background variable or update the background style based on the selected theme
+    switch (teem) {
+        case 'Jungle':
+            theme = "Background.png";
+            break;
+        case 'Volcano':
+            theme = "Volcano.jpg";
+            break;
+        case 'Space':
+            theme = "Space.jpg";
+            break;
+        // Add more cases for additional themes
+        default:
+            // Set a default background in case the theme is not recognized
+            theme = "Background.png";
+    }
+    updateBackground();
+}
+function updateBackground(){
+    document.getElementById('background').src = theme;
+    console.log(theme)
+}
+
+function startAudio() {
+    const backgroundAudio = document.getElementById('backgroundAudio');
+    backgroundAudio.play();
+    console.log("audio play")
+}
+const volumeSlider = document.getElementById('volumeSlider');
+    const audio1 = document.getElementById('backgroundAudio');
+    //const audio2 = document.getElementById('audio2');
+
+    // Set initial volume
+    audio1.volume = volumeSlider.value;
+    //audio2.volume = volumeSlider.value;
+
+    // Update volume when the slider changes
+    volumeSlider.addEventListener('input', function() {
+        const volumeValue = this.value;
+        audio1.volume = volumeValue;
+        //audio2.volume = volumeValue;
+    });
+// Example function to initialize settings
+function initializeSettings() {
+    // Fetch and set the initial values for settings (volume, theme, etc.)
+    const volumeSlider = document.getElementById('volumeSlider');
+    const themeSelect = document.getElementById('themeSelect');
+    const notificationToggle = document.getElementById('notificationToggle');
+    const usernameInput = document.getElementById('usernameInput');
+
+    // Set initial values (replace with actual values from your game state)
+    volumeSlider.value = initialVolumeValue;
+    themeSelect.value = initialThemeValue;
+    notificationToggle.checked = initialNotificationValue;
+    usernameInput.value = initialUsername;
+}

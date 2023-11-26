@@ -18,7 +18,7 @@
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
         <div class="Picture">
-            <img src="Background.png">
+            <img id="background" src="Background.png">
             <!--<img src="Fukuda.png" class="fukuda">-->
             <img src="Coin.png" class="coin">
             <div class="Character" id="swordman"></div>
@@ -40,7 +40,8 @@
                     <img src="Fire.png" alt="Skill Image" class="SkillImage">
                     <h3>Fire</h3>
                     <p>Level: <span class="skillLevel">1</span></p>
-                    <button class="BuyButton">Buy <img class="SkillCoin" src="Coin.png"><span > 13222</span></button>
+                    <button class="BuyButton">Buy <img class="SkillCoin"
+                            src="Coin.png"><span> 13222</span></button>
                     <div class="UpgradeImages">
                         <img src="black.png" alt="Upgrade 1">
                         <img src="black.png" alt="Upgrade 2">
@@ -49,41 +50,10 @@
                         <img src="black.png" alt="Upgrade 5">
                     </div>
                 </div>
-                
+
             </div>
             <div id="powerups" class="tabContent">
-                <div class="PowContain" id="pow1">
-                    <div class="picPowContain">
-                        <img class="picPow" src="Oil.png">
-                    </div>
-                    <div class="PowDesc" id="pow1Name">Oil</div>
-                    <button class="PowButton">BUY <img class="PowCoin"
-                            src="Coin.png"><span id="pow1Price"> 13</span></button>>
-                </div>
-                <div class="PowContain" id="pow2">
-                    <div class="picPowContain">
-                        <img class="picPow" src="Titanium.png">
-                    </div>
-                    <div class="PowDesc" id="pow2Name">Titanium</div>
-                    <button class="PowButton">BUY <img class="PowCoin"
-                            src="Coin.png"><span id="pow2Price"> 200</span></button>
-                </div>
-                <div class="PowContain" id="pow3">
-                    <div class="picPowContain">
-                        <img class="picPow" src="Grinder.png">
-                    </div>
-                    <div class="PowDesc" id="pow3Name">Grinder</div>
-                    <button class="PowButton">BUY <img class="PowCoin"
-                            src="Coin.png"><span id="pow3Price"> 500</span></button>
-                </div>
-                <div class="PowContain" id="pow4">
-                    <div class="picPowContain">
-                        <img class="picPow" src="Cloud.png">
-                    </div>
-                    <div class="PowDesc" id="pow4Name">Cloud</div>
-                    <button class="PowButton">BUY <img class="PowCoin"
-                            src="Coin.png"><span id="pow4Price"> 600</span></button>
-                </div>
+
             </div>
             <div id="customisation" class="tabContent">
                 customisation
@@ -96,8 +66,48 @@
                 <p class="rowStat">Money per Click<br> <span id="PerClickStat">500</span></p>
             </div>
             <div id="setting" class="tabContent">
-                Setting
+                <!-- Volume Slider -->
+                <div class="settingOption">
+                    <label for="volumeSlider">Volume:</label>
+                    <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="1">
+                </div>
+
+                <!-- Theme Selection -->
+                <div class="settingOption">
+                    <label for="themeSelect">Theme:</label>
+                    <select name="themeSelect" id="themeSelect" onchange="changeTheme(this.value)">
+                        <option value="Jungle">Jungle</option>
+                        <option value="Volcano">Volcano</option>
+                        <option value="Space">Space</option>
+                        <!-- Add more theme options as needed -->
+                    </select>
+                </div>
+
+                <!-- Notification Toggle -->
+                <div class="settingOption">
+                    <label for="notificationToggle">Enable Notifications:</label>
+                    <input type="checkbox" id="notificationToggle">
+                </div>
+
+                <!-- Change Username -->
+                <div class="settingOption">
+                    <label for="usernameInput">Change Username:</label>
+                    <form>
+                        <input type="text" id="usernameInput"
+                            placeholder="New Username">
+                        <button onclick="changeUsername()">Save</button>
+                    </form>
+                </div>
+
+                <!-- Save Game Button -->
+                <div class="settingOption">
+                    <button onclick="saveGame()">Save Game</button>
+                </div>
             </div>
+            <audio loop id="backgroundAudio" >
+                <source src="JungleMusic.mp3" type="audio/mp3">
+                Your browser does not support the audio element.
+            </audio>
             <script src="Main.js" async defer></script>
         </body>
     </html>
