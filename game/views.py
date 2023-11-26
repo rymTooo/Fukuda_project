@@ -103,6 +103,7 @@ def save_data(request):
                 for skill in data_user_skill:
                     user_skill = get_object_or_404(User_Skill, user = user, skill_name = skill["skill_name"])
                     user_skill.level = skill["level"]
+                    user_skill.unlocked = skill["unlocked"]
                     user_skill.save()
                     print(f"Save skill: {skill['skill_name']} for user: '{user}' Successfully")
 
