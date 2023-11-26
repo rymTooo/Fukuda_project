@@ -59,4 +59,4 @@ class PowerUp(models.Model):
 class User_PowerUp(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     powerup_name = models.ForeignKey(PowerUp, on_delete=models.CASCADE)
-    accuired = models.BooleanField(default=0)
+    acquired = models.BooleanField(default=False)
