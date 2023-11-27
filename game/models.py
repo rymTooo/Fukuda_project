@@ -52,8 +52,9 @@ class User_Skill(models.Model):
     unlocked = models.BooleanField(default=0)
 
 class PowerUp(models.Model):
+    powerup_id = models.IntegerField(default=0, auto_created=True)
     powerup_name = models.CharField(max_length=255, primary_key=True)
-    cost = models.IntegerField()
+    cost = models.BigIntegerField()
     multiply = models.IntegerField()
     skill_name = models.ForeignKey(Skill,on_delete=models.CASCADE,default='name')
     skillReq = models.IntegerField(default=0)

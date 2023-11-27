@@ -14,7 +14,7 @@ function get_data() {
             }
         }
     };
-    xhr.send();
+    xhr.send();//if this thing error then might be because of wrong query in views.py
 }
 //updating money
 
@@ -99,13 +99,12 @@ function fetchSkills() {
                 upgrades: [
                     { upgradeID: powers[i]['powerupID'], upgradeImage: "../../static/game/black.png" },
                     { upgradeID: powers[i+1]['powerupID'], upgradeImage: "../../static/game/black.png" },
-                    // { upgradeID: powers[i+2]['powerupID'], upgradeImage: "../../static/game/black.png" },
-                    // { upgradeID: powers[i+3]['powerupID'], upgradeImage: "../../static/game/black.png" },
-                    // { upgradeID: powers[i+4]['powerupID'], upgradeImage: "../../static/game/black.png" },
+                    { upgradeID: powers[i+2]['powerupID'], upgradeImage: "../../static/game/black.png" },
                 ],
             };
+            //console.log(n);
             skills.push(n);
-            i = i + 2;//must change to i = i + 5 later if add more upgrade
+            i = i + 3;//must change to i = i + 5 later if add more upgrade
         }
     );
     updateSkillsUI();
@@ -152,10 +151,6 @@ function updateSkillsUI() {
         const skillCost = document.createElement('p');
         skillCost.textContent = 'Cost: ' + skill.cost; // Replace with your skill level property
         skillDetails.appendChild(skillCost);
-
-        const skillPassive = document.createElement('p');
-        skillPassive.textContent = 'Passive: ' + skill.passive.toFixed(1); // Replace with your skill level property
-        skillDetails.appendChild(skillPassive);
 
         const skillButton = document.createElement('button');
         skillButton.textContent = 'Buy'; // Replace with your skill level property
@@ -219,6 +214,11 @@ function updateSkillsUI() {
         })
         skill.passive = calculatePassiveIncome(skill.level,skill.base_income,boughtPower);
 
+        const skillPassive = document.createElement('p');
+        skillPassive.textContent = 'Passive: ' + skill.passive.toFixed(1); // Replace with your skill level property
+        skillDetails.appendChild(skillPassive);
+
+
         for (let i = 0; i < 5 - countUpgrade; i++) {
             const upgradeHTML = document.createElement('img');
             upgradeHTML.src = "../../static/game/black.png"; // Replace with your image URL
@@ -238,7 +238,6 @@ function calculatePassiveIncome(level,base_income,boughtPowers) {
 
     // Use the skill's level to calculate passive income
     let passive = base_income * level
-    console.log(typeof boughtPowers + "boughtpowers type");
     boughtPowers.forEach(power => {
         passive *= power.multiplier;
     })
@@ -255,6 +254,7 @@ function fetchPowers() {
                 ...powerup,
                 image: "../../static/game/"+powerup.skill_name+"_powerup.png"
             };
+            //console.log(n);
             powers.push(n);
         }
     );

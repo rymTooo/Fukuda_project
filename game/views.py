@@ -52,7 +52,7 @@ def main_page(request):
             else:
                 print(f"USER_EVENT, event '{event.event_name}' already exists.")
         #create USER_POWERUP
-        all_powerups = PowerUp.objects.raw("select * from game_powerup order by cost")
+        all_powerups = PowerUp.objects.raw("select * from game_powerup order by powerup_id")
         for powerup in all_powerups:
             # Retrieve or create a User_Skill instance for the user and skill
             user_powerup, user_powerup_created = User_PowerUp.objects.get_or_create(user=user, powerup_name=powerup)
