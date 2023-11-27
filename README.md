@@ -113,7 +113,7 @@ EERD(link : https://drive.google.com/file/d/1qOWuVpo94jOJCajYtX2wI9oSJOAr3NXi/vi
   - steroid
   - chemical X
 - Triple slash
-  - quardruple slash
+  - quadruple slash
   - penta kill
   - Ace
 - Wind cutter
