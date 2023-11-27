@@ -1,4 +1,5 @@
 import json
+import time
 from django.shortcuts import render,redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User
@@ -61,9 +62,9 @@ def main_page(request):
             else:
                 print(f"USER_POWERUP, powerup '{powerup.powerup_name}' already exists.")
         print("--------------------------------\n")
-        
+        build_timestamp = int(time.time())
        
-        return render(request, 'Main.html', {"username": user})
+        return render(request, 'Main.html', {"username": user,"build_timestamp":build_timestamp})
     else:
         return render(request, "auth_app/login.html")
 

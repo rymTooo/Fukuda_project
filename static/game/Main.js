@@ -86,6 +86,7 @@ function showTab(tabId) {
 function fetchSkills() {
     // Make an API request to your server to get the skills
     // Example using Fetch API:
+    //{'skill_name': 'Fire', 'base_income': 0.1, 'growth_rate': 1.0, 'base_cost': 15.0, 'level': 79, 'unlocked': True}
     loaded_data['skill'].forEach(
         skill => {
             n = {...skill,
@@ -239,8 +240,9 @@ function calculatePassiveIncome(level,base_income,boughtPowers) {
     return passive;
 }
 
-
+//load powerup data from loaded_data to powers variable
 function fetchPowers() {
+    //{'powerupID': 'BlueFlame', 'skill_name': 'Fire', 'multiplier': 2, 'cost': 100, 'purchased': False}
     loaded_data["powerup"].forEach( 
         powerup =>{
             n = {
@@ -250,22 +252,6 @@ function fetchPowers() {
             powers.push(n);
         }
     );
-    // powers = [{
-    //     powerupID: "Oil",
-    //     skill_name: "Fire",
-    //     multiplier: 2,
-    //     cost: 1000,
-    //     purchased: false,
-    //     image: "Oil.png"
-    // },
-    // {
-    //     powerupID: "Cock",
-    //     skillID: "Skill2",
-    //     multiplier: 2,
-    //     cost: 2000,
-    //     purchased: false,
-    //     image: "Grinder.png"
-    // }]
     updatePower();
 }
 
