@@ -21,6 +21,7 @@ function get_data() {
 let skills = [];// skill list composes of many skill objects.
 let powers = [];
 let powerInShop = [];
+
 let theme = "../../static/game/Background.png"
 get_data();
 
@@ -87,25 +88,27 @@ function fetchSkills() {
     // Make an API request to your server to get the skills
     // Example using Fetch API:
     //{'skill_name': 'Fire', 'base_income': 0.1, 'growth_rate': 1.0, 'base_cost': 15.0, 'level': 79, 'unlocked': True}
+    var i = 0
     loaded_data['skill'].forEach(
         skill => {
+            var power_name = 
             n = {...skill,
-                passive: 0,//calculatePassiveIncome(skill.level,skill.base_income,skill.growth_rate),
+                passive: 0,
                 image: "../../static/game/"+skill.skill_name+".png",
-                cost: 0, //calculateNewCost(skill.level,skill.base_cost),//calculate from level + base cost
+                cost: calculateNewCost(skill.level,skill.base_cost),//calculate from level + base cost
                 upgrades: [
-                    { upgradeID: skill.skill_name+"", upgradeImage: "../../static/game/black.png" },
-                    { upgradeID: skill.skill_name+"2", upgradeImage: "../../static/game/black.png" },
-                    { upgradeID: skill.skill_name+"3", upgradeImage: "../../static/game/black.png" },
-                    { upgradeID: skill.skill_name+"4", upgradeImage: "../../static/game/black.png" },
-                    { upgradeID: skill.skill_name+"5", upgradeImage: "../../static/game/black.png" },
+                    { upgradeID: powers[i]['powerupID'], upgradeImage: "../../static/game/black.png" },
+                    { upgradeID: powers[i+1]['powerupID'], upgradeImage: "../../static/game/black.png" },
+                    // { upgradeID: powers[i+2]['powerupID'], upgradeImage: "../../static/game/black.png" },
+                    // { upgradeID: powers[i+3]['powerupID'], upgradeImage: "../../static/game/black.png" },
+                    // { upgradeID: powers[i+4]['powerupID'], upgradeImage: "../../static/game/black.png" },
                 ],
             };
             skills.push(n);
+            i = i + 2;//must change to i = i + 5 later if add more upgrade
         }
     );
     updateSkillsUI();
-
 }
 
 
@@ -214,6 +217,7 @@ function updateSkillsUI() {
             }
             )
         })
+        skill.passive = calculatePassiveIncome(skill.level,skill.base_income,boughtPower);
 
         for (let i = 0; i < 5 - countUpgrade; i++) {
             const upgradeHTML = document.createElement('img');
@@ -243,12 +247,13 @@ function calculatePassiveIncome(level,base_income,boughtPowers) {
 
 //load powerup data from loaded_data to powers variable
 function fetchPowers() {
+    
     //{'powerupID': 'BlueFlame', 'skill_name': 'Fire', 'multiplier': 2, 'cost': 100, 'purchased': False}
     loaded_data["powerup"].forEach( 
         powerup =>{
             n = {
                 ...powerup,
-                image: "../../static/game/"+powerup.skill_name+".png"
+                image: "../../static/game/"+powerup.skill_name+"_powerup.png"
             };
             powers.push(n);
         }
