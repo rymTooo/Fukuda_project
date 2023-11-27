@@ -160,6 +160,7 @@ def data(request): #method for sending data from db to javascript
             powerup["skill_name"] = i.powerup_name.skill_name.skill_name
             powerup["multiplier"] = i.powerup_name.multiply
             powerup["cost"] = i.powerup_name.cost
+            powerup["skillReq"] = i.powerup_name.skillReq
             powerup["purchased"] = i.acquired
             powerups_list.append(powerup)
             print(powerup,"powerup")

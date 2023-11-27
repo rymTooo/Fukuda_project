@@ -56,6 +56,7 @@ class PowerUp(models.Model):
     cost = models.IntegerField()
     multiply = models.IntegerField()
     skill_name = models.ForeignKey(Skill,on_delete=models.CASCADE,default='name')
+    skillReq = models.IntegerField(default=0)
 
 class User_PowerUp(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
