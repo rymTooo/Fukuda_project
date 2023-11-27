@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Fukuda Clicker</title>
+        <meta name="description" content>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="styles.css">
+
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+        <div class="Picture">
+            <img id="background" src="Background.png">
+            <!--<img src="Fukuda.png" class="fukuda">-->
+            <img src="Coin.png" class="coin">
+            <div class="Character" id="swordman"></div>
+            <div class="CharacterHitbox" id="hitbox">Test</div>
+            <div class="DisCurMoney"><span id="money">0</span></div>
+
+            <img src="Dummy.png" class="dummy">
+        </div>
+        <div class="Navigation">
+            <div onclick="showTab('skills')" class="tab">Skills</div>
+            <div onclick="showTab('powerups')" class="tab">Powerups</div>
+            <div onclick="showTab('customisation')" class="tab">Customisation</div>
+            <div onclick="showTab('statistics')" class="tab">Statistics</div>
+            <div onclick="showTab('setting')" class="tab">Setting</div>
+        </div>
+        <div class="Content">
+            <div id="skills" class="tabContent active">
+                <div class="SkillRow">
+                    <img src="Fire.png" alt="Skill Image" class="SkillImage">
+                    <h3>Fire</h3>
+                    <p>Level: <span class="skillLevel">1</span></p>
+                    <button class="BuyButton">Buy <img class="SkillCoin"
+                            src="Coin.png"><span> 13222</span></button>
+                    <div class="UpgradeImages">
+                        <img src="black.png" alt="Upgrade 1">
+                        <img src="black.png" alt="Upgrade 2">
+                        <img src="black.png" alt="Upgrade 3">
+                        <img src="black.png" alt="Upgrade 4">
+                        <img src="black.png" alt="Upgrade 5">
+                    </div>
+                </div>
+
+            </div>
+            <div id="powerups" class="tabContent">
+
+            </div>
+            <div id="customisation" class="tabContent">
+                customisation
+            </div>
+            <div id="statistics" class="tabContent">
+                <p class="rowStat">Current Money<br> <span id="CurMoneyStat">500</span></p>
+                <p class="rowStat">All-time Clicks<br> <span id="AllClickStat">500</span></p>
+                <p class="rowStat">All-time Money<br> <span id="AllMoneyStat">500</span></p>
+                <p class="rowStat">Passive Income<br> <span id="PassiveStat">500</span></p>
+                <p class="rowStat">Money per Click<br> <span id="PerClickStat">500</span></p>
+            </div>
+            <div id="setting" class="tabContent">
+                <!-- Volume Slider -->
+                <div class="settingOption">
+                    <label for="volumeSlider">Volume:</label>
+                    <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="1">
+                </div>
+
+                <!-- Theme Selection -->
+                <div class="settingOption">
+                    <label for="themeSelect">Theme:</label>
+                    <select name="themeSelect" id="themeSelect" onchange="changeTheme(this.value)">
+                        <option value="Jungle">Jungle</option>
+                        <option value="Volcano">Volcano</option>
+                        <option value="Space">Space</option>
+                        <!-- Add more theme options as needed -->
+                    </select>
+                </div>
+
+                <!-- Notification Toggle -->
+                <div class="settingOption">
+                    <label for="notificationToggle">Enable Notifications:</label>
+                    <input type="checkbox" id="notificationToggle">
+                </div>
+
+                <!-- Change Username -->
+                <div class="settingOption">
+                    <label for="usernameInput">Change Username:</label>
+                    <form>
+                        <input type="text" id="usernameInput"
+                            placeholder="New Username">
+                        <button onclick="changeUsername()">Save</button>
+                    </form>
+                </div>
+
+                <!-- Save Game Button -->
+                <div class="settingOption">
+                    <button onclick="saveGame()">Save Game</button>
+                </div>
+            </div>
+            <audio loop id="backgroundAudio" >
+                <source src="JungleMusic.mp3" type="audio/mp3">
+                Your browser does not support the audio element.
+            </audio>
+            <script src="Main.js" async defer></script>
+        </body>
+    </html>
