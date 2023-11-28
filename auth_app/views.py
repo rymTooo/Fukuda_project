@@ -66,4 +66,4 @@ def login_user(request):
     return render(request, "auth_app/login.html", {'form': form})
 def logout_user(request):
     logout(request)
-    return render(request, "auth_app/home.html")
+    return redirect("/authorization/login/")
