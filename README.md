@@ -80,3 +80,52 @@ EERD(link : https://drive.google.com/file/d/1qOWuVpo94jOJCajYtX2wI9oSJOAr3NXi/vi
 ![FukudaERD](https://github.com/rymTooo/Fukuda_project/assets/125113738/bbeaf759-df18-4587-a442-e288d7655c9f)
 ^this is ERD for project database
 ## Slide()
+## Variable list
+### skill
+- Pierce
+- Vertical slash
+- Power spin
+- Precision cut
+- Power strike
+- Triple slash
+- Wind cutter
+- Fire ball
+
+### powerups
+- Pierce
+  - shary
+  - sharper
+  - sharpest
+- Vertical slash
+  - grind stone
+  - super grind stone
+  - diamond stone
+- Power spin
+  - boots
+  - leather boots
+  - Nike
+- Precision cut
+  - 2xScope
+  - 4xScope
+  - 8xScope
+- Power strike
+  - M150
+  - steroid
+  - chemical X
+- Triple slash
+  - quadruple slash
+  - penta kill
+  - Ace
+- Wind cutter
+  - water cutter
+  - fire cutter
+  - holy cutter
+- Fire ball
+  - napalm
+  - TNT
+  - nuclear
+
+
+
+
+
