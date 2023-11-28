@@ -335,7 +335,7 @@ function buyPowerUp(powerUp) {
         // Apply the power-up effects
         skill.passive *= powerUp.multiplier;
         console.log(skill.passive, "passive after update");
-
+        money_per_click *= powerUp.multiplier;
         // Mark the power-up as purchased
         powerUp.purchased = true;
 
@@ -360,17 +360,27 @@ function updateStatistics() {
 
 // JavaScript functions for Settings tab
 function changeUsername() {
-    const newUsername = document.getElementById('usernameInput').value;
-    // Implement logic to update the username in the game\
     event.preventDefault();
-    fetch('http://127.0.0.1:8000/game/change-username/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
-        },
-        body: JSON.stringify({username:newUsername})
-    });
+
+    const newUsername = document.getElementById('usernameInput').value;
+
+    // Check if the input is not empty
+    if (newUsername.trim() === "") {
+        alert("Please enter a username.");
+        return; // Don't proceed further if the input is empty
+    }
+
+    // Implement logic to update the username in the game
+    else{
+        fetch('http://127.0.0.1:8000/game/change-username/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
+            },
+            body: JSON.stringify({ username: newUsername })
+        });
+    }
 }
 //Clicking
 
