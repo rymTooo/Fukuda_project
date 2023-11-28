@@ -326,6 +326,7 @@ function buyPowerUp(powerUp) {
 
     if (skill && cur_money >= powerUp.cost) {
         cur_money -= powerUp.cost;
+        console.log(skill,skill.skill_name,powerUp.skill_name)
 
         // Apply the power-up effects
         skill.passive *= powerUp.multiplier;
@@ -356,13 +357,20 @@ function updateStatistics() {
 // JavaScript functions for Settings tab
 function changeUsername() {
     const newUsername = document.getElementById('usernameInput').value;
-    // Implement logic to update the username in the game
-
+    // Implement logic to update the username in the game\
+    event.preventDefault();
+    fetch('http://127.0.0.1:8000/game/change-username/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
+        },
+        body: JSON.stringify({username:newUsername})
+    });
 }
 //Clicking
 
 
-test = {name:"test",level:"1"}
 function saveManually() {//save game function
     stat = {"all_time_money":all_time_money,"passiveincome":totalPassiveIncome,"current_money":cur_money,"money_per_click":money_per_click,"click_counter":click_counter}
     fetch('http://127.0.0.1:8000/game/save-data/', {
@@ -454,4 +462,5 @@ function initializeSettings() {
     themeSelect.value = initialThemeValue;
     notificationToggle.checked = initialNotificationValue;
     usernameInput.value = initialUsername;
+    console.log(volumeSlider.value)
 }

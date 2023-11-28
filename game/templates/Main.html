@@ -98,6 +98,7 @@
             </div>
             <div id="setting" class="tabContent">
                 Setting
+                <p>USERNAME: {{username}}</p>
                  <!-- Volume Slider -->
                  <div class="settingOption">
                     <label for="volumeSlider">Volume:</label>
@@ -124,20 +125,19 @@
                     <form>
                         <input type="text" id="usernameInput"
                             placeholder="New Username">
-                        <button onclick="changeUsername()">Save</button>
+                        <button onclick="changeUsername(event)">Save</button>
                     </form>
                 </div>
                 <!-- Save Game Button -->
                 <div class="settingOption">
                     <button onclick="saveManually()">Save Game</button>
+                    <button type = 'submit'> <a href = '/authorization/logout'>Logout</a></button>
                 </div>
             </div>
             <audio loop id="backgroundAudio" >
                 <source src={% static "game/JungleMusic.mp3" %} type="audio/mp3">
                 Your browser does not support the audio element.
-            </audio>
-                <p>USERNAME: {{username}}</p>
-                <button onclick="saveManually()" method = "POST">Save</button>
+            </audio>              
             </div>
             <script src="{% static "game/Main.js" %}?v={{ build_timestamp }}" async defer></script>
         </body>

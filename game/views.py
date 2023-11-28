@@ -66,7 +66,7 @@ def main_page(request):
        
         return render(request, 'Main.html', {"username": user,"build_timestamp":build_timestamp})
     else:
-        return render(request, "auth_app/login.html")
+        return redirect("/authorization/login/")
 
 def test_method(request):
     for i in User_Skill.objects.raw("select * from game_user_skill;"):
@@ -182,3 +182,22 @@ def data(request): #method for sending data from db to javascript
         return JsonResponse(main_dict)
     else:
         return JsonResponse({"error": "user not authenticated"}, status=401)
+    
+def change_username(request):
+    if request.method == 'POST':
+        user = None
+
+        if request.user.is_authenticated:
+            user = request.user.id
+            try:
+                new_username = json.loads(request.body)["username"]
+                user_obj = User.objects.get(pk = user)
+                user_obj.username = new_username
+                user_obj.save()
+                print("This is new username: ", new_username)
+                print("============================\nChange Username Complete\n============================\n")
+            except Exception as e:
+                print(f"Saved failed.: {str(e)}")
+                return JsonResponse({'status': 'failed', 'error': str(e)})
+
+    return JsonResponse({'status': 'failed'})
