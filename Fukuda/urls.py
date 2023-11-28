@@ -15,8 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import path,include
+
+import game
 
 
 urlpatterns = [
@@ -24,4 +26,5 @@ urlpatterns = [
     path('authorization/', include("auth_app.urls")),
     path('game/', include("game.urls")),
     path("__debug__/", include("debug_toolbar.urls")),
+    path("",game.views.main_page)
 ]

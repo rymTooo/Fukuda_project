@@ -98,37 +98,37 @@ def save_data(request):
                 data = json.loads(request.body)    # Get the data sent from the JavaScript                 
                 # Save USER_SKILL data to database
                 data_user_skill = data["User_Skill"]
-                print("\n--------------------USER SKILL--------------------n")
+                print("\n--------------------USER SKILL--------------------\n")
                 for skill in data_user_skill:
                     user_skill = get_object_or_404(User_Skill, user = user, skill_name = skill["skill_name"])
                     user_skill.level = skill["level"]
                     user_skill.unlocked = skill["unlocked"]
                     user_skill.save()
                     print(f"Save skill: {skill['skill_name']} for user: '{user}' Successfully")
-                print("\n---------------------------------------------n")
+                print("\n---------------------------------------------\n")
                 
                 # Save STAT
-                print("\n--------------------STAT--------------------n")
+                print("\n--------------------STAT--------------------\n")
                 data_stat = data["Stat"]
                 stat_obj = get_object_or_404(Stat, user = user)
                 for key, value in data_stat.items():
                     setattr(stat_obj, key, value)
                 stat_obj.save()
                 print(f"Save stat for user: '{user}' Successfully")
-                print("\n----------------------------------------n")
+                print("\n----------------------------------------\n")
                 
                 # Save USER_POWERUP data to database
-                print("\n--------------------USER POWERUP--------------------n")
+                print("\n--------------------USER POWERUP--------------------\n")
                 data_user_power_up = data["User_PowerUp"]
                 for powerup in data_user_power_up:
                     user_powerup = get_object_or_404(User_PowerUp, user = user, powerup_name = powerup["powerupID"])
                     user_powerup.acquired = powerup["purchased"]
                     user_powerup.save()
                     print(f"Save powerup: {powerup['powerupID']} for user: '{user}' Successfully")
-                print("\n----------------------------------------n")
+                print("\n----------------------------------------\n")
                 
                 # Save SETTING
-                print("\n--------------------SETTING--------------------n")
+                print("\n--------------------SETTING--------------------\n")
                 data_setting = data["Setting"]
                 print(data_setting)
                 setting_obj = get_object_or_404(Setting, user = user)
@@ -137,7 +137,7 @@ def save_data(request):
                     setattr(setting_obj, key, value)
                 setting_obj.save()
                 print(f"Save Setting for user: '{user}' Successfully")
-                print("\n----------------------------------------n")
+                print("\n----------------------------------------\n")
 
 
                 print("\n===============END SAVED==================\n")
