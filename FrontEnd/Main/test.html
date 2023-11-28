@@ -21,9 +21,110 @@
             <div class="DisCurMoney"><span id="money">0</span></div>
 
             <img src="Dummy.png" class="dummy">
+            <div class="Event" id="Event"></div>
         </div>
         <div id="skills" class="tabContent active">
         </div>
-        <script src="Main.js" async defer></script>
-      </body>
-  </html>
+        <script>
+            let money = 0;
+            const swordman = document.getElementById('swordman');
+            let EventOngoing = false;
+            let EventMult = 1;
+
+            function updateMoney() {
+                totalPassiveIncome = 2;
+                money += totalPassiveIncome*EventMult;
+                document.getElementById('money').textContent = money.toFixed(1);
+            }
+            setInterval(updateMoney, 1000); // Update score every second
+
+            hitbox.addEventListener('click', () => {
+                swordman.classList.add('SwingAnim');
+                money = money + 1;
+                document.getElementById('money').textContent = money.toFixed(1);
+                gaugeValue+= 5;
+                setTimeout(() => {
+                    swordman.classList.remove('SwingAnim');
+                }, 700); // Adjust based on your swing animation duration
+            });
+                            //Event
+                function EventOccur() {
+                    if(!EventOngoing){
+                    // Generate a random number between 0 and 9999 (representing 0.01% probability)
+                    const randomProbability = Math.floor(Math.random() * 1);
+
+                    // Check if the event should occur based on the probability
+                    if (randomProbability === 0) {
+                        const randomEvent = Math.floor(Math.random() * 3);
+                        console.log("Event Occur");
+                        clickGaugeEvent();
+                        
+                        /*switch (randomEvent) {
+                            case 0:
+                                clickGaugeEvent();
+                                break;
+                            case 1:
+                                flyingTargetEvent();
+                                break;
+                            case 2:
+                                colorMatchingEvent();
+                                break;
+                        }*/
+                    }else{
+                        console.log("Event Not Occur");
+                    }
+                }
+            }
+                // Set interval to check for events every second
+                
+
+                setInterval(EventOccur, 1000);
+                let gaugeValue = 50;
+                function clickGaugeEvent() {
+                    let finish = false;
+                    EventOngoing = true;
+                    let Event = document.getElementById('Event');
+                    let gaugetext = document.createElement('p');
+                    Event.appendChild(gaugetext);
+                    let gaugeContainer = document.createElement('div');
+                    gaugeContainer.classList.add("gaugeContainer");
+                    Event.appendChild(gaugeContainer);
+                    let gauge = document.createElement('div');
+                    gauge.classList.add("gauge");
+                    gaugeContainer.appendChild(gauge);
+                    let filler = document.createElement('div');
+                    filler.classList.add("filler");
+                    gauge.appendChild(filler);
+                    gaugeValue = 50;
+                    filler.style.width = gaugeValue + '%';
+                    const gaugeInterval = setInterval(() => {
+                        gaugeValue -= 1;
+                        gaugetext.textContent = "Click before the gauge depletes"; // Replace with your skill level property
+                        filler.style.width = gaugeValue + '%';
+                       
+                        if (gaugeValue <= 0) {
+                            clearInterval(gaugeInterval);
+                            gaugetext.textContent = 'Gauge depleted! Event failed.';
+                            setTimeout(function(){
+                                EventOngoing = false;
+                                Event.innerHTML= "";
+                            }, 2000);
+                            
+                        }
+                        if (gaugeValue >= 100) {
+                            clearInterval(gaugeInterval);
+                            gaugetext.textContent = 'Gauge completed! 10 times Multiplier.';
+                            EventMult = 10;
+                            setTimeout(function(){
+                                EventOngoing = false;
+                                EventMult = 1;
+                                Event.innerHTML= "";
+                            }, 10000);
+                            
+                        }
+                    }, 50);
+                        
+                }
+        </script>
+    </body>
+</html>

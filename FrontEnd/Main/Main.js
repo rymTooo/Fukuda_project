@@ -1,5 +1,6 @@
 
 //updating money
+let money_per_click = 10;
 let money = 0;
 let skills = [];
 let powers = [];
@@ -7,35 +8,83 @@ let powerInShop = [];
 let totalPassiveIncome = 0;
 let purchasedPowerUps = [];
 let theme = "Background.png"
+const Swordsounds = [
+    "Sword1.mp3",
+    "Sword2.mp3",
+    "Sword3.mp3",
+    "Sword4.mp3"
+];
+let SwordSound = "Sword1.mp3"
 fetchPowers();
 fetchSkills();
-startAudio();
+
+// Get the audio element
+const backgroundAudio = document.getElementById('backgroundAudio');
+
+// Play the audio automatically
+backgroundAudio.play();
+
+
 document.addEventListener('DOMContentLoaded', fetchSkills);
 document.addEventListener('DOMContentLoaded', fetchPowers);
-document.addEventListener('DOMContentLoaded', startAudio);
+
+
 
 //Clicking
 const swordman = document.getElementById('swordman');
 
-hitbox.addEventListener('click', () => {
-    swordman.classList.add('SwingAnim');
-    money = money + 10000;
-    document.getElementById('money').textContent = money.toFixed(1);
-    setTimeout(() => {
-        swordman.classList.remove('SwingAnim');
-    }, 700); // Adjust based on your swing animation duration
+let clicking = false;
+
+hitbox.addEventListener('mousedown', () => {
+    clicking = true;
 });
 
+hitbox.addEventListener('mouseup', () => {
+    clicking = false;
+});
+
+hitbox.addEventListener('click', () => {
+ 
+    swordman.classList.add('SwingAnim');
+    money = money + money_per_click*EventMult;
+    document.getElementById('passive').textContent = (totalPassiveIncome*EventMult + money_per_click*EventMult).toFixed(1);
+    document.getElementById('money').textContent = money.toFixed(1);
+
+    playRandomSound();
+    gaugeValue+= 5;
+    setTimeout(() => {
+        swordman.classList.remove('SwingAnim');
+        
+    }, 700); // Adjust based on your swing animation duration
+    
+});
+
+function playRandomSound() {
+    // Randomly choose a sound effect from the array
+    const randomIndex = Math.floor(Math.random() * Swordsounds.length);
+    const randomSoundPath = Swordsounds[randomIndex];
+
+    // Create an audio element and play the chosen sound
+    SwordSound = new Audio(randomSoundPath);
+    SwordSound.volume = volumeValue;
+    SwordSound.play();
+}
 
 function updateMoney() {
     totalPassiveIncome = 0;
     skills.forEach(skill => {
         totalPassiveIncome += skill.passive;
     });
-    money += totalPassiveIncome;
+    money += totalPassiveIncome*EventMult;
+    if(clicking){
+        document.getElementById('passive').textContent = (totalPassiveIncome*EventMult + money_per_click*EventMult).toFixed(1);
+    }else{
+    document.getElementById('passive').textContent = (totalPassiveIncome*EventMult).toFixed(1);
+    }
     document.getElementById('money').textContent = money.toFixed(1);
 }
 setInterval(updateMoney, 1000); // Update score every second
+
 
 
 //switching tab
@@ -381,6 +430,7 @@ function buyPowerUp(powerUp) {
 
         // Apply the power-up effects
         skill.passive *= powerUp.multiplier;
+        money_per_click *= powerUp.multiplier;
 
         // Mark the power-up as purchased
         powerUp.purchased = true;
@@ -422,10 +472,16 @@ function saveGame() {
     alert('Game saved I NA HEE');
 }
 
+function logOut() {
+    // Implement logic to save the game state
+
+    alert('Logged Out I NA HEE');
+}
+
 function getComboA(selectObject) {
-    var value = selectObject.value;  
+    var value = selectObject.value;
     console.log(value);
-  }
+}
 // Fetch themes, initialize settings, etc. based on your game structure
 function changeTheme(teem) {
     console.log(teem)
@@ -447,30 +503,28 @@ function changeTheme(teem) {
     }
     updateBackground();
 }
-function updateBackground(){
+function updateBackground() {
     document.getElementById('background').src = theme;
     console.log(theme)
 }
 
-function startAudio() {
-    const backgroundAudio = document.getElementById('backgroundAudio');
-    backgroundAudio.play();
-    console.log("audio play")
-}
+
 const volumeSlider = document.getElementById('volumeSlider');
-    const audio1 = document.getElementById('backgroundAudio');
-    //const audio2 = document.getElementById('audio2');
+const audioBackground = document.getElementById('backgroundAudio');
+//const audio2 = document.getElementById('audio2');
 
-    // Set initial volume
-    audio1.volume = volumeSlider.value;
-    //audio2.volume = volumeSlider.value;
+// Set initial volume
+let volumeValue = volumeSlider.value
+audioBackground.volume = volumeSlider.value;
+SwordSound.volume = volumeSlider.value;
 
-    // Update volume when the slider changes
-    volumeSlider.addEventListener('input', function() {
-        const volumeValue = this.value;
-        audio1.volume = volumeValue;
-        //audio2.volume = volumeValue;
-    });
+// Update volume when the slider changes
+volumeSlider.addEventListener('input', function () {
+    volumeValue = this.value;
+    audioBackground.volume = volumeValue;
+    SwordSound.volume = volumeValue;
+    console.log(volumeValue)
+});
 // Example function to initialize settings
 function initializeSettings() {
     // Fetch and set the initial values for settings (volume, theme, etc.)
@@ -484,4 +538,85 @@ function initializeSettings() {
     themeSelect.value = initialThemeValue;
     notificationToggle.checked = initialNotificationValue;
     usernameInput.value = initialUsername;
+}
+
+//Event
+// Set interval to check for events every second
+setInterval(EventOccur, 1000);
+
+function EventOccur() {
+    if (!EventOngoing) {
+        // Generate a random number between 0 and 9999 (representing 0.01% probability)
+        const randomProbability = Math.floor(Math.random() * 1);
+
+        // Check if the event should occur based on the probability
+        if (randomProbability === 0) {
+            const randomEvent = Math.floor(Math.random() * 3);
+            console.log("Event Occur");
+            clickGaugeEvent();
+
+            /*switch (randomEvent) {
+                case 0:
+                    clickGaugeEvent();
+                    break;
+                case 1:
+                    flyingTargetEvent();
+                    break;
+                case 2:
+                    colorMatchingEvent();
+                    break;
+            }*/
+        } else {
+            console.log("Event Not Occur");
+        }
+    }
+}
+// Set interval to check for events every second
+let gaugeValue = 50;
+let EventOngoing = false;
+let EventMult = 1;
+function clickGaugeEvent() {
+    let finish = false;
+    EventOngoing = true;
+    let Event = document.getElementById('Event');
+    let gaugetext = document.createElement('p');
+    Event.appendChild(gaugetext);
+    let gaugeContainer = document.createElement('div');
+    gaugeContainer.classList.add("gaugeContainer");
+    Event.appendChild(gaugeContainer);
+    let gauge = document.createElement('div');
+    gauge.classList.add("gauge");
+    gaugeContainer.appendChild(gauge);
+    let filler = document.createElement('div');
+    filler.classList.add("filler");
+    gauge.appendChild(filler);
+    gaugeValue = 50;
+    filler.style.width = gaugeValue + '%';
+    const gaugeInterval = setInterval(() => {
+        gaugeValue -= 1;
+        gaugetext.textContent = "Click before the gauge depletes"; // Replace with your skill level property
+        filler.style.width = gaugeValue + '%';
+
+        if (gaugeValue <= 0) {
+            clearInterval(gaugeInterval);
+            gaugetext.textContent = 'Gauge depleted! Event failed.';
+            setTimeout(function () {
+                EventOngoing = false;
+                Event.innerHTML = "";
+            }, 2000);
+
+        }
+        if (gaugeValue >= 100) {
+            clearInterval(gaugeInterval);
+            gaugetext.textContent = 'Gauge completed! 10 times Multiplier.';
+            EventMult = 10;
+            setTimeout(function () {
+                EventOngoing = false;
+                EventMult = 1;
+                Event.innerHTML = "";
+            }, 10000);
+
+        }
+    }, 50);
+
 }
