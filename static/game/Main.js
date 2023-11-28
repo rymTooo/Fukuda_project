@@ -30,9 +30,13 @@ let all_time_money = loaded_data["stat"]["all_time_money"];
 let totalPassiveIncome = loaded_data["stat"]["passive_income"];
 let money_per_click = loaded_data["stat"]["money_per_click"];
 let click_counter = loaded_data["stat"]["click_counter"];
+
+
 fetchPowers();// should move into get data method and then just run get data method once.
 fetchSkills();
-startAudio();
+initializeSettings();
+
+
 document.getElementById('money').textContent = Math.floor(cur_money);
 document.addEventListener('DOMContentLoaded', fetchSkills);
 document.addEventListener('DOMContentLoaded', fetchPowers);
@@ -371,34 +375,6 @@ function changeUsername() {
 //Clicking
 
 
-function saveManually() {//save game function
-    stat = {"all_time_money":all_time_money,"passiveincome":totalPassiveIncome,"current_money":cur_money,"money_per_click":money_per_click,"click_counter":click_counter}
-    fetch('http://127.0.0.1:8000/game/save-data/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
-        },
-        body: JSON.stringify({User_Skill:skills,Stat:stat,User_PowerUp:powers})
-    });
-}
-
-setInterval(saveManually, 30000); // Auto save every 30 seconds
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-    }
-
 function getComboA(selectObject) {
     var value = selectObject.value;  
     console.log(value);
@@ -458,9 +434,55 @@ function initializeSettings() {
     const usernameInput = document.getElementById('usernameInput');
 
     // Set initial values (replace with actual values from your game state)
-    volumeSlider.value = initialVolumeValue;
-    themeSelect.value = initialThemeValue;
-    notificationToggle.checked = initialNotificationValue;
-    usernameInput.value = initialUsername;
-    console.log(volumeSlider.value)
+    volumeSlider.value = loaded_data["setting"]["sound_volumn"];
+    themeSelect.value = loaded_data["setting"]["theme"];
+    notificationToggle.checked = loaded_data["setting"]["notification"];
+    // usernameInput.value = initialUsername;
+    changeTheme(themeSelect.value)
+    startAudio();
 }
+
+
+function saveManually() {//save game function
+    stat = {
+        "all_time_money":all_time_money,
+        "passiveincome":totalPassiveIncome,
+        "current_money":cur_money,
+        "money_per_click":money_per_click,
+        "click_counter":click_counter
+    }
+    setting ={
+        "theme": document.getElementById('themeSelect').value,
+        "sound_volumn": document.getElementById('volumeSlider').value,
+        "notification": document.getElementById('notificationToggle').checked
+    }
+    fetch('http://127.0.0.1:8000/game/save-data/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
+        },
+        body: JSON.stringify({
+            User_Skill:skills,
+            Stat:stat,
+            User_PowerUp:powers,
+            Setting:setting
+        })
+    });
+}
+
+setInterval(saveManually, 30000); // Auto save every 30 seconds
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+    }
