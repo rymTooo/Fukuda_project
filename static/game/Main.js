@@ -8,7 +8,7 @@ function get_data() {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 loaded_data = JSON.parse(xhr.responseText);
-                console.log(loaded_data);
+                console.log(loaded_data, "loaded data");
             } else {
                 console.error('Error:', xhr.statusText);
             }
@@ -72,7 +72,9 @@ function showTab(tabId) {
 
     const selectedTab = document.getElementById(tabId);
     if (tabId === 'skills'){
-    selectedTab.style.display = 'block';}
+        selectedTab.style.display = 'block';
+        updateSkillsUI();
+    }
     else{
         selectedTab.style.display = 'flex';
     }
@@ -214,8 +216,9 @@ function updateSkillsUI() {
         })
         skill.passive = calculatePassiveIncome(skill.level,skill.base_income,boughtPower);
 
+        //update skill.passive on display
         const skillPassive = document.createElement('p');
-        skillPassive.textContent = 'Passive: ' + skill.passive.toFixed(1); // Replace with your skill level property
+        skillPassive.textContent = 'Passive: ' + skill.passive.toFixed(1); 
         skillDetails.appendChild(skillPassive);
 
 
@@ -326,6 +329,7 @@ function buyPowerUp(powerUp) {
 
         // Apply the power-up effects
         skill.passive *= powerUp.multiplier;
+        console.log(skill.passive, "passive after update");
 
         // Mark the power-up as purchased
         powerUp.purchased = true;
