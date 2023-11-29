@@ -5,7 +5,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from game.models import Event, User_Customization, PowerUp, Setting, Stat, User_Event, User_PowerUp, User_Skill,Skill
+from game.models import Customization_head, Customization_pants, Customization_shoes, Customization_torso, Event, User_Customization, PowerUp, Setting, Stat, User_Event, User_PowerUp, User_Skill,Skill
 #from .forms import Skill
 
 def main_page(request): 
@@ -36,7 +36,11 @@ def main_page(request):
         else:
             print(f"SETTING already EXISTS.")
         #create User_Customization
-        custom, custom_created = User_Customization.objects.get_or_create(user = user)
+        head = Customization_head.objects.raw("select * from game_customization_head where name like %s", ['%Default%'])
+        torso = Customization_torso.objects.raw("select * from game_customization_torso where name like %s", ['%Default%'])
+        pants = Customization_pants.objects.raw("select * from game_customization_pants where name like %s", ['%Default%'])
+        shoes = Customization_shoes.objects.raw("select * from game_customization_shoes where name like %s", ['%Default%'])
+        custom, custom_created = User_Customization.objects.get_or_create(user = user,head = head[0], torso = torso[0], pants = pants[0], shoes = shoes[0])
         if custom_created:
             print(f"User_Customization created SUCCESSFUL.")
         else:
@@ -64,7 +68,7 @@ def main_page(request):
         print("--------------------------------\n")
         build_timestamp = int(time.time())
        
-        return render(request, 'Main.html', {"username": user,"build_timestamp":build_timestamp})
+        return render(request, 'Main.html', {"username": user, "build_timestamp":build_timestamp})
     else:
         return redirect("/authorization/login/")
 
@@ -203,6 +207,29 @@ def data(request): #method for sending data from db to javascript
             setting_dict["notification"] = i.notification
             print(stat_dict,"stat")
         main_dict["setting"] = setting_dict
+
+        #load leaderboard
+        leaderboard_list = []
+        loaded_leaderboard = Stat.objects.raw("""
+                                              SELECT
+                                              game_stat.user_id,
+                                            game_stat.all_time_money,
+                                            auth_user.username
+                                        FROM
+                                            game_stat
+                                        INNER JOIN
+                                            auth_user ON game_stat.user_id = auth_user.id
+                                    """)
+   
+        for i in loaded_leaderboard:
+            player = {}
+            player["id"] = i.user_id
+            player["name"] = i.username
+            player["all_time_money"] = i.all_time_money 
+            leaderboard_list.append(player)
+            print("PLAYER: ",player)
+        main_dict["leaderboard"] = leaderboard_list
+        
         print(main_dict)
         return JsonResponse(main_dict)
     else:

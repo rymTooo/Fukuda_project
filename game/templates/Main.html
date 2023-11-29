@@ -140,6 +140,9 @@
             </div>
             <div id="setting" class="tabContent">
                 Setting
+                <script>
+                    var current_user_id = "{{ request.user.id }}";
+                </script>
                 <p>USERNAME: {{username}}</p>
                  <!-- Volume Slider -->
                  <div class="settingOption">

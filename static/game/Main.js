@@ -415,6 +415,10 @@ function buyPowerUp(powerUp) {
 
 function updateStatistics() {
     players.sort((a, b) => b.all_time_money - a.all_time_money);
+
+    //update this player all time money stat to show in table
+    players.find(player => player.id === OurPlayerid).all_time_money = all_time_money;
+    
     const leaderboardBody = document.getElementById('leaderboardBody');
     // Clear existing content
     leaderboardBody.innerHTML = '';
@@ -507,6 +511,7 @@ function updateCustomisations(){
     console.log(selectedCustomisation["head"]);
 };
 
+// ต้องแก้ดึงจาก DB
 function fetchCustomisation(){
     customisationOptions = {
     head: ['head/headDefault.png', 'head/headPink.png', 'head/headBlue.png', 'head/headGreen.png', 'head/headYellow.png', 'head/headPurple.png', 'head/headOrange.png'],
@@ -539,19 +544,8 @@ function changeCustomisation(part, direction) {
 
 }
 
-let players = [
-    { id: 1, name: 'Player1', all_time_money: 500 },
-    { id: 2, name: 'Player2', all_time_money: 1000 },
-    { id: 3, name: 'Player3', all_time_money: 1500 },
-    { id: 4, name: 'Player4', all_time_money: 2000 },
-    { id: 5, name: 'Player5', all_time_money: 2500 },
-    { id: 6, name: 'Player6', all_time_money: 3500 },
-    { id: 7, name: 'Player7', all_time_money: 5500 },
-    { id: 8, name: 'Player8', all_time_money: 6500 },
-    { id: 9, name: 'Player9', all_time_money: 7500 },
-    // Add more players...
-];
-let OurPlayerid = 1;
+let players = loaded_data["leaderboard"]
+var  OurPlayerid = parseInt(current_user_id) ;
 
 
 //Clicking

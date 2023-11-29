@@ -35,10 +35,10 @@ class Customization_shoes(models.Model):
 
 class User_Customization(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE, primary_key=True)
-    Head = models.ForeignKey(Customization_head, default="default",on_delete=models.CASCADE)
-    pant = models.ForeignKey(Customization_torso, default="default",on_delete=models.CASCADE)
-    torso = models.ForeignKey(Customization_pants, default="default",on_delete=models.CASCADE)
-    shoes = models.ForeignKey(Customization_shoes, default="default",on_delete=models.CASCADE)
+    head = models.ForeignKey(Customization_head, default="headDefault",on_delete=models.CASCADE)
+    torso = models.ForeignKey(Customization_torso, default="torsoDefault",on_delete=models.CASCADE)
+    pants = models.ForeignKey(Customization_pants, default="pantsDefault",on_delete=models.CASCADE)
+    shoes = models.ForeignKey(Customization_shoes, default="shoesDefault",on_delete=models.CASCADE)
 
 
 class Event(models.Model):
