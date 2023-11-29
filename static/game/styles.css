@@ -160,6 +160,42 @@ body {
     
 }
 
+.target {
+    z-index: 2;
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    border-radius: 25px;
+    position: absolute;
+    cursor: pointer;}
+.flyingtext{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    z-index: 1;
+    font-size: 50px;
+    top: -10%;
+    left: 35%;
+    position: absolute;
+    object-fit: cover;
+    color: white;
+    -webkit-text-stroke: 0.3px black;
+    text-align: justify;
+    display: inline-block;
+}
+
+.textHolder{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    z-index: 1;
+    font-size: 35px;
+    top: 7%;
+    left: 39%;
+    position: absolute;
+    object-fit: cover;
+    color: white;
+    -webkit-text-stroke: 0.3px black;
+    text-align: justify;
+    display: inline-flex;
+}
+
 .passivePerSec{
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     z-index: 1;

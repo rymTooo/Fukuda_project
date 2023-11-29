@@ -494,27 +494,24 @@ function initializeSettings() {
 //Event
 // Set interval to check for events every second
 setInterval(EventOccur, 10000);
+eventProb = 10000;
 function EventOccur() {
     if (!EventOngoing) {
         // Generate a random number between 0 and 9999 (representing 0.01% probability)
-        const randomProbability = Math.floor(Math.random() * 5);
-        console.log("EVENT PROP = ", randomProbability)
+        const randomProbability = Math.floor(Math.random() * eventProb);
+       
         // Check if the event should occur based on the probability
         if (randomProbability === 0) {
-            const randomEvent = Math.floor(Math.random() * 3);
+            const randomEvent = Math.floor(Math.random() * 2);
             console.log("Event Occur");
-            clickGaugeEvent();
-            /*switch (randomEvent) {
+            switch (randomEvent) {
                 case 0:
                     clickGaugeEvent();
                     break;
                 case 1:
-                    flyingTargetEvent();
+                    startFlyingTargetEvent();
                     break;
-                case 2:
-                    colorMatchingEvent();
-                    break;
-            }*/
+            }
         } else {
             console.log("Event Not Occur");
         }
@@ -525,11 +522,8 @@ let gaugeValue = 50;
 let EventOngoing = false;
 let EventMult = 1;
 function clickGaugeEvent() {
-    console.log("Hi I'm EVENT /@-@/ ")
     let finish = false;
     EventOngoing = true;
-    let Event = document.getElementById('Event');
-    console.log(Event)
 
     let gaugetext = document.createElement('p');
     Event.appendChild(gaugetext);
@@ -568,7 +562,95 @@ function clickGaugeEvent() {
         }
     }, 50);
 }
+let score = 0;
+let eventStartTime;
+let flying = false;
 
+
+function startFlyingTargetEvent() {
+    EventOngoing = true;
+    flying = true;
+    eventStartTime = Date.now();
+    let flyingTextContainer = document.getElementById('FlyingTextContainer');
+    
+    let textHolder = document.createElement('div');
+    flyingText.textContent = "Click atleast 15 targets";
+    flyingTextContainer.appendChild(flyingText);
+    textHolder.classList.add('textHolder');
+    textHolder.appendChild(scoreEl);
+    textHolder.appendChild(timeEl);
+    flyingTextContainer.appendChild(textHolder);
+    
+    timerInterval = setInterval(updateTimer, 1000);
+
+    setTimeout(endFlyingTargetEvent, 20000);
+}
+setInterval(createTarget, 300);
+let flyingTextContainer = document.getElementById('FlyingTextContainer');
+let Event = document.getElementById('Event');
+let flyingText = document.createElement('h2');
+flyingText.classList.add('flyingtext');
+let scoreEl = document.createElement('h3');
+scoreEl.style.marginRight = "10px";
+let timeEl = document.createElement('h3');
+function createTarget() {
+    if (flying) {
+        const target = document.createElement('div');
+        target.classList.add('target');
+        target.style.left = `${Math.random() * (window.innerWidth - 250)}px`;
+        target.style.top = `${Math.random() * (window.innerHeight - 500)}px`;
+        updateScore();
+        target.addEventListener('click', () => {
+            score++;
+
+            target.remove();
+        });
+
+        Event.appendChild(target);
+        if (flying) {
+            setTimeout(() => {
+                target.remove();
+            }, 900);
+        }
+        else {
+            target.remove();
+        }
+    }
+}
+
+function endFlyingTargetEvent() {
+    if (score >= 15) {
+        flying = false;
+        flyingText.textContent = `Success. 10 times multiplier`;
+        EventMult = 10;
+        setTimeout(function () {
+            EventOngoing = false;
+            EventMult = 1;
+            flyingTextContainer.innerHTML= "";
+            Event.innerHTML = "";
+        }, 10000);
+    }
+    else {
+        flying = false;
+        flyingText.textContent = `Failed. No multiplier ;-;`;
+        setTimeout(function () {
+            EventOngoing = false;
+            flyingTextContainer.innerHTML= "";
+            Event.innerHTML = "";
+        }, 2000);
+    }
+    score = 0;
+    //updateScore();
+}
+
+function updateScore() {
+    scoreEl.textContent = `Score: ${score}`;
+}
+function updateTimer() {
+    const currentTime = Math.floor((Date.now() - eventStartTime) / 1000);
+    const timeLeft = Math.max(0, 20 - currentTime);
+    timeEl.textContent = ` Time Left: ${timeLeft}s`;
+}
 function saveManually() {//save game function
     stat = {
         "all_time_money":all_time_money,
@@ -596,6 +678,7 @@ function saveManually() {//save game function
         })
     });
 }
+
 
 setInterval(saveManually, 30000); // Auto save every 30 seconds
 function getCookie(name) {
