@@ -430,6 +430,7 @@ function changeUsername() {
             },
             body: JSON.stringify({ username: newUsername })
         });
+        alert("Username is Changed!!");
     }
 }
 //Clicking
@@ -681,6 +682,7 @@ function saveManually() {//save game function
             Setting:setting
         })
     });
+    console.log("Game is SAVED!!");
 }
 
 
