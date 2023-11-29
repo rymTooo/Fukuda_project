@@ -44,19 +44,19 @@ hitbox.addEventListener('mouseup', () => {
 });
 
 hitbox.addEventListener('click', () => {
- 
+
     swordman.classList.add('SwingAnim');
-    money = money + money_per_click*EventMult;
-    document.getElementById('passive').textContent = (totalPassiveIncome*EventMult + money_per_click*EventMult).toFixed(1);
+    money = money + money_per_click * EventMult;
+    document.getElementById('passive').textContent = (totalPassiveIncome * EventMult + money_per_click * EventMult).toFixed(1);
     document.getElementById('money').textContent = money.toFixed(1);
 
     playRandomSound();
-    gaugeValue+= 5;
+    gaugeValue += 5;
     setTimeout(() => {
         swordman.classList.remove('SwingAnim');
-        
+
     }, 700); // Adjust based on your swing animation duration
-    
+
 });
 
 function playRandomSound() {
@@ -75,11 +75,11 @@ function updateMoney() {
     skills.forEach(skill => {
         totalPassiveIncome += skill.passive;
     });
-    money += totalPassiveIncome*EventMult;
-    if(clicking){
-        document.getElementById('passive').textContent = (totalPassiveIncome*EventMult + money_per_click*EventMult).toFixed(1);
-    }else{
-    document.getElementById('passive').textContent = (totalPassiveIncome*EventMult).toFixed(1);
+    money += totalPassiveIncome * EventMult;
+    if (clicking) {
+        document.getElementById('passive').textContent = (totalPassiveIncome * EventMult + money_per_click * EventMult).toFixed(1);
+    } else {
+        document.getElementById('passive').textContent = (totalPassiveIncome * EventMult).toFixed(1);
     }
     document.getElementById('money').textContent = money.toFixed(1);
 }
@@ -553,14 +553,14 @@ function EventOccur() {
         if (randomProbability === 0) {
             const randomEvent = Math.floor(Math.random() * 3);
             console.log("Event Occur");
-            clickGaugeEvent();
+            startFlyingTargetEvent()
 
             /*switch (randomEvent) {
                 case 0:
                     clickGaugeEvent();
                     break;
                 case 1:
-                    flyingTargetEvent();
+                    startFlyingTargetEvent();
                     break;
                 case 2:
                     colorMatchingEvent();
@@ -578,7 +578,7 @@ let EventMult = 1;
 function clickGaugeEvent() {
     let finish = false;
     EventOngoing = true;
-    let Event = document.getElementById('Event');
+    //let Event = document.getElementById('Event');
     let gaugetext = document.createElement('p');
     Event.appendChild(gaugetext);
     let gaugeContainer = document.createElement('div');
@@ -619,4 +619,93 @@ function clickGaugeEvent() {
         }
     }, 50);
 
+}
+let score = 0;
+let eventStartTime;
+let flying = false;
+
+
+function startFlyingTargetEvent() {
+    EventOngoing = true;
+    flying = true;
+    eventStartTime = Date.now();
+    let flyingTextContainer = document.getElementById('FlyingTextContainer');
+    
+    let textHolder = document.createElement('div');
+    flyingText.textContent = "Click atleast 15 targets";
+    flyingTextContainer.appendChild(flyingText);
+    textHolder.classList.add('textHolder');
+    textHolder.appendChild(scoreEl);
+    textHolder.appendChild(timeEl);
+    flyingTextContainer.appendChild(textHolder);
+    
+    timerInterval = setInterval(updateTimer, 1000);
+
+    setTimeout(endFlyingTargetEvent, 15000);
+}
+setInterval(createTarget, 300);
+let flyingTextContainer = document.getElementById('FlyingTextContainer');
+let Event = document.getElementById('Event');
+let flyingText = document.createElement('h2');
+flyingText.classList.add('flyingtext');
+let scoreEl = document.createElement('h3');
+scoreEl.style.marginRight = "10px";
+let timeEl = document.createElement('h3');
+function createTarget() {
+    if (flying) {
+        const target = document.createElement('div');
+        target.classList.add('target');
+        target.style.left = `${Math.random() * (window.innerWidth - 250)}px`;
+        target.style.top = `${Math.random() * (window.innerHeight - 500)}px`;
+        updateScore();
+        target.addEventListener('click', () => {
+            score++;
+
+            target.remove();
+        });
+
+        Event.appendChild(target);
+        if (flying) {
+            setTimeout(() => {
+                target.remove();
+            }, 900);
+        }
+        else {
+            target.remove();
+        }
+    }
+}
+
+function endFlyingTargetEvent() {
+    if (score >= 15) {
+        flying = false;
+        flyingText.textContent = `Success. 10 times multiplier`;
+        EventMult = 10;
+        setTimeout(function () {
+            EventOngoing = false;
+            EventMult = 1;
+            flyingTextContainer.innerHTML= "";
+            Event.innerHTML = "";
+        }, 10000);
+    }
+    else {
+        flying = false;
+        flyingText.textContent = `Failed. No multiplier ;-;`;
+        setTimeout(function () {
+            EventOngoing = false;
+            flyingTextContainer.innerHTML= "";
+            Event.innerHTML = "";
+        }, 2000);
+    }
+    score = 0;
+    //updateScore();
+}
+
+function updateScore() {
+    scoreEl.textContent = `Score: ${score}`;
+}
+function updateTimer() {
+    const currentTime = Math.floor((Date.now() - eventStartTime) / 1000);
+    const timeLeft = Math.max(0, 15 - currentTime);
+    timeEl.textContent = ` Time Left: ${timeLeft}s`;
 }

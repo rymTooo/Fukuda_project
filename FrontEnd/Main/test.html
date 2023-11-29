@@ -12,7 +12,7 @@
         <!--[if lt IE 7]>
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-        <div class="Picture">
+        <div class="Picture" id="Picture">
             <img src="Background.png">
             <!--<img src="Fukuda.png" class="fukuda">-->
             <img src="Coin.png" class="coin">
@@ -57,7 +57,7 @@
                     if (randomProbability === 0) {
                         const randomEvent = Math.floor(Math.random() * 3);
                         console.log("Event Occur");
-                        clickGaugeEvent();
+                        startFlyingTargetEvent();
                         
                         /*switch (randomEvent) {
                             case 0:
@@ -125,6 +125,94 @@
                     }, 50);
                         
                 }
+
+                let score = 0;
+                let eventStartTime;
+                let flying = false;
+            
+                function startFlyingTargetEvent() {
+                    EventOngoing = true;
+                    flying = true;
+                  eventStartTime = Date.now();
+                  flyingText.textContent = "Click atleast 15 targets";
+                  let Picture = document.getElementById('Picture');
+                  Picture.appendChild(flyingText);
+                  let textHolder = document.createElement('div');
+                  textHolder.classList.add('textHolder');
+                  textHolder.appendChild(scoreEl);
+                  textHolder.appendChild(timeEl);
+                  Picture.appendChild(textHolder);
+                  timerInterval = setInterval(updateTimer, 1000);
+                  
+                  setTimeout(endFlyingTargetEvent, 15000);
+                }
+                setInterval(createTarget, 300);
+                let Event = document.getElementById('Event');
+                let flyingText = document.createElement('h2');
+                flyingText.classList.add('flyingtext');
+                let scoreEl = document.createElement('h3');
+                scoreEl.style.marginRight = "10px";
+                let timeEl = document.createElement('h3');
+                function createTarget() {
+                  if(flying){
+                  const target = document.createElement('div');
+                  target.classList.add('target');
+                  target.style.left = `${Math.random() * (window.innerWidth - 250)}px`;
+                  target.style.top = `${Math.random() * (window.innerHeight - 500)}px`;
+                  updateScore();
+                  target.addEventListener('click', () => {
+                    score++;
+                    
+                    target.remove();
+                  });
+            
+                  Event.appendChild(target);
+                  if(flying){
+                  setTimeout(() => {
+                    target.remove();
+                  }, 900);}
+                  else{
+                    target.remove();
+                  }
+                }
+                }
+            
+                function endFlyingTargetEvent() {
+                    if(score >=15){
+                        flying = false;
+                        flyingText.textContent =  `Success. 10 times multiplier`;
+                        EventMult = 10;
+                            setTimeout(function(){
+                                EventOngoing = false;
+                                EventMult = 1;
+                                Event.innerHTML= "";
+                            }, 10000);
+                    }
+                    else{
+                        flying = false;
+                        flyingText.textContent =  `Failed. No multiplier ;-;`;
+                        setTimeout(function(){
+                            EventOngoing = false;
+                            Event.innerHTML= "";
+                        }, 2000);
+                    }
+                  score = 0;
+                  //updateScore();
+                }
+            
+                function updateScore() {
+                  scoreEl.textContent = `Score: ${score}`;
+                }
+                function updateTimer() {
+                    const currentTime = Math.floor((Date.now() - eventStartTime) / 1000);
+                    const timeLeft = Math.max(0, 15 - currentTime);
+                    timeEl.textContent = ` Time Left: ${timeLeft}s`;
+                  }
+                // Start the event when the page loads (you can trigger it based on your game logic)
+             
+
+
+
         </script>
     </body>
 </html>
