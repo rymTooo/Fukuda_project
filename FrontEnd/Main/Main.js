@@ -516,16 +516,60 @@ function fetchCustomisation(){
     image.src = options[currentIndex];
   }
 
+let players = [
+    { id: 1, name: 'Player1', allTimeMoney: 500 },
+    { id: 2, name: 'Player2', allTimeMoney: 1000 },
+    { id: 3, name: 'Player3', allTimeMoney: 1500 },
+    { id: 4, name: 'Player4', allTimeMoney: 2000 },
+    { id: 5, name: 'Player5', allTimeMoney: 2500 },
+    { id: 6, name: 'Player6', allTimeMoney: 3500 },
+    { id: 7, name: 'Player7', allTimeMoney: 5500 },
+    { id: 8, name: 'Player8', allTimeMoney: 6500 },
+    { id: 9, name: 'Player9', allTimeMoney: 7500 },
+    // Add more players...
+];
+let OurPlayerid = 1;
 function updateStatistics() {
     // Example variables, replace them with your actual variables
-    const currentMoney = 1000;
+    players.sort((a, b) => b.allTimeMoney - a.allTimeMoney);
+
+    const leaderboardBody = document.getElementById('leaderboardBody');
+
+    // Clear existing content
+    leaderboardBody.innerHTML = '';
+    let top5 =[];
+    console.log(players);
+    // Display players in the table
+    for (let i = 0; i < Math.min(players.length, 5); i++) {
+        const player = players[i];
+        top5.push(player);
+        const rowClass = player.id === OurPlayerid ? 'highlight' : '';
+        const row = `<tr class="${rowClass}">
+                      <td>${i + 1}</td>
+                      <td>${player.name}</td>
+                      <td>${player.allTimeMoney}</td>
+                    </tr>`;
+        leaderboardBody.innerHTML += row;
+      }
+    // Display your data in row 6 if you're not in the top 5
+    if (top5.findIndex(player => player.id === OurPlayerid) === -1) {
+        const rank = players.findIndex(player => player.id === OurPlayerid);
+        const yourData = players.find(player => player.id === OurPlayerid);
+        const yourDataRow = `<tr class="highlight">
+                              <td>${rank+1}</td>
+                              <td>${yourData.name}</td>
+                              <td>${yourData.allTimeMoney}</td>
+                            </tr>`;
+        leaderboardBody.innerHTML += yourDataRow;
+      }
+
     const allTimeClicks = 500;
     const allTimeMoney = 1500;
     const passiveIncome = 200;
     const moneyPerClick = 2;
 
     // Update the content of each statistic element
-    document.getElementById('CurMoneyStat').textContent = currentMoney;
+
     document.getElementById('AllClickStat').textContent = allTimeClicks;
     document.getElementById('AllMoneyStat').textContent = allTimeMoney;
     document.getElementById('PassiveStat').textContent = passiveIncome;
