@@ -112,6 +112,68 @@ body {
     text-align: left;
 }
 
+.Event{
+    z-index: 1;
+    font-size: 30px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    -webkit-text-stroke: 0.3px black;
+    top: 2%;
+    left: 38%;
+    position: absolute;
+    object-fit: cover;
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.gaugeContainer {
+    z-index: 1;
+    left: 6%;
+    top: 40%;
+    position: absolute;
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    display: inline-block;
+}
+
+.gauge {
+    z-index: 1;
+    position: absolute;
+    width: 300px;
+    height: 20px;
+    border: 1px solid #000;
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+.filler {
+    z-index: 1;
+    position: absolute;
+    height: 100%;
+    width: 0%;
+    background-color: red;
+    position: absolute;
+    
+}
+
+.passivePerSec{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    z-index: 1;
+    font-size: 25px;
+    top: 80%;
+    left: 60%;
+    justify-content: space-between;
+    position: absolute;
+    object-fit: cover;
+    color: white;
+    text-align: center;
+    display: inline-block;
+}
+
 .Navigation {
     height: 10%;
     background-color: #FFB648;
