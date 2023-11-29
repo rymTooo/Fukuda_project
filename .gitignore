@@ -9,3 +9,8 @@ game/migrations/__pycache__/0003_alter_stat_money_per_click.cpython-310.pyc
 game/migrations/__pycache__/__init__.cpython-310.pyc
 *.pyc
 game/migrations/__pycache__/__init__.cpython-310.pyc
+game/migrations/__pycache__/__init__.cpython-310.pyc
+game/migrations/0007_remove_user_customization_pant_and_more.py
+game/migrations/0006_alter_user_customization_head_and_more.py
+game/migrations/0005_rename_head_user_customization_head.py
+game/migrations/0004_customization_head_customization_pants_and_more.py
