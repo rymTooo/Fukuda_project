@@ -17,8 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.shortcuts import redirect, render
 from django.urls import path,include
-
-import game
+from . import views
 
 
 urlpatterns = [
@@ -26,5 +25,5 @@ urlpatterns = [
     path('authorization/', include("auth_app.urls")),
     path('game/', include("game.urls")),
     path("__debug__/", include("debug_toolbar.urls")),
-    path("",game.views.main_page)
+    path("",views.my_redirect_view, name='my_redirect_view')
 ]
