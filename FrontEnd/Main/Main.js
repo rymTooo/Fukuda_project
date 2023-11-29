@@ -543,11 +543,12 @@ function initializeSettings() {
 //Event
 // Set interval to check for events every second
 setInterval(EventOccur, 1000);
+eventProb = 10000;
 
 function EventOccur() {
     if (!EventOngoing) {
         // Generate a random number between 0 and 9999 (representing 0.01% probability)
-        const randomProbability = Math.floor(Math.random() * 1);
+        const randomProbability = Math.floor(Math.random() * eventProb);
 
         // Check if the event should occur based on the probability
         if (randomProbability === 0) {
