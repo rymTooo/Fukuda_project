@@ -27,6 +27,12 @@
             <div class="DisCurMoney"><span id="money">0</span></div>
             <img src={% static "game/monster0.png" %} class="dummy" id = "dummy">
             <div class="Event" id="Event"></div>
+
+            <img src={% static "game/torso/torsoDefault.png" %} id="torsoIdle">
+            <img src={% static "game/pants/pantsDefault.png" %} id="pantsIdle">
+            <img src={% static "game/shoes2/shoes2Default.png" %} id="shoesIdle">
+            <img src={% static "game/head/headDefault.png" %} id="headIdle">
+            
             <div class="passivePerSec"><span id="passive">0</span> per second</div>
             <div class="FlyingTextContainer" id="FlyingTextContainer"></div>
         </div>
@@ -89,10 +95,44 @@
                 </div> {% endcomment %}
             </div>
             <div id="customisation" class="tabContent">
-                customisation
+                <div class="column" id="headColumn">
+                    <img src={% static "game/head/headDefault.png" %} class="customizationImage" id="headImage">
+                    <div class="arrowButton" onclick="changeCustomisation('head', 'left')">←</div>
+                    <div class="arrowButton" onclick="changeCustomisation('head', 'right')">→</div>
+                  </div>
+                  
+                  <div class="column" id="torsoColumn">
+                    <img src={% static "game/torso/torsoDefault.png" %} class="customizationImage" id="torsoImage">
+                    <div class="arrowButton" onclick="changeCustomisation('torso', 'left')">←</div>
+                    <div class="arrowButton" onclick="changeCustomisation('torso', 'right')">→</div>
+                  </div>
+              
+                  <div class="column" id="pantsColumn">
+                    <img src={% static "game/pants/pantsDefault.png" %} class="customizationImage" id="pantsImage">
+                    <div class="arrowButton" onclick="changeCustomisation('pants', 'left')">←</div>
+                    <div class="arrowButton" onclick="changeCustomisation('pants', 'right')">→</div>
+                  </div>
+              
+                  <div class="column" id="shoesColumn">
+                    <img src={% static "game/shoes2/shoes2Default.png" %} class="customizationImage" id="shoesImage">
+                    <div class="arrowButton" onclick="changeCustomisation('shoes', 'left')">←</div>
+                    <div class="arrowButton" onclick="changeCustomisation('shoes', 'right')">→</div>
+                  </div>
             </div>
             <div id="statistics" class="tabContent">
-                <p class="rowStat">Current Money<br> <span id="CurMoneyStat">500</span></p>
+                <div id="Leaderboard">
+                    <table>
+                        <thead>
+                          <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>All-Time Money</th>
+                          </tr>
+                        </thead>
+                        <tbody id="leaderboardBody"></tbody>
+                      </table>
+                </div>
+
                 <p class="rowStat">All-time Clicks<br> <span id="AllClickStat">500</span></p>
                 <p class="rowStat">All-time Money<br> <span id="AllMoneyStat">500</span></p>
                 <p class="rowStat">Passive Income<br> <span id="PassiveStat">500</span></p>
