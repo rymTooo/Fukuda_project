@@ -21,6 +21,7 @@ function get_data() {
 let skills = [];// skill list composes of many skill objects.
 let powers = [];
 let powerInShop = [];
+let target_id = 0;
 
 let theme = "../../static/game/Background.png"
 get_data();
@@ -74,6 +75,9 @@ hitbox.addEventListener('click', () => {
     cur_money +=  money_per_click*EventMult;
     all_time_money += money_per_click*EventMult;
     click_counter++;
+    if (click_counter%200 == 0){//chnage target every 200 clicks
+        change_target();
+    }
     document.getElementById('passive').textContent = (totalPassiveIncome*EventMult + money_per_click*EventMult).toFixed(1);
     document.getElementById('money').textContent = cur_money.toFixed(1);
 
@@ -695,3 +699,16 @@ function getCookie(name) {
     }
     return cookieValue;
     }
+
+
+function change_target(){
+    while(true){
+        random_target_id = parseInt(Math.random() * 10);
+        console.log(random_target_id,"random target ID");
+        if(random_target_id != target_id){
+            target_id = random_target_id;
+            break;
+        }
+    }
+    document.getElementById('dummy').src = '../../static/game/monster' + target_id + '.png';
+}
