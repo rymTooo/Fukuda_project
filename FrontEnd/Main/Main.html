@@ -27,7 +27,11 @@
             <div class="DisCurMoney"><span id="money">0</span></div>
             <img src="Dummy.png" class="dummy">
             <div class="Event" id="Event"></div>
-            
+           
+            <img src="torso/torsoDefault.png" id="torsoIdle">
+            <img src="pants/pantsDefault.png" id="pantsIdle">
+            <img src="shoes2/shoes2Default.png" id="shoesIdle">
+            <img src="head/headDefault.png" id="headIdle">
             <div class="passivePerSec"><span id="passive">0</span> per second</div>
             <div class="FlyingTextContainer" id="FlyingTextContainer"></div>
             
@@ -61,7 +65,29 @@
 
             </div>
             <div id="customisation" class="tabContent">
-                customisation
+                <div class="column" id="headColumn">
+                    <img src="head/headDefault.png" class="customizationImage" id="headImage">
+                    <div class="arrowButton" onclick="changeCustomisation('head', 'left')">←</div>
+                    <div class="arrowButton" onclick="changeCustomisation('head', 'right')">→</div>
+                  </div>
+                  
+                  <div class="column" id="torsoColumn">
+                    <img src="torso/torsoDefault.png" class="customizationImage" id="torsoImage">
+                    <div class="arrowButton" onclick="changeCustomisation('torso', 'left')">←</div>
+                    <div class="arrowButton" onclick="changeCustomisation('torso', 'right')">→</div>
+                  </div>
+              
+                  <div class="column" id="pantsColumn">
+                    <img src="pants/pantsDefault.png" class="customizationImage" id="pantsImage">
+                    <div class="arrowButton" onclick="changeCustomisation('pants', 'left')">←</div>
+                    <div class="arrowButton" onclick="changeCustomisation('pants', 'right')">→</div>
+                  </div>
+              
+                  <div class="column" id="shoesColumn">
+                    <img src="shoes2/shoes2Default.png" class="customizationImage" id="shoesImage">
+                    <div class="arrowButton" onclick="changeCustomisation('shoes', 'left')">←</div>
+                    <div class="arrowButton" onclick="changeCustomisation('shoes', 'right')">→</div>
+                  </div>
             </div>
             <div id="statistics" class="tabContent">
                 <p class="rowStat">Current Money<br> <span id="CurMoneyStat">500</span></p>

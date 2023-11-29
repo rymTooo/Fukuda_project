@@ -83,6 +83,43 @@ body {
     transform: translate(-18.2%, -37%) scale(0.38);
 }
 
+#headIdle{
+    z-index: 1;
+    /* Place the Fukuda.png on top */
+    width: 9%;
+    height: auto;
+    top: 32%;
+    left: 32%;
+    opacity: 0.8;
+}
+#torsoIdle{
+    z-index: 1;
+    /* Place the Fukuda.png on top */
+    width: 17%;
+    height: auto;
+    top: 22%;
+    left: 27.5%;
+    opacity: 0.8;
+}
+#pantsIdle{
+    z-index: 1;
+    /* Place the Fukuda.png on top */
+    width: 11%;
+    height: auto;
+    top: 55%;
+    left: 31%;
+    opacity: 0.8;
+}
+#shoesIdle{
+    z-index: 1;
+    /* Place the Fukuda.png on top */
+    width: 13%;
+    height: auto;
+    top: 55%;
+    left: 31%;
+    opacity: 0.8;
+}
+
 .Picture img.dummy {
     z-index: 1;
     /* Place the Fukuda.png on top */
@@ -412,6 +449,37 @@ body {
     margin-bottom: -9px;
     height: 75%;
 }
+#customisation {
+    display: flex;
+    /* Set the background image */
+    height: 113%;
+    /* Ensure the content takes up the full height */
+    width: auto;
+    padding: 0%;
+    /* Add some padding for better visibility of content */
+    margin: -20px;
+  }
+.column {
+    flex: 1;
+    box-sizing: border-box;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFDF8B;
+    border: 4px solid #8A5B00;
+  }
+
+  .customizationImage {
+    width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+    margin-bottom: 10px;
+  }
+
+  .arrowButton {
+    cursor: pointer;
+    font-size: 24px;
+  }
 #setting {
     background: url('SettingBackground.png') center/cover;
     /* Set the background image */

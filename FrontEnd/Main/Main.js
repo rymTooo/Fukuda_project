@@ -7,6 +7,8 @@ let powers = [];
 let powerInShop = [];
 let totalPassiveIncome = 0;
 let purchasedPowerUps = [];
+let customisationOptions={};
+let selectedCustomisation = {head : "head/headDefault.png", torso:"torso/torsoDefault.png",pants:"pants/pantsDefault.png",shoes:"shoes2/shoes2Default.png"};
 let theme = "Background.png"
 const Swordsounds = [
     "Sword1.mp3",
@@ -17,6 +19,7 @@ const Swordsounds = [
 let SwordSound = "Sword1.mp3"
 fetchPowers();
 fetchSkills();
+fetchCustomisation();
 
 // Get the audio element
 const backgroundAudio = document.getElementById('backgroundAudio');
@@ -27,8 +30,13 @@ backgroundAudio.play();
 
 document.addEventListener('DOMContentLoaded', fetchSkills);
 document.addEventListener('DOMContentLoaded', fetchPowers);
+document.addEventListener('DOMContentLoaded', fetchCustomisation);
 
 
+headIdle = document.getElementById('headIdle');
+torsoIdle = document.getElementById('torsoIdle');
+pantsIdle = document.getElementById('pantsIdle');
+shoesIdle = document.getElementById('shoesIdle');
 
 //Clicking
 const swordman = document.getElementById('swordman');
@@ -52,11 +60,16 @@ hitbox.addEventListener('click', () => {
 
     playRandomSound();
     gaugeValue += 5;
+    headIdle.style.visibility = 'hidden';
+    torsoIdle.style.visibility = 'hidden';
+    pantsIdle.style.visibility = 'hidden';
+    shoesIdle.style.visibility = 'hidden';
     setTimeout(() => {
         swordman.classList.remove('SwingAnim');
+        updateCustomisations();
 
     }, 700); // Adjust based on your swing animation duration
-
+    
 });
 
 function playRandomSound() {
@@ -442,6 +455,66 @@ function buyPowerUp(powerUp) {
         alert("Not enough money to buy this power-up!");
     }
 }
+
+
+function updateCustomisations(){
+    if(selectedCustomisation["head"] == customisationOptions["head"][0]){
+        headIdle.style.visibility = 'hidden';
+    }else{
+        console.log("show " + selectedCustomisation["head"])
+        console.log("show " + customisationOptions["head"][0])
+        headIdle.style.visibility = 'visible';
+        headIdle.src = selectedCustomisation["head"];
+    }
+    if(selectedCustomisation["torso"] == customisationOptions["torso"][0]){
+        torsoIdle.style.visibility = 'hidden';
+    }else{
+        torsoIdle.style.visibility = 'visible';
+        torsoIdle.src = selectedCustomisation["torso"];
+    }
+    if(selectedCustomisation["pants"] == customisationOptions["pants"][0]){
+        pantsIdle.style.visibility = 'hidden';
+    }else{
+        pantsIdle.style.visibility = 'visible';
+        pantsIdle.src = selectedCustomisation["pants"];
+    }
+    if(selectedCustomisation["shoes"] == customisationOptions["shoes"][0]){
+        shoesIdle.style.visibility = 'hidden';
+    }else{
+        shoesIdle.style.visibility = 'visible';
+        shoesIdle.src = selectedCustomisation["shoes"];
+    }
+
+    console.log(selectedCustomisation["head"]);
+};
+function fetchCustomisation(){
+    customisationOptions = {
+    head: ['head/headDefault.png', 'head/headPink.png', 'head/headBlue.png', 'head/headGreen.png', 'head/headYellow.png', 'head/headPurple.png', 'head/headOrange.png'],
+    torso: ['torso/torsoDefault.png', 'torso/torsoPink.png', 'torso/torsoBlue.png', 'torso/torsoGreen.png', 'torso/torsoYellow.png', 'torso/torsoPurple.png', 'torso/torsoOrange.png'],
+    pants: ['pants/pantsDefault.png', 'pants/pantsPink.png', 'pants/pantsBlue.png', 'pants/pantsGreen.png', 'pants/pantsYellow.png', 'pants/pantsPurple.png', 'pants/pantsOrange.png'],
+    shoes: ['shoes2/shoes2Default.png', 'shoes2/shoes2Pink.png', 'shoes2/shoes2Blue.png', 'shoes2/shoes2Green.png', 'shoes2/shoes2Yellow.png', 'shoes2/shoes2Purple.png', 'shoes2/shoes2Orange.png']
+  };
+  updateCustomisations();
+}
+  function changeCustomisation(part, direction) {
+    const column = document.getElementById(`${part}Column`);
+    const image = document.getElementById(`${part}Image`);
+    const options = customisationOptions[part];
+    console.log("Current Pic " + image.src);
+    let currentIndex = options.indexOf(image.src.replace('http://127.0.0.1:5501/FrontEnd/Main/',''));
+    console.log("Current" + currentIndex)
+    if (direction === 'left') {
+      currentIndex = (currentIndex - 1 + options.length) % options.length;
+    } else if (direction === 'right') {
+      currentIndex = (currentIndex + 1)% options.length;
+    }
+    console.log("After" + currentIndex)
+    console.log(options[currentIndex]);
+    console.log(options[5]);
+    selectedCustomisation[part] = options[currentIndex];
+    updateCustomisations();
+    image.src = options[currentIndex];
+  }
 
 function updateStatistics() {
     // Example variables, replace them with your actual variables
