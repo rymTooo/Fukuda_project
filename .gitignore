@@ -1,0 +1,11 @@
+
+game/migrations/0001_initial.py
+game/migrations/0002_powerup_powerup_id_powerup_skillreq_and_more.py
+game/migrations/0003_alter_stat_money_per_click.py
+game/migrations/__init__.py
+game/migrations/__pycache__/0001_initial.cpython-310.pyc
+game/migrations/__pycache__/0002_powerup_powerup_id_powerup_skillreq_and_more.cpython-310.pyc
+game/migrations/__pycache__/0003_alter_stat_money_per_click.cpython-310.pyc
+game/migrations/__pycache__/__init__.cpython-310.pyc
+*.pyc
+game/migrations/__pycache__/__init__.cpython-310.pyc

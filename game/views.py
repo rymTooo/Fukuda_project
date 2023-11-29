@@ -66,7 +66,7 @@ def main_page(request):
        
         return render(request, 'Main.html', {"username": user,"build_timestamp":build_timestamp})
     else:
-        return render(request, "auth_app/login.html")
+        return redirect("/authorization/login/")
 
 def test_method(request):
     for i in User_Skill.objects.raw("select * from game_user_skill;"):
@@ -95,34 +95,50 @@ def save_data(request):
                 print("\n===============START SAVED==================\n")  
                 # Process the data and save it to the database
                 
-                data = json.loads(request.body)    # Get the data sent from the JavaScript                  
-                data_user_skill = data["User_Skill"]
-                data_stat = data["Stat"]
-                data_user_power_up = data["User_PowerUp"]
-                
+                data = json.loads(request.body)    # Get the data sent from the JavaScript                 
                 # Save USER_SKILL data to database
+                data_user_skill = data["User_Skill"]
+                print("\n--------------------USER SKILL--------------------\n")
                 for skill in data_user_skill:
                     user_skill = get_object_or_404(User_Skill, user = user, skill_name = skill["skill_name"])
                     user_skill.level = skill["level"]
                     user_skill.unlocked = skill["unlocked"]
                     user_skill.save()
                     print(f"Save skill: {skill['skill_name']} for user: '{user}' Successfully")
-
+                print("\n---------------------------------------------\n")
+                
                 # Save STAT
+                print("\n--------------------STAT--------------------\n")
+                data_stat = data["Stat"]
                 stat_obj = get_object_or_404(Stat, user = user)
                 for key, value in data_stat.items():
                     setattr(stat_obj, key, value)
                 stat_obj.save()
                 print(f"Save stat for user: '{user}' Successfully")
-
+                print("\n----------------------------------------\n")
+                
                 # Save USER_POWERUP data to database
+                print("\n--------------------USER POWERUP--------------------\n")
+                data_user_power_up = data["User_PowerUp"]
                 for powerup in data_user_power_up:
                     user_powerup = get_object_or_404(User_PowerUp, user = user, powerup_name = powerup["powerupID"])
                     user_powerup.acquired = powerup["purchased"]
                     user_powerup.save()
                     print(f"Save powerup: {powerup['powerupID']} for user: '{user}' Successfully")
+                print("\n----------------------------------------\n")
                 
-                # Save USER_EVENT
+                # Save SETTING
+                print("\n--------------------SETTING--------------------\n")
+                data_setting = data["Setting"]
+                print(data_setting)
+                setting_obj = get_object_or_404(Setting, user = user)
+                for key, value in data_setting.items():
+                    print(value)
+                    setattr(setting_obj, key, value)
+                setting_obj.save()
+                print(f"Save Setting for user: '{user}' Successfully")
+                print("\n----------------------------------------\n")
+
 
                 print("\n===============END SAVED==================\n")
             except Exception as e:
@@ -178,7 +194,35 @@ def data(request): #method for sending data from db to javascript
             print(stat_dict,"stat")
         main_dict["stat"] = stat_dict
 
-
+        #load setting
+        setting_dict = {}
+        loaded_setting = Setting.objects.raw("select * from game_setting where user_id = %s;", [user.id])
+        for i in loaded_setting:
+            setting_dict["theme"] = i.theme
+            setting_dict["sound_volumn"] = i.sound_volumn
+            setting_dict["notification"] = i.notification
+            print(stat_dict,"stat")
+        main_dict["setting"] = setting_dict
+        print(main_dict)
         return JsonResponse(main_dict)
     else:
         return JsonResponse({"error": "user not authenticated"}, status=401)
+    
+def change_username(request):
+    if request.method == 'POST':
+        user = None
+
+        if request.user.is_authenticated:
+            user = request.user.id
+            try:
+                new_username = json.loads(request.body)["username"]
+                user_obj = User.objects.get(pk = user)
+                user_obj.username = new_username
+                user_obj.save()
+                print("This is new username: ", new_username)
+                print("============================\nChange Username Complete\n============================\n")
+            except Exception as e:
+                print(f"Saved failed.: {str(e)}")
+                return JsonResponse({'status': 'failed', 'error': str(e)})
+
+    return JsonResponse({'status': 'failed'})

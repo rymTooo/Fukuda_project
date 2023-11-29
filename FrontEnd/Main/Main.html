@@ -11,7 +11,7 @@
         <meta name="description" content>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="styles.css">
-
+        <link rel="shortcut icon" href>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -21,11 +21,14 @@
             <img id="background" src="Background.png">
             <!--<img src="Fukuda.png" class="fukuda">-->
             <img src="Coin.png" class="coin">
+            
             <div class="Character" id="swordman"></div>
             <div class="CharacterHitbox" id="hitbox">Test</div>
             <div class="DisCurMoney"><span id="money">0</span></div>
-
             <img src="Dummy.png" class="dummy">
+            <div class="Event" id="Event"></div>
+            <div class="passivePerSec"><span id="passive">111111111110</span> per second</div>
+            
         </div>
         <div class="Navigation">
             <div onclick="showTab('skills')" class="tab">Skills</div>
@@ -69,13 +72,15 @@
                 <!-- Volume Slider -->
                 <div class="settingOption">
                     <label for="volumeSlider">Volume:</label>
-                    <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="1">
+                    <input type="range" id="volumeSlider" min="0" max="1"
+                        step="0.1" value="0">
                 </div>
 
                 <!-- Theme Selection -->
                 <div class="settingOption">
                     <label for="themeSelect">Theme:</label>
-                    <select name="themeSelect" id="themeSelect" onchange="changeTheme(this.value)">
+                    <select name="themeSelect" id="themeSelect"
+                        onchange="changeTheme(this.value)">
                         <option value="Jungle">Jungle</option>
                         <option value="Volcano">Volcano</option>
                         <option value="Space">Space</option>
@@ -103,8 +108,11 @@
                 <div class="settingOption">
                     <button onclick="saveGame()">Save Game</button>
                 </div>
+                <div class="settingOption">
+                    <button onclick="logOut()">Log Out</button>
+                </div>
             </div>
-            <audio loop id="backgroundAudio" >
+            <audio id="backgroundAudio" loop>
                 <source src="JungleMusic.mp3" type="audio/mp3">
                 Your browser does not support the audio element.
             </audio>

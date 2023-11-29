@@ -12,7 +12,7 @@
         <meta name="description" content>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{% static "game/styles.css" %}?v={{ build_timestamp }}">
-
+        <link rel="shortcut icon" href>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -25,8 +25,9 @@
             <div class="Character" id="swordman"></div>
             <div class="CharacterHitbox" id="hitbox">Test</div>
             <div class="DisCurMoney"><span id="money">0</span></div>
-
             <img src={% static "game/dummy.png" %} class="dummy">
+            <div class="Event" id="Event"></div>
+            <div class="passivePerSec"><span id="passive">111111111110</span> per second</div>
         </div>
         <div class="Navigation">
             <div onclick="showTab('skills')" class="tab">Skills</div>
@@ -98,6 +99,7 @@
             </div>
             <div id="setting" class="tabContent">
                 Setting
+                <p>USERNAME: {{username}}</p>
                  <!-- Volume Slider -->
                  <div class="settingOption">
                     <label for="volumeSlider">Volume:</label>
@@ -121,18 +123,19 @@
                 <!-- Change Username -->
                 <div class="settingOption">
                     <label for="usernameInput">Change Username:</label>
-                    <form>
+                    <form autocomplete="off">
                         <input type="text" id="usernameInput"
                             placeholder="New Username">
-                        <button onclick="changeUsername()">Save</button>
+                        <button onclick="changeUsername(event)">Save</button>
                     </form>
                 </div>
                 <!-- Save Game Button -->
                 <div class="settingOption">
                     <button onclick="saveManually()">Save Game</button>
+                    <button type = 'submit'> <a href = '/authorization/logout'>Logout</a></button>
                 </div>
             </div>
-            <audio loop id="backgroundAudio" >
+            <audio id="backgroundAudio" loop>
                 <source src={% static "game/JungleMusic.mp3" %} type="audio/mp3">
                 Your browser does not support the audio element.
             </audio>

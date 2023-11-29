@@ -6,14 +6,14 @@ class Stat(models.Model):
     all_time_money = models.BigIntegerField(default=0)
     passiveincome = models.BigIntegerField(default=0)
     current_money = models.BigIntegerField(default=0)
-    money_per_click = models.IntegerField(default=0)
+    money_per_click = models.IntegerField(default=1)
     click_counter = models.BigIntegerField(default=0)
 
 
 class Setting(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    theme = models.CharField(max_length=255,default="default")
-    sound_volumn = models.DecimalField(max_digits=3, decimal_places=1,default=50.0)
+    theme = models.CharField(max_length=255,default="Jungle")
+    sound_volumn = models.DecimalField(max_digits=1, decimal_places=1,default=0.5)
     notification = models.BooleanField(default=1)
 
 class FukudaCustomization(models.Model):

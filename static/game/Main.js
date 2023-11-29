@@ -30,37 +30,86 @@ let all_time_money = loaded_data["stat"]["all_time_money"];
 let totalPassiveIncome = loaded_data["stat"]["passive_income"];
 let money_per_click = loaded_data["stat"]["money_per_click"];
 let click_counter = loaded_data["stat"]["click_counter"];
+const Swordsounds = [
+    "../../static/game/Sword1.mp3",
+    "../../static/game/Sword2.mp3",
+    "../../static/game/Sword3.mp3",
+    "../../static/game/Sword4.mp3"
+];
+let SwordSound = "../../static/game/Sword1.mp3"
+
 fetchPowers();// should move into get data method and then just run get data method once.
 fetchSkills();
-startAudio();
+initializeSettings();
+
+// Get the audio element
+const backgroundAudio = document.getElementById('backgroundAudio');
+// Play the audio automatically
+backgroundAudio.play();
+
+
+
 document.getElementById('money').textContent = Math.floor(cur_money);
 document.addEventListener('DOMContentLoaded', fetchSkills);
 document.addEventListener('DOMContentLoaded', fetchPowers);
-document.addEventListener('DOMContentLoaded', startAudio);
 
 //Clicking
 const swordman = document.getElementById('swordman');
+let clicking = false;
 
-hitbox.addEventListener('click', () => {
-    swordman.classList.add('SwingAnim');
-    cur_money+= money_per_click;
-    all_time_money += money_per_click;
-    click_counter++;
-    document.getElementById('money').textContent = Math.floor(cur_money);
-    setTimeout(() => {
-        swordman.classList.remove('SwingAnim');
-    }, 700); // Adjust based on your swing animation duration
+
+hitbox.addEventListener('mousedown', () => {
+    clicking = true;
+    console.log(clicking)
 });
 
+hitbox.addEventListener('mouseup', () => {
+    clicking = false;
+    console.log(clicking)
+});
+
+hitbox.addEventListener('click', () => {
+ 
+    swordman.classList.add('SwingAnim');
+    cur_money +=  money_per_click*EventMult;
+    all_time_money += money_per_click*EventMult;
+    click_counter++;
+    document.getElementById('passive').textContent = (totalPassiveIncome*EventMult + money_per_click*EventMult).toFixed(1);
+    document.getElementById('money').textContent = cur_money.toFixed(1);
+
+    playRandomSound();
+    gaugeValue+= 5;
+    setTimeout(() => {
+        swordman.classList.remove('SwingAnim');
+        
+    }, 700); // Adjust based on your swing animation duration
+    
+});
+
+function playRandomSound() {
+    // Randomly choose a sound effect from the array
+    const randomIndex = Math.floor(Math.random() * Swordsounds.length);
+    const randomSoundPath = Swordsounds[randomIndex];
+    // Create an audio element and play the chosen sound
+    SwordSound = new Audio(randomSoundPath);
+    SwordSound.volume = volumeValue;
+    SwordSound.play();
+    console.log("\nSound Played!!!!\n")
+}
 
 function updateMoney() {
     totalPassiveIncome = 0;
     skills.forEach(skill => {
         totalPassiveIncome += skill.passive;
     }); 
-    cur_money += totalPassiveIncome;
-    all_time_money += totalPassiveIncome
-    document.getElementById('money').textContent = Math.floor(cur_money);
+    cur_money += totalPassiveIncome*EventMult;
+    all_time_money += totalPassiveIncome*EventMult;
+    if(clicking){
+        document.getElementById('passive').textContent = (totalPassiveIncome*EventMult + money_per_click*EventMult).toFixed(1);
+    }else{
+    document.getElementById('passive').textContent = (totalPassiveIncome*EventMult).toFixed(1);
+    }
+    document.getElementById('money').textContent = (cur_money).toFixed(1);
 }
 setInterval(updateMoney, 1000); // Update score every second
 
@@ -326,9 +375,11 @@ function buyPowerUp(powerUp) {
 
     if (skill && cur_money >= powerUp.cost) {
         cur_money -= powerUp.cost;
+        console.log(skill,skill.skill_name,powerUp.skill_name)
 
         // Apply the power-up effects
         skill.passive *= powerUp.multiplier;
+        money_per_click *= powerUp.multiplier;
         console.log(skill.passive, "passive after update");
 
         // Mark the power-up as purchased
@@ -355,41 +406,30 @@ function updateStatistics() {
 
 // JavaScript functions for Settings tab
 function changeUsername() {
-    const newUsername = document.getElementById('usernameInput').value;
-    // Implement logic to update the username in the game
+    event.preventDefault();
 
+    const newUsername = document.getElementById('usernameInput').value;
+
+    // Check if the input is not empty
+    if (newUsername.trim() === "") {
+        alert("Please enter a username.");
+        return; // Don't proceed further if the input is empty
+    }
+
+    // Implement logic to update the username in the game
+    else{
+        fetch('http://127.0.0.1:8000/game/change-username/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
+            },
+            body: JSON.stringify({ username: newUsername })
+        });
+    }
 }
 //Clicking
 
-
-test = {name:"test",level:"1"}
-function saveManually() {//save game function
-    stat = {"all_time_money":all_time_money,"passiveincome":totalPassiveIncome,"current_money":cur_money,"money_per_click":money_per_click,"click_counter":click_counter}
-    fetch('http://127.0.0.1:8000/game/save-data/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
-        },
-        body: JSON.stringify({User_Skill:skills,Stat:stat,User_PowerUp:powers})
-    });
-}
-
-setInterval(saveManually, 30000); // Auto save every 30 seconds
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-    }
 
 function getComboA(selectObject) {
     var value = selectObject.value;  
@@ -420,26 +460,21 @@ function updateBackground(){
     console.log(theme)
 }
 
-function startAudio() {
-    const backgroundAudio = document.getElementById('backgroundAudio');
-    backgroundAudio.play();
-    console.log("audio play")
-}
 
 const volumeSlider = document.getElementById('volumeSlider');
-    const audio1 = document.getElementById('backgroundAudio');
-    //const audio2 = document.getElementById('audio2');
-
-    // Set initial volume
-    audio1.volume = volumeSlider.value;
-    //audio2.volume = volumeSlider.value;
-
-    // Update volume when the slider changes
-    volumeSlider.addEventListener('input', function() {
-        const volumeValue = this.value;
-        audio1.volume = volumeValue;
-        //audio2.volume = volumeValue;
-    });
+const audioBackground = document.getElementById('backgroundAudio');
+//const audio2 = document.getElementById('audio2');
+// Set initial volume
+let volumeValue = volumeSlider.value
+audioBackground.volume = volumeSlider.value;
+SwordSound.volume = volumeSlider.value;
+// Update volume when the slider changes
+volumeSlider.addEventListener('input', function () {
+    volumeValue = this.value;
+    audioBackground.volume = volumeValue;
+    SwordSound.volume = volumeValue;
+    console.log(volumeValue)
+});
 
 // Example function to initialize settings
 function initializeSettings() {
@@ -450,12 +485,130 @@ function initializeSettings() {
     const usernameInput = document.getElementById('usernameInput');
 
     // Set initial values (replace with actual values from your game state)
-    volumeSlider.value = initialVolumeValue;
-    themeSelect.value = initialThemeValue;
-    notificationToggle.checked = initialNotificationValue;
-    usernameInput.value = initialUsername;
+    volumeSlider.value = loaded_data["setting"]["sound_volumn"];
+    themeSelect.value = loaded_data["setting"]["theme"];
+    notificationToggle.checked = loaded_data["setting"]["notification"];
+    // usernameInput.value = initialUsername;
+    changeTheme(themeSelect.value)
+}
+//Event
+// Set interval to check for events every second
+setInterval(EventOccur, 10000);
+function EventOccur() {
+    if (!EventOngoing) {
+        // Generate a random number between 0 and 9999 (representing 0.01% probability)
+        const randomProbability = Math.floor(Math.random() * 5);
+        console.log("EVENT PROP = ", randomProbability)
+        // Check if the event should occur based on the probability
+        if (randomProbability === 0) {
+            const randomEvent = Math.floor(Math.random() * 3);
+            console.log("Event Occur");
+            clickGaugeEvent();
+            /*switch (randomEvent) {
+                case 0:
+                    clickGaugeEvent();
+                    break;
+                case 1:
+                    flyingTargetEvent();
+                    break;
+                case 2:
+                    colorMatchingEvent();
+                    break;
+            }*/
+        } else {
+            console.log("Event Not Occur");
+        }
+    }
+}
+// Set interval to check for events every second
+let gaugeValue = 50;
+let EventOngoing = false;
+let EventMult = 1;
+function clickGaugeEvent() {
+    console.log("Hi I'm EVENT /@-@/ ")
+    let finish = false;
+    EventOngoing = true;
+    let Event = document.getElementById('Event');
+    console.log(Event)
+
+    let gaugetext = document.createElement('p');
+    Event.appendChild(gaugetext);
+    let gaugeContainer = document.createElement('div');
+    gaugeContainer.classList.add("gaugeContainer");
+    Event.appendChild(gaugeContainer);
+    let gauge = document.createElement('div');
+    gauge.classList.add("gauge");
+    gaugeContainer.appendChild(gauge);
+    let filler = document.createElement('div');
+    filler.classList.add("filler");
+    gauge.appendChild(filler);
+    gaugeValue = 50;
+    filler.style.width = gaugeValue + '%';
+    const gaugeInterval = setInterval(() => {
+        gaugeValue -= 1;
+        gaugetext.textContent = "Click before the gauge depletes"; // Replace with your skill level property
+        filler.style.width = gaugeValue + '%';
+        if (gaugeValue <= 0) {
+            clearInterval(gaugeInterval);
+            gaugetext.textContent = 'Gauge depleted! Event failed.';
+            setTimeout(function () {
+                EventOngoing = false;
+                Event.innerHTML = "";
+            }, 2000);
+        }
+        if (gaugeValue >= 100) {
+            clearInterval(gaugeInterval);
+            gaugetext.textContent = 'Gauge completed! 10 times Multiplier.';
+            EventMult = 10;
+            setTimeout(function () {
+                EventOngoing = false;
+                EventMult = 1;
+                Event.innerHTML = "";
+            }, 10000);
+        }
+    }, 50);
 }
 
-function get_skills(){
-    return JSON.stringify(skills);
+function saveManually() {//save game function
+    stat = {
+        "all_time_money":all_time_money,
+        "passiveincome":totalPassiveIncome,
+        "current_money":cur_money,
+        "money_per_click":money_per_click,
+        "click_counter":click_counter
+    }
+    setting ={
+        "theme": document.getElementById('themeSelect').value,
+        "sound_volumn": document.getElementById('volumeSlider').value,
+        "notification": document.getElementById('notificationToggle').checked
+    }
+    fetch('http://127.0.0.1:8000/game/save-data/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
+        },
+        body: JSON.stringify({
+            User_Skill:skills,
+            Stat:stat,
+            User_PowerUp:powers,
+            Setting:setting
+        })
+    });
 }
+
+setInterval(saveManually, 30000); // Auto save every 30 seconds
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+    }
