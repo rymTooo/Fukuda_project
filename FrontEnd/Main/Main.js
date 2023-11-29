@@ -551,21 +551,17 @@ function EventOccur() {
 
         // Check if the event should occur based on the probability
         if (randomProbability === 0) {
-            const randomEvent = Math.floor(Math.random() * 3);
+            const randomEvent = Math.floor(Math.random() * 2);
             console.log("Event Occur");
-            startFlyingTargetEvent()
 
-            /*switch (randomEvent) {
+            switch (randomEvent) {
                 case 0:
                     clickGaugeEvent();
                     break;
                 case 1:
                     startFlyingTargetEvent();
                     break;
-                case 2:
-                    colorMatchingEvent();
-                    break;
-            }*/
+            }
         } else {
             console.log("Event Not Occur");
         }
@@ -641,7 +637,7 @@ function startFlyingTargetEvent() {
     
     timerInterval = setInterval(updateTimer, 1000);
 
-    setTimeout(endFlyingTargetEvent, 15000);
+    setTimeout(endFlyingTargetEvent, 20000);
 }
 setInterval(createTarget, 300);
 let flyingTextContainer = document.getElementById('FlyingTextContainer');
@@ -706,6 +702,6 @@ function updateScore() {
 }
 function updateTimer() {
     const currentTime = Math.floor((Date.now() - eventStartTime) / 1000);
-    const timeLeft = Math.max(0, 15 - currentTime);
+    const timeLeft = Math.max(0, 20 - currentTime);
     timeEl.textContent = ` Time Left: ${timeLeft}s`;
 }
