@@ -16,12 +16,30 @@ class Setting(models.Model):
     sound_volumn = models.DecimalField(max_digits=1, decimal_places=1,default=0.5)
     notification = models.BooleanField(default=1)
 
-class FukudaCustomization(models.Model):
+
+class Customization_head(models.Model):
+    name = models.CharField(max_length=255,default="default", primary_key= True)
+    file_name = models.CharField(max_length=255,default="default")
+
+class Customization_torso(models.Model):
+    name = models.CharField(max_length=255,default="default", primary_key= True)
+    file_name = models.CharField(max_length=255,default="default")
+
+class Customization_pants(models.Model):
+    name = models.CharField(max_length=255,default="default", primary_key= True)
+    file_name = models.CharField(max_length=255,default="default")
+
+class Customization_shoes(models.Model):
+    name = models.CharField(max_length=255,default="default", primary_key= True)
+    file_name = models.CharField(max_length=255,default="default")
+
+class User_Customization(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE, primary_key=True)
-    Head = models.CharField(max_length=255,default="default")
-    pant = models.CharField(max_length=255,default="default")
-    torso = models.CharField(max_length=255,default="default")
-    shoes = models.CharField(max_length=255,default="default")
+    Head = models.ForeignKey(Customization_head, default="default",on_delete=models.CASCADE)
+    pant = models.ForeignKey(Customization_torso, default="default",on_delete=models.CASCADE)
+    torso = models.ForeignKey(Customization_pants, default="default",on_delete=models.CASCADE)
+    shoes = models.ForeignKey(Customization_shoes, default="default",on_delete=models.CASCADE)
+
 
 class Event(models.Model):
     event_name = models.CharField(max_length=255,primary_key=True)
