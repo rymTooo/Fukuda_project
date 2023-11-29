@@ -36,11 +36,7 @@ def main_page(request):
         else:
             print(f"SETTING already EXISTS.")
         #create User_Customization
-        head = Customization_head.objects.raw("select * from game_customization_head where name like %s", ['%Default%'])
-        torso = Customization_torso.objects.raw("select * from game_customization_torso where name like %s", ['%Default%'])
-        pants = Customization_pants.objects.raw("select * from game_customization_pants where name like %s", ['%Default%'])
-        shoes = Customization_shoes.objects.raw("select * from game_customization_shoes where name like %s", ['%Default%'])
-        custom, custom_created = User_Customization.objects.get_or_create(user = user,head = head[0], torso = torso[0], pants = pants[0], shoes = shoes[0])
+        custom, custom_created = User_Customization.objects.get_or_create(user = user)
         if custom_created:
             print(f"User_Customization created SUCCESSFUL.")
         else:
@@ -119,7 +115,7 @@ def save_data(request):
                     setattr(stat_obj, key, value)
                 stat_obj.save()
                 print(f"Save stat for user: '{user}' Successfully")
-                print("\n----------------------------------------\n")
+                
                 
                 # Save USER_POWERUP data to database
                 print("\n--------------------USER POWERUP--------------------\n")
@@ -129,7 +125,6 @@ def save_data(request):
                     user_powerup.acquired = powerup["purchased"]
                     user_powerup.save()
                     print(f"Save powerup: {powerup['powerupID']} for user: '{user}' Successfully")
-                print("\n----------------------------------------\n")
                 
                 # Save SETTING
                 print("\n--------------------SETTING--------------------\n")
@@ -141,8 +136,27 @@ def save_data(request):
                     setattr(setting_obj, key, value)
                 setting_obj.save()
                 print(f"Save Setting for user: '{user}' Successfully")
-                print("\n----------------------------------------\n")
+                
 
+                # Save User_Customiztion
+                print("\n--------------------User_Customization--------------------\n")
+                data_user_customization = data["User_Customization"]
+                head = data_user_customization["head"].split('/')[-1].split('.')[0]
+                torso = data_user_customization["torso"].split('/')[-1].split('.')[0]
+                pants = data_user_customization["pants"].split('/')[-1].split('.')[0]
+                shoes = data_user_customization["shoes"].split('/')[-1].split('.')[0]
+                head_obj = Customization_head.objects.filter(name__contains = head)
+                torso_obj = Customization_torso.objects.filter(name__contains = torso)
+                pants_obj = Customization_pants.objects.filter(name__contains = pants)
+                shoes_obj = Customization_shoes.objects.filter(name__contains = shoes)
+
+                customization_obj = get_object_or_404(User_Customization, user=user)
+                customization_obj.head = head_obj[0]
+                customization_obj.torso = torso_obj[0]
+                customization_obj.pants = pants_obj[0]
+                customization_obj.shoes = shoes_obj[0]
+                customization_obj.save()
+                print(f"Save Setting for user: '{user}' Successfully")
 
                 print("\n===============END SAVED==================\n")
             except Exception as e:
@@ -220,7 +234,6 @@ def data(request): #method for sending data from db to javascript
                                         INNER JOIN
                                             auth_user ON game_stat.user_id = auth_user.id
                                     """)
-   
         for i in loaded_leaderboard:
             player = {}
             player["id"] = i.user_id
@@ -230,6 +243,59 @@ def data(request): #method for sending data from db to javascript
             print("PLAYER: ",player)
         main_dict["leaderboard"] = leaderboard_list
         
+
+        #load all customisation
+        loaded_head = Customization_head.objects.all()
+        head_list = []
+        for i in loaded_head:
+            head_file_part = "../../static/game/head/"+i.file_name
+            head_list.append(head_file_part)
+
+        loaded_torso = Customization_torso.objects.all()
+        torso_list = []
+        for i in loaded_torso:
+            torso_file_part = "../../static/game/torso/"+i.file_name
+            torso_list.append(torso_file_part)
+
+        loaded_pants = Customization_pants.objects.all()
+        pants_list = []
+        for i in loaded_pants:
+            pants_file_part = "../../static/game/pants/"+i.file_name
+            pants_list.append(pants_file_part)
+        
+        loaded_shoes = Customization_shoes.objects.all()
+        shoes_list = []
+        for i in loaded_shoes:
+            shoes_file_part = "../../static/game/shoes2/"+i.file_name
+            shoes_list.append(shoes_file_part)
+        customization_dict = {
+            "head": head_list,
+            "torso": torso_list,
+            "pants": pants_list,
+            "shoes": shoes_list
+            }
+        main_dict["customization"]= customization_dict
+
+        # Load User_customizaation
+        loaded_user_customiztion = User_Customization.objects.raw('''
+                                                                  select 
+                                                                  uc.*, ch.file_name, ct.file_name, ct.file_name, cp.file_name, cs.file_name
+                                                                  from game_user_customization uc
+                                                                  join game_customization_head ch on uc.head_id = ch.name
+                                                                  join game_customization_torso ct on uc.torso_id = ct.name
+                                                                  join game_customization_pants cp on uc.pants_id = cp.name
+                                                                  join game_customization_shoes cs on uc.shoes_id = cs.name
+                                                                  where uc.user_id = %s;''', [user.id])
+
+        user_customization_dict = {
+            "head": "../../static/game/head/"+loaded_user_customiztion[0].head.file_name,
+            "torso": "../../static/game/torso/"+loaded_user_customiztion[0].torso.file_name,
+            "pants": "../../static/game/pants/"+loaded_user_customiztion[0].pants.file_name,
+            "shoes": "../../static/game/shoes2/"+loaded_user_customiztion[0].shoes.file_name
+        }
+
+        main_dict["User_Customization"] = user_customization_dict
+
         print(main_dict)
         return JsonResponse(main_dict)
     else:

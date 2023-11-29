@@ -23,11 +23,12 @@ let powers = [];
 let powerInShop = [];
 let target_id = 0;
 let customisationOptions={};
-let selectedCustomisation = {head : "head/headDefault.png", torso:"torso/torsoDefault.png",pants:"pants/pantsDefault.png",shoes:"shoes2/shoes2Default.png"};//load from db
+
 
 let theme = "../../static/game/Background.png"
 get_data();
 
+let selectedCustomisation = loaded_data["User_Customization"];
 let cur_money = loaded_data["stat"]["current_money"];
 let all_time_money = loaded_data["stat"]["all_time_money"];
 let totalPassiveIncome = loaded_data["stat"]["passive_income"];
@@ -417,7 +418,7 @@ function updateStatistics() {
     players.sort((a, b) => b.all_time_money - a.all_time_money);
 
     //update this player all time money stat to show in table
-    players.find(player => player.id === OurPlayerid).all_time_money = all_time_money;
+    players.find(player => player.id === OurPlayerid).all_time_money = Math.floor(all_time_money);
     
     const leaderboardBody = document.getElementById('leaderboardBody');
     // Clear existing content
@@ -482,27 +483,27 @@ function changeUsername() {
 }
 
 function updateCustomisations(){
-    if(selectedCustomisation["head"] == customisationOptions["head"][0]){
+    if(selectedCustomisation["head"] == '../../static/game/head/headDefault.png'){
         headIdle.style.visibility = 'hidden';
     }else{
-        console.log("show " + selectedCustomisation["head"])
-        console.log("show " + customisationOptions["head"][0])
+        // console.log("show " + selectedCustomisation["head"])
+        // console.log("show " + customisationOptions["head"][0])
         headIdle.style.visibility = 'visible';
         headIdle.src = selectedCustomisation["head"];
     }
-    if(selectedCustomisation["torso"] == customisationOptions["torso"][0]){
+    if(selectedCustomisation["torso"] == '../../static/game/torso/torsoDefault.png'){
         torsoIdle.style.visibility = 'hidden';
     }else{
         torsoIdle.style.visibility = 'visible';
         torsoIdle.src = selectedCustomisation["torso"];
     }
-    if(selectedCustomisation["pants"] == customisationOptions["pants"][0]){
+    if(selectedCustomisation["pants"] == '../../static/game/pants/pantsDefault.png'){
         pantsIdle.style.visibility = 'hidden';
     }else{
         pantsIdle.style.visibility = 'visible';
         pantsIdle.src = selectedCustomisation["pants"];
     }
-    if(selectedCustomisation["shoes"] == customisationOptions["shoes"][0]){
+    if(selectedCustomisation["shoes"] == '../../static/game/shoes2/shoes2Default.png'){
         shoesIdle.style.visibility = 'hidden';
     }else{
         shoesIdle.style.visibility = 'visible';
@@ -513,12 +514,14 @@ function updateCustomisations(){
 
 // ต้องแก้ดึงจาก DB
 function fetchCustomisation(){
-    customisationOptions = {
-    head: ['head/headDefault.png', 'head/headPink.png', 'head/headBlue.png', 'head/headGreen.png', 'head/headYellow.png', 'head/headPurple.png', 'head/headOrange.png'],
-    torso: ['torso/torsoDefault.png', 'torso/torsoPink.png', 'torso/torsoBlue.png', 'torso/torsoGreen.png', 'torso/torsoYellow.png', 'torso/torsoPurple.png', 'torso/torsoOrange.png'],
-    pants: ['pants/pantsDefault.png', 'pants/pantsPink.png', 'pants/pantsBlue.png', 'pants/pantsGreen.png', 'pants/pantsYellow.png', 'pants/pantsPurple.png', 'pants/pantsOrange.png'],
-    shoes: ['shoes2/shoes2Default.png', 'shoes2/shoes2Pink.png', 'shoes2/shoes2Blue.png', 'shoes2/shoes2Green.png', 'shoes2/shoes2Yellow.png', 'shoes2/shoes2Purple.png', 'shoes2/shoes2Orange.png']
-  };
+//     customisationOptions = {
+//     head: ['../../static/game/head/headDefault.png', '../../static/game/head/headPink.png', '../../static/game/head/headBlue.png', '../../static/game/head/headGreen.png', '../../static/game/head/headYellow.png', '../../static/game/head/headPurple.png', '../../static/game/head/headOrange.png'],
+//     torso: ['../../static/game/torso/torsoDefault.png', '../../static/game/torso/torsoPink.png', '../../static/game/torso/torsoBlue.png', '../../static/game/torso/torsoGreen.png', '../../static/game/torso/torsoYellow.png', '../../static/game/torso/torsoPurple.png', '../../static/game/torso/torsoOrange.png'],
+//     pants: ['../../static/game/pants/pantsDefault.png', '../../static/game/pants/pantsPink.png', '../../static/game/pants/pantsBlue.png', '../../static/game/pants/pantsGreen.png', '../../static/game/pants/pantsYellow.png', '../../static/game/pants/pantsPurple.png', '../../static/game/pants/pantsOrange.png'],
+//     shoes: ['../../static/game/shoes2/shoes2Default.png', '../../static/game/shoes2/shoes2Pink.png', '../../static/game/shoes2/shoes2Blue.png', '../../static/game/shoes2/shoes2Green.png', '../../static/game/shoes2/shoes2Yellow.png', '../../static/game/shoes2/shoes2Purple.png', '../../static/game/shoes2/shoes2Orange.png']
+//   };
+    customisationOptions = loaded_data["customization"]
+
   updateCustomisations();
 }
 
@@ -527,7 +530,7 @@ function changeCustomisation(part, direction) {
     const image = document.getElementById(`${part}Image`);
     const options = customisationOptions[part];
     console.log("Current Pic " + image.src);
-    let currentIndex = options.indexOf(image.src.replace('http://127.0.0.1:5501/FrontEnd/Main/',''));
+    let currentIndex = options.indexOf(image.src.replace('http://127.0.0.1:8000/','../../'));
     console.log("Current" + currentIndex)
     if (direction === 'left') {
       currentIndex = (currentIndex - 1 + options.length) % options.length;
@@ -794,7 +797,8 @@ function saveManually() {//save game function
             User_Skill:skills,
             Stat:stat,
             User_PowerUp:powers,
-            Setting:setting
+            Setting:setting,
+            User_Customization : selectedCustomisation,
         })
     });
     console.log("Game is SAVED!!");
