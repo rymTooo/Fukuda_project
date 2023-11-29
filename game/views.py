@@ -5,7 +5,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from game.models import Event, FukudaCustomization, PowerUp, Setting, Stat, User_Event, User_PowerUp, User_Skill,Skill
+from game.models import Event, User_Customization, PowerUp, Setting, Stat, User_Event, User_PowerUp, User_Skill,Skill
 #from .forms import Skill
 
 def main_page(request): 
@@ -35,12 +35,12 @@ def main_page(request):
             print(f"SETTING created SUCCESSFUL.")
         else:
             print(f"SETTING already EXISTS.")
-        #create FukudaCustomization
-        custom, custom_created = FukudaCustomization.objects.get_or_create(user = user)
+        #create User_Customization
+        custom, custom_created = User_Customization.objects.get_or_create(user = user)
         if custom_created:
-            print(f"FukudaCustomization created SUCCESSFUL.")
+            print(f"User_Customization created SUCCESSFUL.")
         else:
-            print(f"FukudaCustomization already EXISTS.")
+            print(f"User_Customization already EXISTS.")
         #create USER_EVENT
         all_events = Event.objects.all()
         for event in all_events:
