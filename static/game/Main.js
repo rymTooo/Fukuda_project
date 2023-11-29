@@ -455,3 +455,7 @@ function initializeSettings() {
     notificationToggle.checked = initialNotificationValue;
     usernameInput.value = initialUsername;
 }
+
+function get_skills(){
+    return JSON.stringify(skills);
+}
