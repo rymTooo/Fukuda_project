@@ -390,7 +390,7 @@ function updatePower() {
         powerUpButton.appendChild(powerUpCoinImage);
 
         const powerUpPrice = document.createElement('span');
-        powerUpPrice.textContent = powerUp.cost; // Replace with your power-up cost calculation
+        powerUpPrice.textContent = powerUp.cost.toLocaleString("en-US"); // Replace with your power-up cost calculation
         powerUpPrice.id = powerUp.powerupID + 'Price'; // Set a unique ID for the price span
         powerUpButton.appendChild(powerUpPrice);
 
@@ -454,7 +454,7 @@ function updateStatistics() {
         const row = `<tr class="${rowClass}">
                       <td>${i + 1}</td>
                       <td>${player.name}</td>
-                      <td>${player.all_time_money}</td>
+                      <td>${player.all_time_money.toLocaleString("en-US")}</td>
                     </tr>`;
         leaderboardBody.innerHTML += row;
       }
@@ -465,15 +465,15 @@ function updateStatistics() {
         const yourDataRow = `<tr class="highlight">
                               <td>${rank+1}</td>
                               <td>${yourData.name}</td>
-                              <td>${yourData.all_time_money}</td>
+                              <td>${yourData.all_time_money.toLocaleString("en-US")}</td>
                             </tr>`;
         leaderboardBody.innerHTML += yourDataRow;
       } 
       // Update the content of each statistic element
       var passiveIncome = (totalPassiveIncome * EventMult).toLocaleString("en-US");
       var moneyPerClick = money_per_click.toLocaleString("en-US");
-    document.getElementById('AllClickStat').textContent = click_counter;
-    document.getElementById('AllMoneyStat').textContent = Math.floor(all_time_money);
+    document.getElementById('AllClickStat').textContent = click_counter.toLocaleString("en-US");
+    document.getElementById('AllMoneyStat').textContent = Math.floor(all_time_money).toLocaleString("en-US");
     document.getElementById('PassiveStat').textContent = passiveIncome;
     document.getElementById('PerClickStat').textContent = moneyPerClick;
 }
@@ -707,10 +707,12 @@ function clickGaugeEvent() {
             clearInterval(gaugeInterval);
             gaugetext.textContent = 'Gauge completed! 10 times Multiplier.';
             EventMult = 10;
+            updateStatistics();
             setTimeout(function () {
                 EventOngoing = false;
                 EventMult = 1;
                 Event.innerHTML = "";
+                updateStatistics();
             }, 10000);
         }
     }, 50);
