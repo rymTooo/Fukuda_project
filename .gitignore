@@ -35,3 +35,5 @@ auth_app/__pycache__/forms.cpython-310.pyc
 auth_app/__pycache__/apps.cpython-310.pyc
 auth_app/__pycache__/admin.cpython-310.pyc
 auth_app/__pycache__/__init__.cpython-310.pyc
+game/migrations/0010_alter_user_customization_head_and_more.py
+game/migrations/0011_alter_user_customization_head_and_more.py

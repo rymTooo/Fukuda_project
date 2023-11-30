@@ -286,13 +286,21 @@ def data(request): #method for sending data from db to javascript
                                                                   join game_customization_pants cp on uc.pants_id = cp.name
                                                                   join game_customization_shoes cs on uc.shoes_id = cs.name
                                                                   where uc.user_id = %s;''', [user.id])
-
-        user_customization_dict = {
+        try:
+            user_customization_dict = {
             "head": "../../static/game/head/"+loaded_user_customiztion[0].head.file_name,
             "torso": "../../static/game/torso/"+loaded_user_customiztion[0].torso.file_name,
             "pants": "../../static/game/pants/"+loaded_user_customiztion[0].pants.file_name,
             "shoes": "../../static/game/shoes2/"+loaded_user_customiztion[0].shoes.file_name
-        }
+            }
+        except:
+            user_customization_dict = {
+                "head": "../../static/game/head/headDefault.png"
+                , "torso":"../../static/game/torso/torsoDefault.png"
+                , "pants":"../../static/game/pants/pantsDefault.png"
+                , "shoes":"../../static/game/shoes2/shoes2Default.png"
+
+            }
 
         main_dict["User_Customization"] = user_customization_dict
 
