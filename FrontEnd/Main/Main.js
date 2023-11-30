@@ -24,6 +24,12 @@ let players = [
     { id: 9, name: 'Player9', allTimeMoney: 7500 },
     // Add more players...
 ];
+let monsters = [
+    'Dummy.png',
+    'Grinder.png',
+    'Oil.png',
+    'Fukuda.png'
+]
 let EventMult = 1;
 let OurPlayerid = 1;
 const Swordsounds = [
@@ -38,6 +44,7 @@ fetchSkills();
 fetchCustomisation();
 toggleCheck();
 updateStatistics();
+setInterval(updateMoney, 1000); // Update score every second
 // Get the audio element
 const backgroundAudio = document.getElementById('backgroundAudio');
 
@@ -74,6 +81,7 @@ hitbox.addEventListener('click', () => {
     allTimeClicks++;
     let anim = document.createElement('div');
     anim.classList.add('SwingAnim'); 
+    changeMonster();
     picture.appendChild(anim);
     swordman.classList.add('SwingAnim');
     money = money + money_per_click * EventMult;
@@ -119,8 +127,16 @@ function updateMoney() {
     }
     document.getElementById('money').textContent = money.toLocaleString("en-US");
 }
-setInterval(updateMoney, 1000); // Update score every second
 
+function changeMonster(){
+    let dummy = document.getElementById('dummy')
+    if(allTimeClicks % 10 == 0){
+        let randomIndex = Math.floor(Math.random() * monsters.length);
+        // Get the picture at the random index
+        let randomPicture = monsters[randomIndex];
+        dummy.src = randomPicture;
+    }
+}
 
 //switching tab
 function showTab(tabId) {
@@ -170,6 +186,244 @@ function fetchSkills() {
         passive: 0,
         image: "Dummy.png",
         name: "Cum",
+        level: 0,
+        cost: 100,
+        unlocked: false,
+        upgrades: [
+            { upgradeID: "Cock", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock2", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock3", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock4", upgradeImage: "black.png", bought: false },
+            { upgradeID: "COck5", upgradeImage: "black.png", bought: false },
+        ]
+    },{
+        skillID: "Skill2",
+        baseIncome: 1,
+        baseCost: 100,
+        passive: 0,
+        image: "Dummy.png",
+        name: "Cum",
+        level: 0,
+        cost: 100,
+        unlocked: false,
+        upgrades: [
+            { upgradeID: "Cock", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock2", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock3", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock4", upgradeImage: "black.png", bought: false },
+            { upgradeID: "COck5", upgradeImage: "black.png", bought: false },
+        ]
+    },{
+        skillID: "Skill2",
+        baseIncome: 1,
+        baseCost: 100,
+        passive: 0,
+        image: "Dummy.png",
+        name: "Cum",
+        level: 0,
+        cost: 100,
+        unlocked: false,
+        upgrades: [
+            { upgradeID: "Cock", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock2", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock3", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock4", upgradeImage: "black.png", bought: false },
+            { upgradeID: "COck5", upgradeImage: "black.png", bought: false },
+        ]
+    },{
+        skillID: "Skill2",
+        baseIncome: 1,
+        baseCost: 100,
+        passive: 0,
+        image: "Dummy.png",
+        name: "Cum",
+        level: 0,
+        cost: 100,
+        unlocked: false,
+        upgrades: [
+            { upgradeID: "Cock", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock2", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock3", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock4", upgradeImage: "black.png", bought: false },
+            { upgradeID: "COck5", upgradeImage: "black.png", bought: false },
+        ]
+    },{
+        skillID: "Skill2",
+        baseIncome: 1,
+        baseCost: 100,
+        passive: 0,
+        image: "Dummy.png",
+        name: "Cum",
+        level: 0,
+        cost: 100,
+        unlocked: false,
+        upgrades: [
+            { upgradeID: "Cock", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock2", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock3", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock4", upgradeImage: "black.png", bought: false },
+            { upgradeID: "COck5", upgradeImage: "black.png", bought: false },
+        ]
+    },{
+        skillID: "Skill2",
+        baseIncome: 1,
+        baseCost: 100,
+        passive: 0,
+        image: "Dummy.png",
+        name: "Cum",
+        level: 0,
+        cost: 100,
+        unlocked: false,
+        upgrades: [
+            { upgradeID: "Cock", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock2", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock3", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock4", upgradeImage: "black.png", bought: false },
+            { upgradeID: "COck5", upgradeImage: "black.png", bought: false },
+        ]
+    },{
+        skillID: "Skill2",
+        baseIncome: 1,
+        baseCost: 100,
+        passive: 0,
+        image: "Dummy.png",
+        name: "Cum",
+        level: 0,
+        cost: 100,
+        unlocked: false,
+        upgrades: [
+            { upgradeID: "Cock", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock2", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock3", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock4", upgradeImage: "black.png", bought: false },
+            { upgradeID: "COck5", upgradeImage: "black.png", bought: false },
+        ]
+    },{
+        skillID: "Skill2",
+        baseIncome: 1,
+        baseCost: 100,
+        passive: 0,
+        image: "Dummy.png",
+        name: "Cum",
+        level: 0,
+        cost: 100,
+        unlocked: false,
+        upgrades: [
+            { upgradeID: "Cock", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock2", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock3", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock4", upgradeImage: "black.png", bought: false },
+            { upgradeID: "COck5", upgradeImage: "black.png", bought: false },
+        ]
+    },{
+        skillID: "Skill2",
+        baseIncome: 1,
+        baseCost: 100,
+        passive: 0,
+        image: "Dummy.png",
+        name: "Cum",
+        level: 0,
+        cost: 100,
+        unlocked: false,
+        upgrades: [
+            { upgradeID: "Cock", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock2", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock3", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock4", upgradeImage: "black.png", bought: false },
+            { upgradeID: "COck5", upgradeImage: "black.png", bought: false },
+        ]
+    },{
+        skillID: "Skill2",
+        baseIncome: 1,
+        baseCost: 100,
+        passive: 0,
+        image: "Dummy.png",
+        name: "Cum",
+        level: 0,
+        cost: 100,
+        unlocked: false,
+        upgrades: [
+            { upgradeID: "Cock", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock2", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock3", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock4", upgradeImage: "black.png", bought: false },
+            { upgradeID: "COck5", upgradeImage: "black.png", bought: false },
+        ]
+    },{
+        skillID: "Skill2",
+        baseIncome: 1,
+        baseCost: 100,
+        passive: 0,
+        image: "Dummy.png",
+        name: "Cum",
+        level: 0,
+        cost: 100,
+        unlocked: false,
+        upgrades: [
+            { upgradeID: "Cock", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock2", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock3", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock4", upgradeImage: "black.png", bought: false },
+            { upgradeID: "COck5", upgradeImage: "black.png", bought: false },
+        ]
+    },{
+        skillID: "Skill2",
+        baseIncome: 1,
+        baseCost: 100,
+        passive: 0,
+        image: "Dummy.png",
+        name: "Cum",
+        level: 0,
+        cost: 100,
+        unlocked: false,
+        upgrades: [
+            { upgradeID: "Cock", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock2", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock3", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock4", upgradeImage: "black.png", bought: false },
+            { upgradeID: "COck5", upgradeImage: "black.png", bought: false },
+        ]
+    },{
+        skillID: "Skill2",
+        baseIncome: 1,
+        baseCost: 100,
+        passive: 0,
+        image: "Dummy.png",
+        name: "Cum",
+        level: 0,
+        cost: 100,
+        unlocked: false,
+        upgrades: [
+            { upgradeID: "Cock", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock2", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock3", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock4", upgradeImage: "black.png", bought: false },
+            { upgradeID: "COck5", upgradeImage: "black.png", bought: false },
+        ]
+    },{
+        skillID: "Skill2",
+        baseIncome: 1,
+        baseCost: 100,
+        passive: 0,
+        image: "Dummy.png",
+        name: "Cum",
+        level: 0,
+        cost: 100,
+        unlocked: false,
+        upgrades: [
+            { upgradeID: "Cock", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock2", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock3", upgradeImage: "black.png", bought: false },
+            { upgradeID: "Cock4", upgradeImage: "black.png", bought: false },
+            { upgradeID: "COck5", upgradeImage: "black.png", bought: false },
+        ]
+    },{
+        skillID: "Skill2",
+        baseIncome: 1,
+        baseCost: 100,
+        passive: 0,
+        image: "Dummy.png",
+        name: "Cum2",
         level: 0,
         cost: 100,
         unlocked: false,

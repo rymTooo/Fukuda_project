@@ -132,8 +132,10 @@ body {
     z-index: 1;
     /* Place the Fukuda.png on top */
     width: 175px;
-    height: auto;
-    top: 44%;
+    height: 200px;
+    max-width: 175px;
+    max-height: 200px;
+    top: 41%;
     left: 60%;
 }
 
@@ -308,7 +310,7 @@ body {
 
     background: url('SettingBackground.png') center/cover;
     /* Set the background image */
-    height: 100%;
+    height: 100vh;
     margin: -20px;
     /* Include padding in the height calculation */
     background-size: cover;
