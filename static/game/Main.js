@@ -41,11 +41,18 @@ const Swordsounds = [
     "../../static/game/Sword4.mp3"
 ];
 let SwordSound = "../../static/game/Sword1.mp3"
+let players = loaded_data["leaderboard"]
+let EventMult = 1;
+let OurPlayerid = parseInt(current_user_id) ;
+let notiOn = false;
 
 fetchPowers();// should move into get data method and then just run get data method once.
 fetchSkills();
 initializeSettings();
 fetchCustomisation();
+toggleCheck();
+updateStatistics();
+setInterval(updateMoney, 1000); // Update score every second
 
 // Get the audio element
 const backgroundAudio = document.getElementById('backgroundAudio');
@@ -58,6 +65,7 @@ document.getElementById('money').textContent = Math.floor(cur_money);
 document.addEventListener('DOMContentLoaded', fetchSkills);
 document.addEventListener('DOMContentLoaded', fetchPowers);
 document.addEventListener('DOMContentLoaded', fetchCustomisation);
+document.addEventListener('DOMContentLoaded', updateStatistics);
 
 headIdle = document.getElementById('headIdle');
 torsoIdle = document.getElementById('torsoIdle');
@@ -66,6 +74,7 @@ shoesIdle = document.getElementById('shoesIdle');
 
 //Clicking
 const swordman = document.getElementById('swordman');
+const picture = document.getElementById('Picture');
 let clicking = false;
 
 
@@ -80,7 +89,11 @@ hitbox.addEventListener('mouseup', () => {
 });
 
 hitbox.addEventListener('click', () => {
- 
+
+    click_counter++;
+    let anim = document.createElement('div');
+    anim.classList.add('SwingAnim'); 
+    picture.appendChild(anim);
     swordman.classList.add('SwingAnim');
     cur_money +=  money_per_click*EventMult;
     all_time_money += money_per_click*EventMult;
@@ -88,8 +101,8 @@ hitbox.addEventListener('click', () => {
     if (click_counter%200 == 0){//chnage target every 200 clicks
         change_target();
     }
-    document.getElementById('passive').textContent = (totalPassiveIncome*EventMult + money_per_click*EventMult).toFixed(1);
-    document.getElementById('money').textContent = cur_money.toFixed(1);
+    document.getElementById('passive').textContent = (totalPassiveIncome*EventMult + money_per_click*EventMult).toLocaleString("en-US");
+    document.getElementById('money').textContent = cur_money.toLocaleString("en-US");
 
     playRandomSound();
     gaugeValue+= 5;
@@ -98,6 +111,7 @@ hitbox.addEventListener('click', () => {
     pantsIdle.style.visibility = 'hidden';
     shoesIdle.style.visibility = 'hidden';
     setTimeout(() => {
+        anim.remove();
         swordman.classList.remove('SwingAnim');
         updateCustomisations();
         
@@ -124,13 +138,13 @@ function updateMoney() {
     cur_money += totalPassiveIncome*EventMult;
     all_time_money += totalPassiveIncome*EventMult;
     if(clicking){
-        document.getElementById('passive').textContent = (totalPassiveIncome*EventMult + money_per_click*EventMult).toFixed(1);
+        document.getElementById('passive').textContent = (totalPassiveIncome*EventMult + money_per_click*EventMult).toLocaleString("en-US");
     }else{
-    document.getElementById('passive').textContent = (totalPassiveIncome*EventMult).toFixed(1);
+    document.getElementById('passive').textContent = (totalPassiveIncome*EventMult).toLocaleString("en-US");
     }
-    document.getElementById('money').textContent = (cur_money).toFixed(1);
+    document.getElementById('money').textContent = (cur_money).toLocaleString("en-US");
 }
-setInterval(updateMoney, 1000); // Update score every second
+
 
 
 //switching tab
@@ -211,15 +225,16 @@ function updateSkillsUI() {
 
         // Create other elements (skill_name, level, buy button, upgrade images, etc.) and append them to skillRow
         const skillName = document.createElement('h3');
+        skillName.classList.add('SkillName');
         skillName.textContent = skill.skill_name; // Replace with your skill skill_name property
         skillDetails.appendChild(skillName);
 
         const skillLevel = document.createElement('p');
-        skillLevel.textContent = 'Level: ' + skill.level; // Replace with your skill level property
+        skillLevel.textContent = 'Level: ' + skill.level.toLocaleString("en-US"); // Replace with your skill level property
         skillDetails.appendChild(skillLevel);
 
         const skillCost = document.createElement('p');
-        skillCost.textContent = 'Cost: ' + skill.cost; // Replace with your skill level property
+        skillCost.textContent = 'Cost: ' + skill.cost.toLocaleString("en-US"); // Replace with your skill level property
         skillDetails.appendChild(skillCost);
 
         const skillButton = document.createElement('button');
@@ -246,12 +261,14 @@ function updateSkillsUI() {
     
                 // Update the displayed information
                 skillLevel.textContent = 'Level: ' + skill.level;
-                skillCost.textContent = 'Cost: ' + skill.cost;
-                skillPassive.textContent = 'Passive: ' + skill.passive.toFixed(1);
+                skillCost.textContent = 'Cost: ' + skill.cost.toLocaleString("en-US");
+                skillPassive.textContent = 'Passive: ' + skill.passive.toLocaleString("en-US");
                 updateMoney();
             } else {
+                if(notiOn){
                 // Display a message or take some action if the player doesn't have enough money
                 alert("Not enough cur_money to buy this skill!");
+                }
             }
             
         });
@@ -410,7 +427,9 @@ function buyPowerUp(powerUp) {
         updatePower();
         
     } else {
-        alert("Not enough money to buy this power-up!");
+        if(notion){
+            alert("Not enough money to buy this power-up!");
+        }
     }
 }
 
@@ -447,13 +466,14 @@ function updateStatistics() {
                               <td>${yourData.all_time_money}</td>
                             </tr>`;
         leaderboardBody.innerHTML += yourDataRow;
-      }
+      } 
       // Update the content of each statistic element
-
+      var passiveIncome = (totalPassiveIncome * EventMult).toLocaleString("en-US");
+      var moneyPerClick = money_per_click.toLocaleString("en-US");
     document.getElementById('AllClickStat').textContent = click_counter;
     document.getElementById('AllMoneyStat').textContent = Math.floor(all_time_money);
-    document.getElementById('PassiveStat').textContent = Math.floor(totalPassiveIncome);
-    document.getElementById('PerClickStat').textContent = Math.floor(money_per_click);
+    document.getElementById('PassiveStat').textContent = passiveIncome;
+    document.getElementById('PerClickStat').textContent = moneyPerClick;
 }
 
 // JavaScript functions for Settings tab
@@ -547,8 +567,8 @@ function changeCustomisation(part, direction) {
 
 }
 
-let players = loaded_data["leaderboard"]
-var  OurPlayerid = parseInt(current_user_id) ;
+
+
 
 
 //Clicking
@@ -629,9 +649,15 @@ function EventOccur() {
             console.log("Event Occur");
             switch (randomEvent) {
                 case 0:
+                    if(notiOn){
+                        alert("Gauge Event Occur!")
+                        }
                     clickGaugeEvent();
                     break;
                 case 1:
+                    if(notiOn){
+                        alert("Flying Target Event Occur!")
+                        }
                     startFlyingTargetEvent();
                     break;
             }
@@ -643,7 +669,7 @@ function EventOccur() {
 // Set interval to check for events every second
 let gaugeValue = 50;
 let EventOngoing = false;
-let EventMult = 1;
+
 function clickGaugeEvent() {
     let finish = false;
     EventOngoing = true;
@@ -746,11 +772,13 @@ function endFlyingTargetEvent() {
         flying = false;
         flyingText.textContent = `Success. 10 times multiplier`;
         EventMult = 10;
+        updateStatistics();
         setTimeout(function () {
             EventOngoing = false;
             EventMult = 1;
             flyingTextContainer.innerHTML= "";
             Event.innerHTML = "";
+            updateStatistics();
         }, 10000);
     }
     else {
@@ -801,7 +829,9 @@ function saveManually() {//save game function
             User_Customization : selectedCustomisation,
         })
     });
-    console.log("Game is SAVED!!");
+    if(notiOn){
+        alert("Game is SAVED!!");
+        }
 }
 
 
@@ -833,3 +863,12 @@ function change_target(){
     }
     document.getElementById('dummy').src = '../../static/game/monster' + target_id + '.png';
 }
+
+
+function toggleCheck() {
+    if(document.getElementById("notificationToggle").checked === true){
+        notiOn = true;
+    } else {
+        notiOn = false;
+    }
+  }

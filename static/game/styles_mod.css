@@ -6,7 +6,6 @@ body {
     margin: 0;
     height: 100%;
     overflow: hidden;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 .Picture {
@@ -63,11 +62,11 @@ body {
     transform: translate(-50%, -50%);
     pointer-events: auto;
     /* Enable pointer events for the hitbox */
-    z-index: 2;
+    z-index: 1;
     /* Debug styling - remove these styles in production */
-    /*border: 2px solid red;
+    border: 2px solid red;
     /* Add a red border to the hitbox */
-    /*background-color: rgba(255, 0, 0, 0.3);*/
+    background-color: rgba(255, 0, 0, 0.3);
 }
 
 @keyframes Swing {
@@ -78,16 +77,11 @@ body {
 }
 
 .SwingAnim {
-    z-index: 1;
-    pointer-events: none;
-    height: 1080px;
     width: 1920px;
     background: url("SwingSprite.png");
     animation: Swing 0.7s steps(10) infinite;
     transform: translate(-18.2%, -37%) scale(0.38);
-    position: absolute;
 }
-
 #headIdle {
     z-index: 1;
     /* Place the Fukuda.png on top */
@@ -97,7 +91,6 @@ body {
     left: 32%;
     opacity: 0.8;
 }
-
 #torsoIdle {
     z-index: 1;
     /* Place the Fukuda.png on top */
@@ -108,6 +101,7 @@ body {
     opacity: 0.8;
 }
 
+
 #pantsIdle {
     z-index: 1;
     /* Place the Fukuda.png on top */
@@ -117,7 +111,6 @@ body {
     left: 31%;
     opacity: 0.8;
 }
-
 #shoesIdle {
     z-index: 1;
     /* Place the Fukuda.png on top */
@@ -127,15 +120,12 @@ body {
     left: 31%;
     opacity: 0.8;
 }
-
 .Picture img.dummy {
     z-index: 1;
     /* Place the Fukuda.png on top */
     width: 175px;
-    height: 200px;
-    max-width: 175px;
-    max-height: 200px;
-    top: 41%;
+    height: auto;
+    top: 44%;
     left: 60%;
 }
 
@@ -144,7 +134,7 @@ body {
     /* Place the Fukuda.png on top */
     width: 50px;
     height: auto;
-    top: 4%;
+    top: 2%;
     left: 1%;
 }
 
@@ -159,7 +149,7 @@ body {
     text-align: left;
 }
 
-.Event {
+.Event{
     z-index: 1;
     font-size: 30px;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
@@ -182,7 +172,7 @@ body {
     position: absolute;
     margin-top: 20px;
     padding: 20px;
-    
+    border: 1px solid #ccc;
     display: inline-block;
 }
 
@@ -204,7 +194,7 @@ body {
     width: 0%;
     background-color: red;
     position: absolute;
-
+    
 }
 
 .target {
@@ -214,10 +204,8 @@ body {
     background-color: red;
     border-radius: 25px;
     position: absolute;
-    cursor: pointer;
-}
-
-.flyingtext {
+    cursor: pointer;}
+.flyingtext{
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     z-index: 1;
     font-size: 50px;
@@ -231,7 +219,7 @@ body {
     display: inline-block;
 }
 
-.textHolder {
+.textHolder{
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     z-index: 1;
     font-size: 35px;
@@ -245,7 +233,7 @@ body {
     display: inline-flex;
 }
 
-.passivePerSec {
+.passivePerSec{
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     z-index: 1;
     font-size: 25px;
@@ -258,7 +246,6 @@ body {
     text-align: center;
     display: inline-block;
 }
-
 
 .Navigation {
     height: 10%;
@@ -283,8 +270,7 @@ body {
     transition: 0.3s;
 
 }
-
-.tab:hover {
+.tab:hover{
     background-color: #ffc368;
 }
 
@@ -307,51 +293,37 @@ body {
 }
 
 #skills {
-
+    
     background: url('SettingBackground.png') center/cover;
     /* Set the background image */
-    height: 100vh;
+    height: 100%;
     margin: -20px;
     /* Include padding in the height calculation */
     background-size: cover;
 
 }
-
 .SkillRow {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
-    padding-left: 35px;
-    padding-right: 35px;
-    border: 4px solid #8A5B00;
-    
-    background-color: #FFDF8B;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
 }
-
 .SkillInfo {
-    width: 50%;
     display: flex;
     align-items: center;
-    margin-right: -10%;
 }
 
 .SkillImage {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     margin-right: 10px;
 }
 
 .SkillDetails {
-    font-size: 150%;
-    width: 100%;
     display: flex;
     text-align: left;
-    justify-content: space-between;
-}
-.SkillName{
-    margin-top: 3%;
-    margin-left: 3%;
 }
 
 .BuyButton {
@@ -364,30 +336,20 @@ body {
     cursor: pointer;
     transition: 0.4s;
 }
-
 .BuyButton:hover {
     background-image: linear-gradient(#90DEFF, #40C6FF);
-    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
-.SkillCoin {
+.SkillCoin{
     margin-top: -20px;
     margin-bottom: -9px;
     height: 50px;
 }
 
-.UpgradeImages {
-    width: 70%;
-    margin-right: -45%;
-    height: 80%;
-}
-
 .UpgradeImages img {
-    width: 6%;
-    height: 6%;
-    max-width: 6%;
-    max-height: 6%;
-    margin-left: 0px;
+    width: 30px;
+    height: 30px;
     margin-right: 5px;
 }
 
@@ -398,9 +360,9 @@ body {
     height: 113%;
     /* Ensure the content takes up the full height */
     width: auto;
+    padding: 0%;
     /* Add some padding for better visibility of content */
     margin: -20px;
-    padding: 0%;
     /* Include padding in the height calculation */
     background-size: 100% 100%;
     overflow: hidden;
@@ -477,13 +439,12 @@ body {
     border-radius: 10px;
     transition-duration: 0.4s;
 }
-
 .PowButton:hover {
     background-image: linear-gradient(#90DEFF, #40C6FF);
-    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
-.PowCoin {
+.PowCoin{
     margin-top: -20px;
     margin-bottom: -9px;
     height: 75%;
@@ -499,7 +460,6 @@ body {
     /* Add some padding for better visibility of content */
     margin: -20px;
 }
-
 .column {
     flex: 1;
     box-sizing: border-box;
@@ -509,51 +469,37 @@ body {
     background-color: #FFDF8B;
     border: 4px solid #8A5B00;
 }
-
 .customizationImage {
     width: 100%;
     max-height: 200px;
     object-fit: contain;
     margin-bottom: 10px;
 }
-
 .arrowButton {
     cursor: pointer;
     font-size: 24px;
 }
 
 #setting {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     background: url('SettingBackground.png') center/cover;
     /* Set the background image */
     height: 113%;
     /* Ensure the content takes up the full height */
     width: auto;
-    padding-left: 5%;
-    padding-right: 5%;
+    padding: 0%;
     /* Add some padding for better visibility of content */
     margin: -20px;
     /* Include padding in the height calculation */
     background-size: 100% 100%;
     overflow: hidden;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
 }
-
 .settingOption {
-    font-size: 20px;
-    line-height: 100%;
-    color: white;
-    margin-top: 3%;
-    text-align: center;
+    margin-bottom: 15px;
 }
-
 label {
     display: block;
     margin-bottom: 5px;
 }
-
 input[type="range"],
 input[type="text"],
 select {
@@ -562,9 +508,7 @@ select {
     box-sizing: border-box;
 }
 
-
 #statistics {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     background: url('SettingBackground.png') center/cover;
     /* Set the background image */
     height: 113%;
@@ -582,163 +526,7 @@ select {
 
 }
 
-:root {
-    --background-gradient: linear-gradient(178deg, #ffff33 10%, #3333ff);
-    --gray: #34495e;
-    --darkgray: #2c3e50;
-}
-
-#selectContain {
-    line-height: 200%;
-    text-align: center;
-    width: 10%;
-    position: relative;
-}
-
-#themeSelect {
-    /* Reset Select */
-    border-radius: 10px;
-    appearance: none;
-    outline: 10px red;
-    border: 0;
-    box-shadow: none;
-    width: 100%;
-    height: 20%;
-    /* Personalize */
-    flex: 1;
-    padding: 0 1em;
-    color: #fff;
-    background-color: var(--darkgray);
-    background-image: none;
-    cursor: pointer;
-    position: relative;
-    display: flex;
-    overflow: hidden;
-    transition: 0.2s;
-}
-
-
-/* Transition */
-#themeSelect:hover{
-    color: #f39c12;
-    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
-}
-
-option {
-    font-size: 15px;
-    text-align: center;
-}
-
-#NotiContain{
-    line-height: 250%;
-}
-
-/* The switch - the box around the slider */
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-}
-
-/* Hide default HTML checkbox */
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-/* The slider */
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
-}
-
-input:checked+.slider {
-    background-color: #2196F3;
-}
-
-input:focus+.slider {
-    box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked+.slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-    border-radius: 34px;
-}
-
-.slider.round:before {
-    border-radius: 50%;
-}
-
-#ChangeUser {
-    font-size: 30px;
-}
-
-#FormChange {
-    margin-top: 0%;
-    line-height: 200%;
-}
-
-#SaveLogout {
-    line-height: 700%;
-}
-
-#SaveUser {
-    color: #000;
-    font-size: 25px;
-    background-image: linear-gradient(white, white);
-}
-
-.rowStat {
-    background-color: white;
-    text-align: center;
-    font-size: 25px;
-    margin: 50px;
-    margin-left: 10px;
-    margin-right: 20px;
-    flex-grow: 0.2;
-    line-height: 200%;
-    justify-content: space-between;
-    /* Allow items to grow and take up equal space */
-    border-radius: 20px;
-}
-
-.rowText {
-    overflow-wrap: break-word;
-    max-width: 120px;
-    line-height: 100%;
-    color: black;
-    transform: translateY(+10%);
-    transform: translateX(+30%);
-}
-
-#Leaderboard {
+#Leaderboard  {
     background-color: white;
     text-align: center;
     margin: 25px;
@@ -747,31 +535,30 @@ input:checked+.slider:before {
     border-radius: 20px;
     overflow: hidden;
 }
-
 table {
-    position: relative;
     border-collapse: collapse;
-    width: 100%;
-    height: 100%;
-
+    width: 50%;
+    margin: 20px auto;
 }
-
-table thead tr th {
-    color: white;
-    background-color: #36304a;
-}
-
 th,
 td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
 }
-
 th {
     background-color: #f2f2f2;
 }
-
 .highlight {
     background-color: yellow;
+  }
+.rowStat {
+    background-color: white;
+    text-align: center;
+    margin: 50px;
+    margin-left: 10px;
+    margin-right: 20px;
+    flex-grow: 0.2;
+    /* Allow items to grow and take up equal space */
+    border-radius: 20px;
 }

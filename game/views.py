@@ -182,7 +182,7 @@ def data(request): #method for sending data from db to javascript
             skill["level"] = i.level
             skill["unlocked"] = i.unlocked
             skills_list.append(skill)
-            print(skill,"skill")
+            # print(skill,"skill")
         main_dict["skill"] = skills_list
 
         #load power up
@@ -197,7 +197,7 @@ def data(request): #method for sending data from db to javascript
             powerup["skillReq"] = i.powerup_name.skillReq
             powerup["purchased"] = i.acquired
             powerups_list.append(powerup)
-            print(powerup,"powerup")
+            # print(powerup,"powerup")
         main_dict["powerup"] = powerups_list
 
         #load stat
@@ -209,7 +209,7 @@ def data(request): #method for sending data from db to javascript
             stat_dict["current_money"] = i.current_money
             stat_dict["money_per_click"] = i.money_per_click
             stat_dict["click_counter"] = i.click_counter
-            print(stat_dict,"stat")
+            # print(stat_dict,"stat")
         main_dict["stat"] = stat_dict
 
         #load setting

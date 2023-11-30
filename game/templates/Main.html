@@ -45,54 +45,10 @@
         </div>
         <div class="Content">
             <div id="skills" class="tabContent active">
-                {% comment %} <div class="SkillRow">
-                    <img src={% static "game/Fire.png" %} alt="Skill Image" class="SkillImage">
-                    <h3>Fire</h3>
-                    <p>Level: <span class="skillLevel">1</span></p>
-                    <button class="BuyButton">Buy <img class="SkillCoin" src={% static "game/Coin.png" %}><span > 13222</span></button>
-                    <div class="UpgradeImages">
-                        <img src={% static "game/black.png" %} alt="Upgrade 1">
-                        <img src={% static "game/black.png" %} alt="Upgrade 2">
-                        <img src={% static "game/black.png" %} alt="Upgrade 3">
-                        <img src={% static "game/black.png" %} alt="Upgrade 4">
-                        <img src={% static "game/black.png" %} alt="Upgrade 5">
-                    </div>
-                </div> {% endcomment %}
                 
             </div>
             <div id="powerups" class="tabContent">
-                {% comment %} <div class="PowContain" id="pow1">
-                    <div class="picPowContain">
-                        <img class="picPow" src={% static "game/Oil.png" %}>
-                    </div>
-                    <div class="PowDesc" id="pow1Name">Oil</div>
-                    <button class="PowButton">BUY <img class="PowCoin"
-                            src={% static "game/Coin.png" %}><span id="pow1Price"> 13</span></button>>
-                </div>
-                <div class="PowContain" id="pow2">
-                    <div class="picPowContain">
-                        <img class="picPow" src={% static "game/Titanium.png" %}>
-                    </div>
-                    <div class="PowDesc" id="pow2Name">Titanium</div>
-                    <button class="PowButton">BUY <img class="PowCoin"
-                            src={% static "game/Coin.png" %}><span id="pow2Price"> 200</span></button>
-                </div>
-                <div class="PowContain" id="pow3">
-                    <div class="picPowContain">
-                        <img class="picPow" src={% static "game/Grinder.png" %}>
-                    </div>
-                    <div class="PowDesc" id="pow3Name">Grinder</div>
-                    <button class="PowButton">BUY <img class="PowCoin"
-                            src={% static "game/Coin.png" %}><span id="pow3Price"> 500</span></button>
-                </div>
-                <div class="PowContain" id="pow4">
-                    <div class="picPowContain">
-                        <img class="picPow" src={% static "game/Cloud.png" %}>
-                    </div>
-                    <div class="PowDesc" id="pow4Name">Cloud</div>
-                    <button class="PowButton">BUY <img class="PowCoin"
-                            src={% static "game/Coin.png" %}><span id="pow4Price"> 600</span></button>
-                </div> {% endcomment %}
+                
             </div>
             <div id="customisation" class="tabContent">
                 <div class="column" id="headColumn">
@@ -132,25 +88,34 @@
                         <tbody id="leaderboardBody"></tbody>
                       </table>
                 </div>
-
-                <p class="rowStat">All-time Clicks<br> <span id="AllClickStat">500</span></p>
-                <p class="rowStat">All-time Money<br> <span id="AllMoneyStat">500</span></p>
-                <p class="rowStat">Passive Income<br> <span id="PassiveStat">500</span></p>
-                <p class="rowStat">Money per Click<br> <span id="PerClickStat">500</span></p>
+                <div class="rowStat">
+                    <p class="rowText">All-time Clicks</p><br> <span id="AllClickStat">500</span> clicks</p>
+                </div>
+                <div class="rowStat">
+                    <p class="rowText">All-time Money</p><br> <span id="AllMoneyStat">500</span></p>
+                </div>
+                <div class="rowStat">
+                    <p class="rowText">Passive Income</p><br> <span id="PassiveStat">500</span> per sec</p>
+                </div>
+                <div class="rowStat">
+                    <p class="rowText">Money per Click</p><br> <span id="PerClickStat">500</span></p>
+                </div>
+                
             </div>
             <div id="setting" class="tabContent">
-                Setting
+                {% comment %} Setting {% endcomment %}
                 <script>
                     var current_user_id = "{{ request.user.id }}";
                 </script>
                 <p>USERNAME: {{username}}</p>
                  <!-- Volume Slider -->
                  <div class="settingOption">
-                    <label for="volumeSlider">Volume:</label>
+                    <strong for="volumeSlider">Volume</strong>
+                    <p>adjust volume intensity</p>
                     <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="1">
                 </div>
                 <!-- Theme Selection -->
-                <div class="settingOption">
+                <div class="settingOption" id="selectContain">
                     <label for="themeSelect">Theme:</label>
                     <select name="themeSelect" id="themeSelect" onchange="changeTheme(this.value)">
                         <option value="Jungle">Jungle</option>
@@ -160,23 +125,26 @@
                     </select>
                 </div>
                 <!-- Notification Toggle -->
-                <div class="settingOption">
+                <div class="settingOption" id="NotiContain">
                     <label for="notificationToggle">Enable Notifications:</label>
-                    <input type="checkbox" id="notificationToggle">
+                    <label class="switch">
+                        <input type="checkbox" id="notificationToggle" onchange="toggleCheck()" checked>
+                        <span class="slider round"></span>
+                    </label>
                 </div>
                 <!-- Change Username -->
-                <div class="settingOption">
-                    <label for="usernameInput">Change Username:</label>
-                    <form autocomplete="off">
+                <div class="settingOption" id="ChangeUser">
+                    <label for="usernameInput">Change Username</label>
+                    <form id="FormChange">
                         <input type="text" id="usernameInput"
                             placeholder="New Username">
-                        <button onclick="changeUsername(event)">Save</button>
+                        <button onclick="changeUsername(event)" class="BuyButton" id="SaveUser">Save</button>
                     </form>
                 </div>
                 <!-- Save Game Button -->
                 <div class="settingOption">
-                    <button onclick="saveManually()">Save Game</button>
-                    <button type = 'submit'> <a href = '/authorization/logout'>Logout</a></button>
+                    <button class="BuyButton" onclick="saveManually()">Save Game</button>
+                    <button class="BuyButton" type = 'submit'> <a href = '/authorization/logout'>Logout</a></button>
                 </div>
             </div>
             <audio id="backgroundAudio" loop>
