@@ -77,8 +77,8 @@ hitbox.addEventListener('click', () => {
     picture.appendChild(anim);
     swordman.classList.add('SwingAnim');
     money = money + money_per_click * EventMult;
-    document.getElementById('passive').textContent = (totalPassiveIncome * EventMult + money_per_click * EventMult).toFixed(1);
-    document.getElementById('money').textContent = money.toFixed(1);
+    document.getElementById('passive').textContent = (totalPassiveIncome * EventMult + money_per_click * EventMult).toLocaleString("en-US");
+    document.getElementById('money').textContent = money.toLocaleString("en-US");
 
     playRandomSound();
     gaugeValue += 5;
@@ -113,11 +113,11 @@ function updateMoney() {
     });
     money += totalPassiveIncome * EventMult;
     if (clicking) {
-        document.getElementById('passive').textContent = (totalPassiveIncome * EventMult + money_per_click * EventMult).toFixed(1);
+        document.getElementById('passive').textContent = (totalPassiveIncome * EventMult + money_per_click * EventMult).toLocaleString("en-US");
     } else {
-        document.getElementById('passive').textContent = (totalPassiveIncome * EventMult).toFixed(1);
+        document.getElementById('passive').textContent = (totalPassiveIncome * EventMult).toLocaleString("en-US");
     }
-    document.getElementById('money').textContent = money.toFixed(1);
+    document.getElementById('money').textContent = money.toLocaleString("en-US");
 }
 setInterval(updateMoney, 1000); // Update score every second
 
@@ -213,6 +213,7 @@ function updateSkillsUI() {
 
         // Create other elements (name, level, buy button, upgrade images, etc.) and append them to skillRow
         const skillName = document.createElement('h3');
+        skillName.classList.add('SkillName');
         skillName.textContent = skill.name; // Replace with your skill name property
         skillDetails.appendChild(skillName);
 
@@ -221,11 +222,11 @@ function updateSkillsUI() {
         skillDetails.appendChild(skillLevel);
 
         const skillCost = document.createElement('p');
-        skillCost.textContent = 'Cost: ' + skill.cost; // Replace with your skill level property
+        skillCost.textContent = 'Cost: ' + skill.cost.toLocaleString("en-US"); // Replace with your skill level property
         skillDetails.appendChild(skillCost);
 
         const skillPassive = document.createElement('p');
-        skillPassive.textContent = 'Passive: ' + skill.passive.toFixed(1); // Replace with your skill level property
+        skillPassive.textContent = 'Passive: ' + skill.passive.toLocaleString("en-US"); // Replace with your skill level property
         skillDetails.appendChild(skillPassive);
 
         const skillButton = document.createElement('button');
@@ -253,8 +254,8 @@ function updateSkillsUI() {
 
                 // Update the displayed information
                 skillLevel.textContent = 'Level: ' + skill.level;
-                skillCost.textContent = 'Cost: ' + skill.cost;
-                skillPassive.textContent = 'Passive: ' + skill.passive.toFixed(1);
+                skillCost.textContent = 'Cost: ' + skill.cost.toLocaleString("en-US");
+                skillPassive.textContent = 'Passive: ' + skill.passive.toLocaleString("en-US");
                 updateMoney();
             } else {
                 // Display a message or take some action if the player doesn't have enough money
@@ -580,8 +581,8 @@ function updateStatistics() {
 
     const allTimeClicks = 500;
     const allTimeMoney = 1500;
-    const passiveIncome = (totalPassiveIncome * EventMult).toFixed(1);
-    const moneyPerClick = money_per_click.toFixed(1);
+    const passiveIncome = (totalPassiveIncome * EventMult).toLocaleString("en-US");
+    const moneyPerClick = money_per_click.toLocaleString("en-US");
 
     // Update the content of each statistic element
 

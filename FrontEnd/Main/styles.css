@@ -319,25 +319,37 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
+    
+    padding-left: 35px;
+    padding-right: 35px;
+    border: 4px solid #8A5B00;
+    
+    background-color: #FFDF8B;
 }
 
 .SkillInfo {
+    width: 50%;
     display: flex;
     align-items: center;
+    margin-right: -10%;
 }
 
 .SkillImage {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     margin-right: 10px;
 }
 
 .SkillDetails {
+    font-size: 150%;
+    width: 100%;
     display: flex;
     text-align: left;
+    justify-content: space-between;
+}
+.SkillName{
+    margin-top: 3%;
+    margin-left: 3%;
 }
 
 .BuyButton {
@@ -362,9 +374,18 @@ body {
     height: 50px;
 }
 
+.UpgradeImages {
+    width: 70%;
+    margin-right: -45%;
+    height: 80%;
+}
+
 .UpgradeImages img {
-    width: 30px;
-    height: 30px;
+    width: 6%;
+    height: 6%;
+    max-width: 6%;
+    max-height: 6%;
+    margin-left: 0px;
     margin-right: 5px;
 }
 
