@@ -839,6 +839,11 @@ function saveManually() {//save game function
             User_Customization : selectedCustomisation,
         })
     });
+    console.log("Game is SAVED")    
+}
+
+function save_onclick(){
+    saveManually();
     if(notiOn){
         alert("Game is SAVED!!");
         }

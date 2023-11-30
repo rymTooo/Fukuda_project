@@ -42,15 +42,15 @@ def main_page(request):
         else:
             print(f"User_Customization already EXISTS.")
         #create USER_EVENT
-        all_events = Event.objects.all()
-        for event in all_events:
-            # Retrieve or create a User_Skill instance for the user and skill
-            user_event, user_event_created = User_Event.objects.get_or_create(user=user, event_id =event)
+        # all_events = Event.objects.all()
+        # for event in all_events:
+        #     # Retrieve or create a User_Skill instance for the user and skill
+        #     user_event, user_event_created = User_Event.objects.get_or_create(user=user, event_id =event)
             
-            if user_event_created:
-                print(f"USER_EVENT, event '{event.event_name}' created SUCCESSFUL.")
-            else:
-                print(f"USER_EVENT, event '{event.event_name}' already exists.")
+        #     if user_event_created:
+        #         print(f"USER_EVENT, event '{event.event_name}' created SUCCESSFUL.")
+        #     else:
+        #         print(f"USER_EVENT, event '{event.event_name}' already exists.")
         #create USER_POWERUP
         all_powerups = PowerUp.objects.raw("select * from game_powerup order by powerup_id")
         for powerup in all_powerups:
