@@ -32,7 +32,7 @@
             <img src={% static "game/pants/pantsDefault.png" %} id="pantsIdle">
             <img src={% static "game/shoes2/shoes2Default.png" %} id="shoesIdle">
             <img src={% static "game/head/headDefault.png" %} id="headIdle">
-            <div class="CharacterHitbox" id="hitbox">Test</div>
+            <div class="CharacterHitbox" id="hitbox"></div>
             <div class="passivePerSec"><span id="passive">0</span> per second</div>
             <div class="FlyingTextContainer" id="FlyingTextContainer"></div>
         </div>
@@ -107,7 +107,7 @@
                 <script>
                     var current_user_id = "{{ request.user.id }}";
                 </script>
-                <p>USERNAME: {{username}}</p>
+                {% comment %} <p>USERNAME: {{username}}</p> {% endcomment %}
                  <!-- Volume Slider -->
                  <div class="settingOption">
                     <strong for="volumeSlider">Volume</strong>
@@ -142,7 +142,7 @@
                     </form>
                 </div>
                 <!-- Save Game Button -->
-                <div class="settingOption">
+                <div class="settingOption" id = "SaveLogout">
                     <button class="BuyButton" onclick="saveManually()">Save Game</button>
                     <button class="BuyButton" type = 'submit'> <a href = '/authorization/logout'>Logout</a></button>
                 </div>

@@ -177,7 +177,7 @@ def data(request): #method for sending data from db to javascript
             skill = {}
             skill["skill_name"] = i.skill_name.skill_name
             skill["base_income"] = i.skill_name.base_passive_income
-            skill["growth_rate"] = i.skill_name.growth_rate
+            # skill["growth_rate"] = i.skill_name.growth_rate
             skill["base_cost"] = i.skill_name.base_cost
             skill["level"] = i.level
             skill["unlocked"] = i.unlocked
@@ -312,7 +312,6 @@ def data(request): #method for sending data from db to javascript
 def change_username(request):
     if request.method == 'POST':
         user = None
-
         if request.user.is_authenticated:
             user = request.user.id
             try:
