@@ -437,7 +437,9 @@ function updateStatistics() {
     players.sort((a, b) => b.all_time_money - a.all_time_money);
 
     //update this player all time money stat to show in table
-    players.find(player => player.id === OurPlayerid).all_time_money = Math.floor(all_time_money);
+    Ownplayer = players.find(player => player.id === OurPlayerid);
+    Ownplayer.all_time_money = Math.floor(all_time_money);
+    
     
     const leaderboardBody = document.getElementById('leaderboardBody');
     // Clear existing content
@@ -477,13 +479,14 @@ function updateStatistics() {
 }
 
 // JavaScript functions for Settings tab
+let newUsername = "";
 function changeUsername() {
     event.preventDefault();
 
-    const newUsername = document.getElementById('usernameInput').value;
+    newUsername = document.getElementById('usernameInput').value.trim();
 
     // Check if the input is not empty
-    if (newUsername.trim() === "") {
+    if (newUsername === "") {
         alert("Please enter a username.");
         return; // Don't proceed further if the input is empty
     }
@@ -499,6 +502,7 @@ function changeUsername() {
             body: JSON.stringify({ username: newUsername })
         });
         alert("Username is Changed!!");
+        Ownplayer.name = newUsername;
     }
 }
 
