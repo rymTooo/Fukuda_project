@@ -45,7 +45,7 @@ def main_page(request):
         all_events = Event.objects.all()
         for event in all_events:
             # Retrieve or create a User_Skill instance for the user and skill
-            user_event, user_event_created = User_Event.objects.get_or_create(user=user, event_name=event)
+            user_event, user_event_created = User_Event.objects.get_or_create(user=user, event_id =event)
             
             if user_event_created:
                 print(f"USER_EVENT, event '{event.event_name}' created SUCCESSFUL.")
@@ -303,8 +303,19 @@ def data(request): #method for sending data from db to javascript
             }
 
         main_dict["User_Customization"] = user_customization_dict
+        # load event
+        events = Event.objects.raw("select * from game_event;")
+        events_list = []
+        for i in events:
+            events_list.append({
+                "id":i.event_id,
+                "name":i.event_name,
+                "description":i.description,
+                "multiplier":i.multiplier
+            })
+        main_dict["event"] = events_list
 
-        print(main_dict)
+        print(main_dict, "\n-------------------this is main dict---------------------")
         return JsonResponse(main_dict)
     else:
         return JsonResponse({"error": "user not authenticated"}, status=401)
