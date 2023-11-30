@@ -1,6 +1,6 @@
 
 //updating money
-let money_per_click = 10;
+let money_per_click = 1000000;
 let money = 0;
 let skills = [];
 let powers = [];
@@ -8,8 +8,24 @@ let powerInShop = [];
 let totalPassiveIncome = 0;
 let purchasedPowerUps = [];
 let customisationOptions={};
+let allTimeClicks = 0;
 let selectedCustomisation = {head : "head/headDefault.png", torso:"torso/torsoDefault.png",pants:"pants/pantsDefault.png",shoes:"shoes2/shoes2Default.png"};
 let theme = "Background.png"
+let notiOn = false;
+let players = [
+    { id: 1, name: 'Player1', allTimeMoney: 500 },
+    { id: 2, name: 'Player2', allTimeMoney: 1000 },
+    { id: 3, name: 'Player3', allTimeMoney: 1500 },
+    { id: 4, name: 'Player4', allTimeMoney: 2000 },
+    { id: 5, name: 'Player5', allTimeMoney: 2500 },
+    { id: 6, name: 'Player6', allTimeMoney: 3500 },
+    { id: 7, name: 'Player7', allTimeMoney: 5500 },
+    { id: 8, name: 'Player8', allTimeMoney: 6500 },
+    { id: 9, name: 'Player9', allTimeMoney: 7500 },
+    // Add more players...
+];
+let EventMult = 1;
+let OurPlayerid = 1;
 const Swordsounds = [
     "Sword1.mp3",
     "Sword2.mp3",
@@ -20,7 +36,8 @@ let SwordSound = "Sword1.mp3"
 fetchPowers();
 fetchSkills();
 fetchCustomisation();
-
+toggleCheck();
+updateStatistics();
 // Get the audio element
 const backgroundAudio = document.getElementById('backgroundAudio');
 
@@ -31,6 +48,7 @@ backgroundAudio.play();
 document.addEventListener('DOMContentLoaded', fetchSkills);
 document.addEventListener('DOMContentLoaded', fetchPowers);
 document.addEventListener('DOMContentLoaded', fetchCustomisation);
+document.addEventListener('DOMContentLoaded', updateStatistics);
 
 
 headIdle = document.getElementById('headIdle');
@@ -40,6 +58,7 @@ shoesIdle = document.getElementById('shoesIdle');
 
 //Clicking
 const swordman = document.getElementById('swordman');
+const picture = document.getElementById('Picture');
 
 let clicking = false;
 
@@ -52,7 +71,10 @@ hitbox.addEventListener('mouseup', () => {
 });
 
 hitbox.addEventListener('click', () => {
-
+    allTimeClicks++;
+    let anim = document.createElement('div');
+    anim.classList.add('SwingAnim'); 
+    picture.appendChild(anim);
     swordman.classList.add('SwingAnim');
     money = money + money_per_click * EventMult;
     document.getElementById('passive').textContent = (totalPassiveIncome * EventMult + money_per_click * EventMult).toFixed(1);
@@ -65,6 +87,7 @@ hitbox.addEventListener('click', () => {
     pantsIdle.style.visibility = 'hidden';
     shoesIdle.style.visibility = 'hidden';
     setTimeout(() => {
+        anim.remove();
         swordman.classList.remove('SwingAnim');
         updateCustomisations();
 
@@ -97,7 +120,6 @@ function updateMoney() {
     document.getElementById('money').textContent = money.toFixed(1);
 }
 setInterval(updateMoney, 1000); // Update score every second
-
 
 
 //switching tab
@@ -236,7 +258,9 @@ function updateSkillsUI() {
                 updateMoney();
             } else {
                 // Display a message or take some action if the player doesn't have enough money
+                if(notiOn){
                 alert("Not enough money to buy this skill!");
+                }
             }
 
         });
@@ -452,7 +476,9 @@ function buyPowerUp(powerUp) {
         updateMoney();
         updatePower();
     } else {
+        if(notiOn){
         alert("Not enough money to buy this power-up!");
+        }
     }
 }
 
@@ -516,19 +542,8 @@ function fetchCustomisation(){
     image.src = options[currentIndex];
   }
 
-let players = [
-    { id: 1, name: 'Player1', allTimeMoney: 500 },
-    { id: 2, name: 'Player2', allTimeMoney: 1000 },
-    { id: 3, name: 'Player3', allTimeMoney: 1500 },
-    { id: 4, name: 'Player4', allTimeMoney: 2000 },
-    { id: 5, name: 'Player5', allTimeMoney: 2500 },
-    { id: 6, name: 'Player6', allTimeMoney: 3500 },
-    { id: 7, name: 'Player7', allTimeMoney: 5500 },
-    { id: 8, name: 'Player8', allTimeMoney: 6500 },
-    { id: 9, name: 'Player9', allTimeMoney: 7500 },
-    // Add more players...
-];
-let OurPlayerid = 1;
+
+
 function updateStatistics() {
     // Example variables, replace them with your actual variables
     players.sort((a, b) => b.allTimeMoney - a.allTimeMoney);
@@ -565,8 +580,8 @@ function updateStatistics() {
 
     const allTimeClicks = 500;
     const allTimeMoney = 1500;
-    const passiveIncome = 200;
-    const moneyPerClick = 2;
+    const passiveIncome = (totalPassiveIncome * EventMult).toFixed(1);
+    const moneyPerClick = money_per_click.toFixed(1);
 
     // Update the content of each statistic element
 
@@ -585,14 +600,16 @@ function changeUsername() {
 
 function saveGame() {
     // Implement logic to save the game state
-
+    if(notiOn){
     alert('Game saved I NA HEE');
+    }
 }
 
 function logOut() {
     // Implement logic to save the game state
-
+    if(notiOn){
     alert('Logged Out I NA HEE');
+    }
 }
 
 function getComboA(selectObject) {
@@ -642,6 +659,14 @@ volumeSlider.addEventListener('input', function () {
     SwordSound.volume = volumeValue;
     console.log(volumeValue)
 });
+
+function toggleCheck() {
+    if(document.getElementById("notificationToggle").checked === true){
+        notiOn = true;
+    } else {
+        notiOn = false;
+    }
+  }
 // Example function to initialize settings
 function initializeSettings() {
     // Fetch and set the initial values for settings (volume, theme, etc.)
@@ -660,7 +685,7 @@ function initializeSettings() {
 //Event
 // Set interval to check for events every second
 setInterval(EventOccur, 1000);
-eventProb = 10000;
+eventProb = 1000;
 
 function EventOccur() {
     if (!EventOngoing) {
@@ -669,14 +694,21 @@ function EventOccur() {
 
         // Check if the event should occur based on the probability
         if (randomProbability === 0) {
+            
             const randomEvent = Math.floor(Math.random() * 2);
             console.log("Event Occur");
 
             switch (randomEvent) {
                 case 0:
+                    if(notiOn){
+                    alert("Gauge Event Occur!")
+                    }
                     clickGaugeEvent();
                     break;
                 case 1:
+                    if(notiOn){
+                    alert("Flying Target Event Occur!")
+                    }
                     startFlyingTargetEvent();
                     break;
             }
@@ -688,7 +720,7 @@ function EventOccur() {
 // Set interval to check for events every second
 let gaugeValue = 50;
 let EventOngoing = false;
-let EventMult = 1;
+
 function clickGaugeEvent() {
     let finish = false;
     EventOngoing = true;
@@ -724,11 +756,14 @@ function clickGaugeEvent() {
             clearInterval(gaugeInterval);
             gaugetext.textContent = 'Gauge completed! 10 times Multiplier.';
             EventMult = 10;
+            updateStatistics();
             setTimeout(function () {
                 EventOngoing = false;
                 EventMult = 1;
                 Event.innerHTML = "";
+                updateStatistics();
             }, 10000);
+           
 
         }
     }, 50);
@@ -795,12 +830,15 @@ function endFlyingTargetEvent() {
         flying = false;
         flyingText.textContent = `Success. 10 times multiplier`;
         EventMult = 10;
+        updateStatistics();
         setTimeout(function () {
             EventOngoing = false;
             EventMult = 1;
             flyingTextContainer.innerHTML= "";
             Event.innerHTML = "";
+            updateStatistics();
         }, 10000);
+        
     }
     else {
         flying = false;
