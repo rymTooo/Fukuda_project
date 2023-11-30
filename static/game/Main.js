@@ -645,16 +645,16 @@ function EventOccur() {
        
         // Check if the event should occur based on the probability
         if (randomProbability === 0) {
-            const randomEvent = Math.floor(Math.random() * 2);
+            const randomEvent = Math.floor(Math.random() * 2 + 1);
             console.log("Event Occur");
             switch (randomEvent) {
-                case 0:
+                case 1:
                     if(notiOn){
                         alert("Gauge Event Occur!")
                         }
                     clickGaugeEvent();
                     break;
-                case 1:
+                case 2:
                     if(notiOn){
                         alert("Flying Target Event Occur!")
                         }
@@ -694,6 +694,7 @@ function clickGaugeEvent() {
         if (gaugeValue <= 0) {
             clearInterval(gaugeInterval);
             gaugetext.textContent = 'Gauge depleted! Event failed.';
+            save_event(1,false,0);// run method to save event happening (input : fail)
             setTimeout(function () {
                 EventOngoing = false;
                 Event.innerHTML = "";
@@ -702,6 +703,7 @@ function clickGaugeEvent() {
         if (gaugeValue >= 100) {
             clearInterval(gaugeInterval);
             gaugetext.textContent = 'Gauge completed! 10 times Multiplier.';
+            save_event(1,true,0);//run method to save event happening (input : success)
             EventMult = 10;
             updateStatistics();
             setTimeout(function () {
@@ -775,6 +777,7 @@ function endFlyingTargetEvent() {
         flyingText.textContent = `Success. 10 times multiplier`;
         EventMult = 10;
         updateStatistics();
+        save_event(2,true,score);// run method to save event happening (input : success)
         setTimeout(function () {
             EventOngoing = false;
             EventMult = 1;
@@ -786,6 +789,7 @@ function endFlyingTargetEvent() {
     else {
         flying = false;
         flyingText.textContent = `Failed. No multiplier ;-;`;
+        save_event(2,false,score);
         setTimeout(function () {
             EventOngoing = false;
             flyingTextContainer.innerHTML= "";
@@ -835,7 +839,20 @@ function saveManually() {//save game function
         alert("Game is SAVED!!");
         }
 }
-
+function save_event(id,success,score){
+    fetch('http://127.0.0.1:8000/game/save-event/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
+        },
+        body: JSON.stringify({
+            id: id,
+            success: success,
+            score: score,
+        })
+    });
+}
 
 setInterval(saveManually, 30000); // Auto save every 30 seconds
 function getCookie(name) {

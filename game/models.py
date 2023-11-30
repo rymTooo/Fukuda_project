@@ -1,3 +1,4 @@
+
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
@@ -42,26 +43,25 @@ class User_Customization(models.Model):
 
 
 class Event(models.Model):
-    event_name = models.CharField(max_length=255,primary_key=True)
-    effect = models.CharField(max_length=255)
-    massage = models.CharField(max_length=255)
-    Probability = models.IntegerField()
+    event_id = models.IntegerField(default=0,primary_key=True)
+    event_name = models.CharField(max_length=255)
+    description = models.TextField(default="default")
+    multiplier = models.IntegerField(default=0)
 
 
 class User_Event(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    event_name = models.ForeignKey(Event, on_delete=models.CASCADE)
+    event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
+    time = models.DateTimeField(auto_now_add=True)
+    success = models.BooleanField(default=0)
+    score = models.IntegerField(default=0)
 
  
 class Skill(models.Model):
     skill_name = models.CharField(max_length=255, primary_key=True)
     base_passive_income = models.FloatField(default=0)
     base_cost = models.FloatField(default=0)
-    increase_per_click = models.FloatField(default=0)
-    growth_rate = models.FloatField(default=0)
     
-
-
 
 class User_Skill(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
