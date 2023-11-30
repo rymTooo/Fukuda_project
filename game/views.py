@@ -84,6 +84,29 @@ def test_method(request):
 #         form = SkillForm()
 
 #     return render(request, 'add_skill.html', {'form': form})
+def save_event(request):
+    if request.method == 'POST':
+        user = None
+        if request.user.is_authenticated:
+            user = request.user
+            try:
+                print("\n===============START SAVE EVENT==================\n")  
+                event_data = json.loads(request.body)
+                event_obj = Event.objects.filter(event_id = event_data["id"])
+                if event_obj:
+                    user_event_obj = User_Event.objects.create(
+                        user=user,
+                        event_id=event_obj[0],
+                        success=event_data["success"],
+                        score=event_data["score"]
+                    )
+                # user_event_obj.save()
+                print(f"\nSave Event: {event_obj[0].event_name} for user: {user.username}\n")
+                print("\n===============END SAVE EVENT==================\n")
+            except Exception as e:
+                print(f"Saved failed.: {str(e)}")
+                return JsonResponse({'status': 'failed', 'error': str(e)})
+    return JsonResponse({'status': 'failed'})
 
 def save_data(request):
     if request.method == 'POST':

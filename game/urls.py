@@ -9,5 +9,6 @@ urlpatterns = [
     path('save-data/',views.save_data),
     path('test/',views.test_method),
     path('data/',views.data),
-    path('change-username/',views.change_username)
+    path('change-username/',views.change_username),
+    path('save-event/',views.save_event),
 ]
