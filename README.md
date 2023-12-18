@@ -2,6 +2,8 @@
 CSS326 Database Lab project.
 ## project introduction
 Our project is a clicker game inspired by coockie clicker with getsu fuuma den theme. The expected user are people with busy schedule, but want to enjoy playing game. Idle game like our project is perfect, since it allow user to progress without having to actively play the game. It also suit a person who enjoy to see number go up or see the character progress, which surprsingly a lot of people actually fit the category.
+## Progress
+  ![100%](https://progress-bar.dev/100)
 ## Game Design
 
 - Tap to increase money
